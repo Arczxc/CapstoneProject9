@@ -1,20 +1,21 @@
 {
   "project_info": {
     "project_number": "957667082676",
+    "firebase_url": "https://capstone-414d8-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "capstone-414d8",
     "storage_bucket": "capstone-414d8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:957667082676:android:0de51759d7a5b24067f2e1",
+        "mobilesdk_app_id": "1:957667082676:android:7fe7aac85981599067f2e1",
         "android_client_info": {
           "package_name": "com.example.capstoneproject9"
         }
       },
       "oauth_client": [
         {
-          "client_id": "957667082676-cjrrujtin4gg08ui89fkc29714id135t.apps.googleusercontent.com",
+          "client_id": "957667082676-ki8ge5cbe8esflicib1bppistcfjtagm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.capstoneproject9",

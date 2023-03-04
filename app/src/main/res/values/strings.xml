@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CapstoneProject9</string>
+
+    <!--IDs-->
+    <string name="web_client_id">957667082676-5udntugmd983dcle07m7619g8voio485.apps.googleusercontent.com</string>
+    <!--Urls-->
+    <string name="firebase_project_id">capstone-414d8</string>
 </resources>

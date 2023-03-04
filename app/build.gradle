@@ -2,8 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'       //Firebase plugins
-    id "dagger.hilt.android.plugin"           //Dagger plugins
     id "kotlin-kapt"
+    id "dagger.hilt.android.plugin"           //Dagger plugins
 }
 
 android {

@@ -1,4 +1,4 @@
-package com.example.capstoneproject9.ui.theme
+package com.example.capstoneproject9.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

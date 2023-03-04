@@ -5,3 +5,5 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class MyApplication: Application()
+
+// Babaguhin yung ibang mga properties, tapos aayusin yung mga data model
