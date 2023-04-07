@@ -52,5 +52,7 @@ class Utils {
             val quantity = item.quantity ?: 0
             price * quantity
         }
+
+        
     }
 }

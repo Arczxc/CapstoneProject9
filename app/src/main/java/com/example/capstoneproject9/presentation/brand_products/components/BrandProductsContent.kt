@@ -23,7 +23,7 @@ fun BrandProductsContent(
 ) {
     Box(
         modifier = Modifier.fillMaxSize().padding(padding),
-        contentAlignment = Alignment.Center
+        //contentAlignment = Alignment.Center
     ) {
         VerticalContent(
             pagingProducts = viewModel.getBrandProducts(productBrand).collectAsLazyPagingItems(),

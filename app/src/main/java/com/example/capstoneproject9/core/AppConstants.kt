@@ -53,6 +53,7 @@ object AppConstants {
     const val PRODUCT_BRAND = "productBrand"
     const val ORDER_ID = "orderId"
     const val PRODUCT_ID = "productId"
+    const val LINK = "link"
 
     //Messages
     const val NO_PRODUCTS_FOUND_MESSAGE = "No products found."

@@ -8,6 +8,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -18,6 +19,7 @@ import com.example.capstoneproject9.core.AppConstants.ORDER_ID
 import com.example.capstoneproject9.core.AppConstants.PRODUCT_BRAND
 import com.example.capstoneproject9.core.AppConstants.PRODUCT_ID
 import com.example.capstoneproject9.navigation.Screen.*
+import com.example.capstoneproject9.presentation.SharedViewModel
 import com.example.capstoneproject9.presentation.auth.AuthScreen
 import com.example.capstoneproject9.presentation.brand_products.BrandProductsScreen
 import com.example.capstoneproject9.presentation.main.MainScreen
@@ -36,6 +38,7 @@ fun NavGraph(
     navController: NavHostController
 ) {
     val direction = remember(navController) { Direction(navController) }
+    val sharedViewModel: SharedViewModel = viewModel()
 
     AnimatedNavHost(
         navController = navController,
@@ -98,6 +101,7 @@ fun NavGraph(
                 navigateToThankYouScreen = {
                     direction.navigateToThankYouScreen()
                 }
+                //sharedViewModel    practice might delete later
             )
         }
         composable(
@@ -125,11 +129,10 @@ fun NavGraph(
         composable(
             route = ThankYouScreen.route
         ) {
-            ThankYouScreen(
-                navigateBackToMainScreen = {
-                    direction.navigateBackToMainScreen()
-                }
-            )
+            ThankYouScreen {
+                direction.navigateBackToMainScreen()
+            }
+            //ThankYouScreen()                //sharedViewModel    practice might delete later
         }
         composable(
             route = "${BrandProductsScreen.route}/{$PRODUCT_BRAND}",

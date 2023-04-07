@@ -31,14 +31,14 @@ import javax.inject.Named
 @InstallIn(SingletonComponent::class)
 object AppModule {
     @Provides
-    fun provideFirebaseAuth() = Firebase.auth
+    fun provideFirebaseAuth() = Firebase.auth                    //Firebase Authentication Instance
 
     @Provides
-    fun provideFirebaseDatabase() = Firebase.database
+    fun provideFirebaseDatabase() = Firebase.database           //Firebase Database Instance
 
 
     @Provides
-    fun provideFirebaseFirestore() = Firebase.firestore
+    fun provideFirebaseFirestore() = Firebase.firestore         //Firebase Firestore Instance
 
     @Provides
     fun provideOneTapClient(
@@ -83,13 +83,13 @@ object AppModule {
 
     @Provides
     fun provideAuthRepository(
-        auth: FirebaseAuth,
+        auth: FirebaseAuth,                                             // Authentication Instance
         oneTapClient: SignInClient,
         @Named(SIGN_IN_REQUEST)
         signInRequest: BeginSignInRequest,
         @Named(SIGN_UP_REQUEST)
         signUpRequest: BeginSignInRequest,
-        db: FirebaseFirestore
+        db: FirebaseFirestore                                           // Firestore Instance
     ): AuthRepository = AuthRepositoryImpl(
         auth = auth,
         oneTapClient = oneTapClient,
@@ -100,10 +100,10 @@ object AppModule {
 
     @Provides
     fun provideMainRepository(
-        auth: FirebaseAuth,
+        auth: FirebaseAuth,                                             //Authentication Instance
         oneTapClient: SignInClient,
-        firebaseDatabase: FirebaseDatabase,
-        firebaseFirestore: FirebaseFirestore,
+        firebaseDatabase: FirebaseDatabase,                             //Database Instance
+        firebaseFirestore: FirebaseFirestore,                           //Firestore Instance
         config: PagingConfig
     ): MainRepository = MainRepositoryImpl(
         auth = auth,
@@ -115,7 +115,7 @@ object AppModule {
 
     @Provides
     fun provideBrandProductsRepository(
-        firebaseFirestore: FirebaseFirestore,
+        firebaseFirestore: FirebaseFirestore,                           //Firestore Instance
         config: PagingConfig
     ): BrandProductsRepository = BrandProductsRepositoryImpl(
         db = firebaseFirestore,
@@ -124,8 +124,8 @@ object AppModule {
 
     @Provides
     fun provideProductDetailsRepository(
-        firebaseDatabase: FirebaseDatabase,
-        firebaseFirestore: FirebaseFirestore,
+        firebaseDatabase: FirebaseDatabase,                              //Database Instance
+        firebaseFirestore: FirebaseFirestore,                            // Firestore Instance
         auth: FirebaseAuth
     ): ProductDetailsRepository = ProductDetailsRepositoryImpl(
         firebaseDatabase = firebaseDatabase,
@@ -135,7 +135,7 @@ object AppModule {
 
     @Provides
     fun provideProductSearchRepository(
-        firebaseFirestore: FirebaseFirestore,
+        firebaseFirestore: FirebaseFirestore,                          //Firestore Instance
         config: PagingConfig
     ): ProductSearchRepository = ProductSearchRepositoryImpl(
         db = firebaseFirestore,
@@ -144,9 +144,9 @@ object AppModule {
 
     @Provides
     fun provideShoppingCartRepository(
-        firebaseDatabase: FirebaseDatabase,
-        firebaseFirestore: FirebaseFirestore,
-        auth: FirebaseAuth
+        firebaseDatabase: FirebaseDatabase,                             //Database Instance
+        firebaseFirestore: FirebaseFirestore,                           //Firestore Instance
+        auth: FirebaseAuth                                              //Authentication Instance
     ): ShoppingCartRepository = ShoppingCartRepositoryImpl(
         firebaseDatabase = firebaseDatabase,
         firebaseFirestore = firebaseFirestore,
@@ -154,8 +154,8 @@ object AppModule {
     )
     @Provides
     fun provideOrderDetailsRepository(
-        firebaseFirestore: FirebaseFirestore,
-        auth: FirebaseAuth
+        firebaseFirestore: FirebaseFirestore,                            //Firestore Instance
+        auth: FirebaseAuth                                               //Authentication Instance
     ): ProductsOrderRepository = ProductsOrderRepositoryImpl(
         db = firebaseFirestore,
         auth = auth

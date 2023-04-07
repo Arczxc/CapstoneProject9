@@ -1,5 +1,6 @@
 package com.example.capstoneproject9.domain.repository
 
+import com.example.capstoneproject9.domain.model.Data
 import kotlinx.coroutines.flow.Flow
 import com.example.capstoneproject9.domain.model.Response
 import com.example.capstoneproject9.domain.model.ShoppingCartItem
@@ -17,5 +18,6 @@ interface ShoppingCartRepository {
 
     suspend fun decrementQuantity(itemId: String): DecrementQuantityResponse
 
-    suspend fun addOrderInFirestore(items: ShoppingCartItems): AddOrderResponse
+    suspend fun addOrderInFirestore(items: ShoppingCartItems, reference: String): AddOrderResponse
+
 }

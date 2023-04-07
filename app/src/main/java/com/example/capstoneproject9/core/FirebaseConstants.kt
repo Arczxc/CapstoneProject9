@@ -27,6 +27,7 @@ object FirebaseConstants {
     const val ID = "id"
     const val DATE_OF_SUBMISSION = "dateOfSubmission"
     const val TOTAL = "total"
+    const val REFERENCE = "referenceNumber"
 
     //Cloud Storage Folders
     const val THUMBS = "thumbs"
