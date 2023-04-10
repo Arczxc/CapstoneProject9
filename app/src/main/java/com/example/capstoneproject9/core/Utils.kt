@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.paging.LoadState
 import com.example.capstoneproject9.R
+import com.example.capstoneproject9.core.AppConstants.CONTACT_SUPPORT
 import com.example.capstoneproject9.core.AppConstants.FAVORITES
 import com.example.capstoneproject9.core.AppConstants.HOME
 import com.example.capstoneproject9.core.AppConstants.ORDERS
@@ -36,6 +37,7 @@ class Utils {
             Item(Icons.Default.List, ORDERS),
             Item(Icons.Default.Favorite, FAVORITES),
             Item(Icons.Default.Person, PROFILE),
+            Item(Icons.Default.Call, CONTACT_SUPPORT ),
             Item(Icons.Default.ExitToApp, SIGN_OUT)
         )
 

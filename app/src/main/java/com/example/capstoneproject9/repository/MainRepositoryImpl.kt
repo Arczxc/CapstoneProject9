@@ -18,19 +18,18 @@ import com.example.capstoneproject9.core.AppConstants.NO_VALUE
 import com.example.capstoneproject9.core.FirebaseConstants.BANNERS
 import com.example.capstoneproject9.core.FirebaseConstants.BRANDS
 import com.example.capstoneproject9.core.FirebaseConstants.DATE_OF_SUBMISSION
+import com.example.capstoneproject9.core.FirebaseConstants.FAQ
 import com.example.capstoneproject9.core.FirebaseConstants.FAVORITES
+import com.example.capstoneproject9.core.FirebaseConstants.NUMBER
 import com.example.capstoneproject9.core.FirebaseConstants.ORDERS
 import com.example.capstoneproject9.core.FirebaseConstants.PAGE_SIZE
 import com.example.capstoneproject9.core.FirebaseConstants.POPULAR
 import com.example.capstoneproject9.core.FirebaseConstants.PRODUCTS
 import com.example.capstoneproject9.core.FirebaseConstants.SHOPPING_CARTS
 import com.example.capstoneproject9.core.FirebaseConstants.USERS
-import com.example.capstoneproject9.domain.model.Banner
-import com.example.capstoneproject9.domain.model.Brand
-import com.example.capstoneproject9.domain.model.Order
+import com.example.capstoneproject9.domain.model.*
 import com.example.capstoneproject9.domain.model.Response.Failure
 import com.example.capstoneproject9.domain.model.Response.Success
-import com.example.capstoneproject9.domain.model.User
 import com.example.capstoneproject9.domain.repository.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -51,6 +50,7 @@ class MainRepositoryImpl @Inject constructor(
     )
     private val uidRef = firebaseDatabase.getReference(SHOPPING_CARTS).child(user.uid)
     private val ordersRef = firebaseFirestore.collection(USERS).document(user.uid).collection(ORDERS)
+    private val faqRef = firebaseFirestore.collection(FAQ)
 
     override suspend fun getBannersFromRealtimeDatabase(): BannersResponse {
         return try {
@@ -96,6 +96,16 @@ class MainRepositoryImpl @Inject constructor(
             val orders = queryOrdersByDateOfSubmission.get().await().toObjects(Order::class.java)
             Success(orders)
         } catch (e: Exception) {
+            Failure(e)
+        }
+    }
+
+    override suspend fun getFaqFromFirestore(): FAQResponse {
+        return try {
+            val faqS = faqRef.orderBy(NUMBER, DESCENDING)
+            val faq = faqS.get().await().toObjects(Faq::class.java)
+            Success(faq)
+        } catch (e: Exception){
             Failure(e)
         }
     }

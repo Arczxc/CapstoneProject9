@@ -9,6 +9,8 @@ typealias Products = List<Product>
 typealias Brands = List<Brand>
 typealias BrandsResponse = Response<Brands>
 typealias Orders = List<Order>
+typealias FAQ = List<Faq>
+typealias FAQResponse = Response<FAQ>
 typealias OrdersResponse = Response<Orders>
 typealias SignOutResponse = Response<Boolean>
 
@@ -22,6 +24,8 @@ interface MainRepository {
     suspend fun getBrandsFromRealtimeDatabase(): BrandsResponse
 
     suspend fun getOrdersFromFirestore(): OrdersResponse
+
+    suspend fun getFaqFromFirestore(): FAQResponse
 
     fun getFavoriteProductsFromFirestore(uid: String): Flow<ProductPagingData>
 

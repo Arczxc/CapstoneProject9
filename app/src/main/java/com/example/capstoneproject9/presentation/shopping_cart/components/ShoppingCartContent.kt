@@ -100,9 +100,9 @@ fun ShoppingCartContent(
                             val link = async {
                                 viewModel.getLink(price)
                             }
-                            val reference = link.await()
-                            println(reference)
-                            viewModel.addOrder(items, reference)
+                            val paymongo = link.await()
+                            println(paymongo)
+                            viewModel.addOrder(items, paymongo)
                         }
                         /*val link = scope.launch {
                             val price = viewModel.numberOfItemsInShoppingCart.toInt()

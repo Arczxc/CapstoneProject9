@@ -58,9 +58,9 @@ class ShoppingCartViewModel @Inject constructor(
         decrementQuantityResponse = repo.decrementQuantity(itemId)
     }
 
-    fun addOrder(items: ShoppingCartItems, reference: String) = viewModelScope.launch {
+    fun addOrder(items: ShoppingCartItems, paymongo: Data) = viewModelScope.launch {
         addOrderResponse = Loading
-        addOrderResponse = repo.addOrderInFirestore(items, reference)
+        addOrderResponse = repo.addOrderInFirestore(items, paymongo)
     }
 
 
@@ -70,7 +70,7 @@ class ShoppingCartViewModel @Inject constructor(
         .build()
     private val dataJsonAdapter = moshi.adapter(Data::class.java)
 
-    suspend fun getLink(price: Int): String{
+    suspend fun getLink(price: Int): Data{
         val mediaType = "application/json".toMediaTypeOrNull()
         val body = RequestBody.create(mediaType, "{\"data\":{\"attributes\":{\"amount\":$price,\"description\":\"checkoutURL\"}}}")
         val request = Request.Builder()
@@ -84,7 +84,8 @@ class ShoppingCartViewModel @Inject constructor(
 
         val data = dataJsonAdapter.fromJson(response.body!!.source())
 
-        return data!!.data.attributes.reference_number
+        return data!!
+        //data!!.data.attributes.reference_number
     }
 
    /* fun creatLink(price: Int) = viewModelScope.launch(Dispatchers.IO) {

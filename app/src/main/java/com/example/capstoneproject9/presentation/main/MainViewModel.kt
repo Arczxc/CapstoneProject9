@@ -27,6 +27,8 @@ class MainViewModel @Inject constructor(
         private set
     var ordersResponse by mutableStateOf<OrdersResponse>(Loading)
         private set
+    var faqResponse by mutableStateOf<FAQResponse>(Loading)
+        private set
     var shoppingCartSizeResponse by mutableStateOf<Response<Long>>(Loading)
         private set
     var signOutResponse by mutableStateOf<SignOutResponse>(Success(false))
@@ -38,6 +40,7 @@ class MainViewModel @Inject constructor(
         getBanners()
         getBrands()
         getOrders()
+        getFAQ()
     }
 
     private fun getBanners() = viewModelScope.launch {
@@ -52,6 +55,10 @@ class MainViewModel @Inject constructor(
 
     private fun getOrders() = viewModelScope.launch {
         ordersResponse = repo.getOrdersFromFirestore()
+    }
+
+    private fun getFAQ() = viewModelScope.launch {
+        faqResponse = repo.getFaqFromFirestore()
     }
 
     fun getFavoriteProducts() = repo.getFavoriteProductsFromFirestore(user.uid).cachedIn(viewModelScope)

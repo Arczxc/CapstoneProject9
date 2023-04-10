@@ -23,6 +23,7 @@ object AppConstants {
     const val FAVORITES = "Favorites"
     const val PROFILE = "Profile"
     const val SIGN_OUT = "Sign-out"
+    const val CONTACT_SUPPORT = "Contact Support"
 
     //Screens
     const val AUTH_SCREEN = "Authentication"

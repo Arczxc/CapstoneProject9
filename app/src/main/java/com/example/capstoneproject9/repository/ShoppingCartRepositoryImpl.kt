@@ -80,10 +80,10 @@ class ShoppingCartRepositoryImpl(
         }
     }
 
-    override suspend fun addOrderInFirestore(items: ShoppingCartItems, reference: String): AddOrderResponse {
+    override suspend fun addOrderInFirestore(items: ShoppingCartItems, paymongo: Data): AddOrderResponse {
         return try {
             val orderId = productsOrdersRef.document().id
-            addOrderInFirestore(orderId, items, reference)
+            addOrderInFirestore(orderId, items, paymongo)               // paymongo will return payment information
             addProductsOrderInFirestore(orderId, items)
             emptyShoppingCartInFirestore()
             deleteShoppingCartInRealtimeDatabase()
@@ -96,8 +96,11 @@ class ShoppingCartRepositoryImpl(
     private suspend fun addOrderInFirestore(
         orderId: String,
         items: ShoppingCartItems,
-        reference: String
-    ) = productsOrdersRef.document(orderId).set(mapOf(REFERENCE to reference, ITEMS to items)).await()
+        paymongo: Data
+    ) = productsOrdersRef.document(orderId).set(mapOf(
+        REFERENCE to paymongo.data.attributes.checkout_url,
+        ITEMS to items
+    )).await()
 
    /* private suspend fun addReference(
         orderId: String,

@@ -6,6 +6,7 @@ object FirebaseConstants {
     const val BRANDS = "brands"                                               //const val BRANDS = "brands"
     const val SHOPPING_CARTS = "shoppingCarts"
     const val USERS = "users"
+    const val FAQ = "faq"
     const val PRODUCTS = "products"
     const val ORDERS = "orders"
     const val PRODUCTS_ORDER = "productsOrder"
@@ -28,6 +29,8 @@ object FirebaseConstants {
     const val DATE_OF_SUBMISSION = "dateOfSubmission"
     const val TOTAL = "total"
     const val REFERENCE = "referenceNumber"
+
+    const val NUMBER = "number"
 
     //Cloud Storage Folders
     const val THUMBS = "thumbs"
