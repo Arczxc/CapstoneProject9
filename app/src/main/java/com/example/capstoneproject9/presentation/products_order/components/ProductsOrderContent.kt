@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.capstoneproject9.components.HyperlinkText
 import com.example.capstoneproject9.components.Price
 import com.example.capstoneproject9.components.ShortDivider
 import com.example.capstoneproject9.components.cards.OrderItemCard
@@ -27,7 +28,9 @@ fun ProductsOrderContent(
 ) {
     LaunchedEffect(Unit) {
         viewModel.getOrderShoppingCartItems(orderId)
+        viewModel.getPaymentInfo(orderId)
     }
+
     ProductsOrder { items ->
         Box(
             modifier = Modifier
@@ -49,7 +52,44 @@ fun ProductsOrderContent(
                         )
                     }
                 }
-                ShortDivider()
+                PaymentInfo{info->
+                     ShortDivider()
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 16.dp,
+                            end = 16.dp,
+                            top = 16.dp
+                        )
+                ) {
+                    Text(
+                        text = info.paymentStatus.toString(),
+                        fontSize = 19.sp
+                    )
+                    Spacer(
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    Price(
+                        price = calculateShoppingCartTotal(items).toString(),
+                        fontSize = 19.sp
+                    )
+                }
+                    Column(modifier = Modifier.fillMaxHeight()) {
+                        Text(
+                            text = info.checkOutUrl.toString(),
+                            fontSize = 19.sp
+                        )
+
+                        Text(
+                            text = info.referenceNumber.toString(),
+                            fontSize = 19.sp
+                        )
+                        HyperlinkText(fullText = "check mo tong url nato saka tong wala lang to", linkText = listOf("url", "wala lang to"), hyperlinks = listOf(info.checkOutUrl.toString(), "https://www.google.com/"))
+                    }
+                }
+               /* ShortDivider()
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -70,7 +110,7 @@ fun ProductsOrderContent(
                         price = calculateShoppingCartTotal(items).toString(),
                         fontSize = 19.sp
                     )
-                }
+                }*/
             }
         }
     }

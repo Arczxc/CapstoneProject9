@@ -25,6 +25,10 @@ import com.example.capstoneproject9.core.AppConstants.SIGN_UP_REQUEST
 import com.example.capstoneproject9.core.FirebaseConstants.PAGE_SIZE
 import com.example.capstoneproject9.data.repository.*
 import com.example.capstoneproject9.domain.repository.*
+import com.example.capstoneproject9.repository.TicketingRepositoryImpl
+import com.example.capstoneproject9.repository.UploadImageRepositoryImpl
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import javax.inject.Named
 
 @Module
@@ -36,6 +40,8 @@ object AppModule {
     @Provides
     fun provideFirebaseDatabase() = Firebase.database           //Firebase Database Instance
 
+    @Provides
+    fun provideFirebaseStorage() = Firebase.storage
 
     @Provides
     fun provideFirebaseFirestore() = Firebase.firestore         //Firebase Firestore Instance
@@ -159,6 +165,26 @@ object AppModule {
     ): ProductsOrderRepository = ProductsOrderRepositoryImpl(
         db = firebaseFirestore,
         auth = auth
+    )
+
+    @Provides                                                           // Will provide Ticketing Repository
+    fun provideTicketingRepository(
+        firebaseFirestore: FirebaseFirestore,                           //Firestore Instance
+        auth: FirebaseAuth                                              //Authentication Instance
+    ): TicketingRepository = TicketingRepositoryImpl(
+        firebaseFirestore = firebaseFirestore,
+        auth = auth
+    )
+
+    @Provides
+    fun provideUploadImageRepository(
+        firebaseFirestore: FirebaseFirestore,
+        firebaseStorage: FirebaseStorage,
+        auth: FirebaseAuth
+    ):UploadImageRepository = UploadImageRepositoryImpl(
+        storage =  firebaseStorage,                                       //Firebase Storage Instance
+        db = firebaseFirestore,                                           //Firebase Firestore Instance
+        auth = auth                                                       //Firebase Authentication Instance
     )
 
     @Provides

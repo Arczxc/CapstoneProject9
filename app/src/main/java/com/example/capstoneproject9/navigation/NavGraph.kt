@@ -12,12 +12,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.example.capstoneproject9.core.AppConstants.NO_VALUE
 import com.example.capstoneproject9.core.AppConstants.ORDER_ID
+import com.example.capstoneproject9.core.AppConstants.PAYMENT_ID
 import com.example.capstoneproject9.core.AppConstants.PRODUCT_BRAND
 import com.example.capstoneproject9.core.AppConstants.PRODUCT_ID
+import com.example.capstoneproject9.core.AppConstants.TRACKING_ID
 import com.example.capstoneproject9.navigation.Screen.*
 import com.example.capstoneproject9.presentation.SharedViewModel
 import com.example.capstoneproject9.presentation.auth.AuthScreen
@@ -27,6 +30,12 @@ import com.example.capstoneproject9.presentation.product_details.ProductDetailsS
 import com.example.capstoneproject9.presentation.product_search.ProductSearchScreen
 import com.example.capstoneproject9.presentation.products_order.ProductsOrderScreen
 import com.example.capstoneproject9.presentation.shopping_cart.ShoppingCartScreen
+import com.example.capstoneproject9.presentation.submit_ticket.SubmitTicketScreen
+import com.example.capstoneproject9.presentation.my_ticket.MyTicketScreen
+import com.example.capstoneproject9.presentation.open_3d_screen.Open3dScreen
+import com.example.capstoneproject9.presentation.products_order_payment.ProductOrderPaymentScreen
+import com.example.capstoneproject9.presentation.products_order_tracking.ProductOrderTrackingScreen
+import com.example.capstoneproject9.presentation.upload_image.UploadImageScreen
 import com.example.capstoneproject9.presentation.thank_you.ThankYouScreen
 
 @Composable
@@ -46,6 +55,9 @@ fun NavGraph(
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ) {
+
+
+
         composable(
             route = AuthScreen.route
         ) {
@@ -55,9 +67,22 @@ fun NavGraph(
                 }
             )
         }
+
+
+
+        val uri = "https://ccwebsite121100.000webhostapp.com"
+        //val uri2 = "cuddly"
         composable(
-            route = MainScreen.route
+            route = MainScreen.route,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "https://ccwebsite121100.000webhostapp.com/{id}"
+
+                },
+            ),
+
         ) {
+
             MainScreen(
                 navigateToProductSearchScreen = {
                     direction.navigateToProductSearchScreen()
@@ -76,9 +101,18 @@ fun NavGraph(
                 },
                 navigateToAuthScreen = {
                     direction.navigateToAuthScreen()
+                },
+                navigateToSubmitTicketScreen = {
+                    direction.navigateToSubmitTicketScreen()
+                },
+                navigateToMyTicketScreen = {
+                    direction.navigateToMyTicketScreen()
                 }
             )
         }
+
+
+
         composable(
             route = ProductSearchScreen.route
         ) {
@@ -91,6 +125,9 @@ fun NavGraph(
                 }
             )
         }
+
+
+
         composable(
             route = ShoppingCartScreen.route
         ) {
@@ -104,6 +141,9 @@ fun NavGraph(
                 //sharedViewModel    practice might delete later
             )
         }
+
+
+
         composable(
             route = "${ProductsOrderScreen.route}/{$ORDER_ID}",
             arguments = listOf(
@@ -115,17 +155,70 @@ fun NavGraph(
             val orderId = backStackEntry.arguments?.getString(ORDER_ID) ?: NO_VALUE
             ProductsOrderScreen(
                 orderId = orderId,
-                navigateBack = {
-                    direction.navigateBack()
-                },
                 navigateToProductSearchScreen = {
                     direction.navigateToProductSearchScreen()
                 },
                 navigateToShoppingCartScreen = {
                     direction.navigateToShoppingCartScreen()
-                }
+                },
+                navigateBack = {
+                    direction.navigateBack()
+                },
             )
         }
+
+
+
+        composable(
+            route = "${ProductOrderPaymentScreen.route}/{$PAYMENT_ID}",
+            arguments = listOf(
+                navArgument(PAYMENT_ID){
+                    type = NavType.StringType
+                }
+            )
+        ){backStackEntry ->
+            val paymentId = backStackEntry.arguments?.getString(PAYMENT_ID) ?: NO_VALUE
+            ProductOrderPaymentScreen(
+                paymentId = paymentId,
+                navigateToProductSearchScreen = {
+                    direction.navigateToProductSearchScreen()
+                },
+                navigateToShoppingCartScreen = {
+                    direction.navigateToShoppingCartScreen()
+                },
+                navigateBack = {
+                    direction.navigateBack()
+                },
+            )
+        }
+
+
+
+        composable(
+            route = "${ProductOrderTrackingScreen.route}/{$TRACKING_ID}",
+            arguments = listOf(
+                navArgument(TRACKING_ID){
+                    type = NavType.StringType
+                }
+            )
+        ){backStackEntry ->
+            val trackingId = backStackEntry.arguments?.getString(TRACKING_ID) ?: NO_VALUE
+            ProductOrderTrackingScreen(
+                trackingId = trackingId,
+                navigateToProductSearchScreen = {
+                    direction.navigateToProductSearchScreen()
+                },
+                navigateToShoppingCartScreen = {
+                    direction.navigateToShoppingCartScreen()
+                },
+                navigateBack = {
+                    direction.navigateBack()
+                },
+            )
+        }
+
+
+
         composable(
             route = ThankYouScreen.route
         ) {
@@ -134,6 +227,31 @@ fun NavGraph(
             }
             //ThankYouScreen()                //sharedViewModel    practice might delete later
         }
+
+
+
+        composable(
+            route = Open3dScreen.route
+        ){
+            Open3dScreen{
+
+            }
+        }
+
+
+
+        composable(
+            route = UploadImageScreen.route
+        ){
+            UploadImageScreen(
+                navigateBack = {
+                    direction.navigateBack()
+                },
+            )
+        }
+
+
+
         composable(
             route = "${BrandProductsScreen.route}/{$PRODUCT_BRAND}",
             arguments = listOf(
@@ -157,8 +275,17 @@ fun NavGraph(
                 navigateBack = {
                     direction.navigateBack()
                 },
+                navigateTo3dScreen = {
+                    direction.navigateTo3dScreen()
+                },
+                navigateToUploadScreen = {
+                    direction.navigateToUploadImageScreen()
+                }
             )
         }
+
+
+
         composable(
             route = "${ProductDetailsScreen.route}/{$PRODUCT_ID}",
             arguments = listOf(
@@ -181,5 +308,33 @@ fun NavGraph(
                 }
             )
         }
+
+
+
+        composable(
+            route = SubmitTicketScreen.route
+        ){
+            SubmitTicketScreen(
+                navigateBack = {
+                    direction.navigateBack()
+                }
+            )
+        }
+
+
+
+        composable(
+            route = MyTicketScreen.route
+        ){
+            MyTicketScreen(
+                navigateBack = {
+                    direction.navigateBack()
+                }
+            )
+        }
     }
+
+
+
+    // will create submit and my ticket screen composable here
 }

@@ -22,6 +22,7 @@ open class ShoppingCartActionsImpl(
     val uidRef = firebaseDatabase.getReference(SHOPPING_CARTS).child(uid)
     val shoppingCartRef = firebaseFirestore.collection(USERS).document(uid).collection(SHOPPING_CART)
 
+
     override suspend fun incrementShoppingCartQuantityInRealtimeDatabase() {
         uidRef.setValue(ServerValue.increment(1)).await()
     }

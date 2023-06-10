@@ -33,7 +33,13 @@ object AppConstants {
     const val BRAND_PRODUCTS_SCREEN = "Brand Products"
     const val PRODUCT_DETAILS_SCREEN = "Product Details"
     const val PRODUCTS_ORDER_SCREEN = "Products Order"
+    const val PRODUCTS_ORDER_PAYMENT_SCREEN = "Product Payment"
+    const val PRODUCTS_ORDER_TRACKING_SCREEN = "Product Tracking"
     const val THANK_YOU_SCREEN = "Thank You"
+    const val OPEN_3D_SCREEN = "Open 3D"
+    const val MY_TICKET_SCREEN = "My Ticket"
+    const val SUBMIT_TICKET_SCREEN = "Submit Ticket"
+    const val UPLOAD_IMAGE_SCREEN = "Upload Image"
 
     //Titles
     const val BRANDS_TITLE = "Categories:"                                   //
@@ -53,6 +59,8 @@ object AppConstants {
     //Arguments
     const val PRODUCT_BRAND = "productBrand"
     const val ORDER_ID = "orderId"
+    const val PAYMENT_ID = "paymentId"
+    const val TRACKING_ID = "trackingId"
     const val PRODUCT_ID = "productId"
     const val LINK = "link"
 

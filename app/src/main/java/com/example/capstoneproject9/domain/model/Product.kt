@@ -15,6 +15,7 @@ data class Product (
     val popular: Boolean? = null,
     val price: Int? = null,
     val reviews: Int? = null,                                      // code of mine
+    val stack: Int? = null,
     val thumb: String? = null
 
 )

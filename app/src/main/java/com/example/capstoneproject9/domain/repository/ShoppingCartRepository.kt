@@ -18,6 +18,6 @@ interface ShoppingCartRepository {
 
     suspend fun decrementQuantity(itemId: String): DecrementQuantityResponse
 
-    suspend fun addOrderInFirestore(items: ShoppingCartItems, paymongo: Data): AddOrderResponse            // paymongo will return payment
+    suspend fun addOrderInFirestore(items: ShoppingCartItems, paymongo: Data, address:String): AddOrderResponse            // paymongo will return payment
 
 }

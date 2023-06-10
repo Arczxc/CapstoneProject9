@@ -14,10 +14,7 @@ import com.example.capstoneproject9.components.DrawerTopBar
 import com.example.capstoneproject9.core.Utils.Companion.items
 import com.example.capstoneproject9.presentation.main.components.SignOut
 import com.example.capstoneproject9.presentation.main.components.drawer.DrawerContent
-import com.example.capstoneproject9.presentation.main.components.drawer.items.ItemFavorites
-import com.example.capstoneproject9.presentation.main.components.drawer.items.ItemHome
-import com.example.capstoneproject9.presentation.main.components.drawer.items.ItemOrders
-import com.example.capstoneproject9.presentation.main.components.drawer.items.ItemProfile
+import com.example.capstoneproject9.presentation.main.components.drawer.items.*
 
 @Composable
 @ExperimentalMaterial3Api
@@ -29,7 +26,9 @@ fun MainScreen(
     navigateToProductDetailsScreen: (productId: String) -> Unit,
     navigateToBrandProductsScreen: (productBrand: String) -> Unit,
     navigateToProductsOrderScreen: (orderId: String) -> Unit,
-    navigateToAuthScreen: () -> Unit
+    navigateToAuthScreen: () -> Unit,
+    navigateToSubmitTicketScreen: () -> Unit,
+    navigateToMyTicketScreen: () -> Unit
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
@@ -58,7 +57,9 @@ fun MainScreen(
                 },
                 content = { padding ->
                     Box(
-                        modifier = Modifier.fillMaxSize().padding(padding)
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(padding)
                     ) {
                         when (viewModel.selectedItem) {
                             items[0] -> ItemHome(
@@ -72,7 +73,12 @@ fun MainScreen(
                                 navigateToProductDetailsScreen = navigateToProductDetailsScreen
                             )
                             items[3] -> ItemProfile()
-                            items[4] -> viewModel.signOut()
+
+                            items[4] -> ItemFAQ(
+                                navigateToMyTicketScreen = navigateToMyTicketScreen,
+                                navigateToSubmitTicketScreen = navigateToSubmitTicketScreen
+                            )
+                            items[5] -> viewModel.signOut()
                         }
                     }
                 }

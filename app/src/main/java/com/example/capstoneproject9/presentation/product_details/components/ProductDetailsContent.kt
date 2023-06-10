@@ -15,6 +15,7 @@ import com.example.capstoneproject9.components.Price
 import com.example.capstoneproject9.components.ShortDivider
 import com.example.capstoneproject9.components.icons.FavoriteBorderIcon
 import com.example.capstoneproject9.components.icons.FavoriteIcon
+import com.example.capstoneproject9.components.layouts.AddToCartButton
 import com.example.capstoneproject9.core.AppConstants.ADD_TO_CART
 import com.example.capstoneproject9.core.AppConstants.NO_VALUE
 import com.example.capstoneproject9.domain.model.toShoppingCartItem
@@ -91,12 +92,20 @@ fun ProductDetailsContent(
                     }
                 }
             }
-            LargeButton(
+           /* LargeButton(
                 text = ADD_TO_CART,
                 onClick = {
                     productDetailsViewModel.addProductToShoppingCart(product.toShoppingCartItem())
-                }
+                },
+            )*/
+            AddToCartButton(
+                text = ADD_TO_CART,
+                onClick = {
+                    productDetailsViewModel.addProductToShoppingCart(product.toShoppingCartItem())
+                },
+                stack = product.stack!!.toInt()
             )
+
         }
     }
 

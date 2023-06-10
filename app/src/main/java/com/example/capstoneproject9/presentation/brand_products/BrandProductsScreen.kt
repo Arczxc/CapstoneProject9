@@ -16,6 +16,8 @@ fun BrandProductsScreen(
     navigateToShoppingCartScreen: () -> Unit,
     navigateToProductDetailsScreen: (productId: String) -> Unit,
     navigateBack: () -> Unit,
+    navigateTo3dScreen: () -> Unit,
+    navigateToUploadScreen: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -30,7 +32,9 @@ fun BrandProductsScreen(
             BrandProductsContent(
                 padding = padding,
                 productBrand = productBrand,
-                navigateToProductDetailsScreen = navigateToProductDetailsScreen
+                navigateToProductDetailsScreen = navigateToProductDetailsScreen,
+                navigateTo3dScreen = navigateTo3dScreen,
+                navigateToUploadScreen = navigateToUploadScreen
             )
         }
     )

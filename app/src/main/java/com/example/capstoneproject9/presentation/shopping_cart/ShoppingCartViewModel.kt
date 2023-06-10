@@ -1,12 +1,10 @@
 package com.example.capstoneproject9.presentation.shopping_cart
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.capstoneproject9.core.AppConstants.TAG
 import com.example.capstoneproject9.domain.model.Data
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,11 +16,6 @@ import com.example.capstoneproject9.domain.repository.ShoppingCartItemsResponse
 import com.example.capstoneproject9.domain.repository.ShoppingCartRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import javax.inject.Inject
@@ -58,9 +51,9 @@ class ShoppingCartViewModel @Inject constructor(
         decrementQuantityResponse = repo.decrementQuantity(itemId)
     }
 
-    fun addOrder(items: ShoppingCartItems, paymongo: Data) = viewModelScope.launch {
+    fun addOrder(items: ShoppingCartItems, paymongo: Data, address: String) = viewModelScope.launch {
         addOrderResponse = Loading
-        addOrderResponse = repo.addOrderInFirestore(items, paymongo)
+        addOrderResponse = repo.addOrderInFirestore(items, paymongo, address)
     }
 
 

@@ -68,6 +68,7 @@ class AuthRepositoryImpl @Inject constructor(
     private suspend fun createUserInFirestore() {
         auth.currentUser?.apply {
             val user = toUser()
+            //EMAIL will display in firestore
             db.collection(USERS).document(uid).set(user).await()
         }
     }

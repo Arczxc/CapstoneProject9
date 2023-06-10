@@ -68,18 +68,23 @@ fun MainContent(url: String) {
 fun MyContent(url: String){
 
     // Declare a string that contains a url
-    val url = "https://pm.link/marcisoven/idXYdqZ"
+    val url = url
 
 
     // Adding a WebView inside AndroidView
     // with layout as full screen
     AndroidView(factory = {
+
         WebView(it).apply {
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
+
             webViewClient = WebViewClient()
+
+            settings.javaScriptEnabled = true
+
             loadUrl(url)
         }
     }, update = {

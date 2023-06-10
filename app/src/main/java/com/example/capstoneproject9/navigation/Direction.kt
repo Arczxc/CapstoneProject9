@@ -27,6 +27,14 @@ class Direction(
         navController.navigate(ThankYouScreen.route)
     }
 
+    val navigateTo3dScreen: () -> Unit = {
+        navController.navigate(Open3dScreen.route)
+    }
+
+    val navigateToUploadImageScreen : () -> Unit = {
+        navController.navigate(UploadImageScreen.route)
+    }
+
     val navigateBackToMainScreen: () -> Unit = {
         navController.navigate(MainScreen.route) {
             popUpTo(MainScreen.route) {
@@ -35,11 +43,27 @@ class Direction(
         }
     }
 
+    val navigateToMyTicketScreen: () -> Unit = {
+        navController.navigate(MyTicketScreen.route)
+    }
+
+    val navigateToSubmitTicketScreen: () -> Unit = {
+        navController.navigate(SubmitTicketScreen.route)
+    }
+
     val navigateToBrandProductsScreen: (String) -> Unit = { productBrand ->
         navController.navigate("${BrandProductsScreen.route}/$productBrand")
     }
 
     val navigateToProductsOrderScreen: (String) -> Unit = { orderId ->
+        navController.navigate("${ProductsOrderScreen.route}/$orderId")
+    }
+
+    val navigateToProductsOrderPaymentScreen: (String) -> Unit = { orderId ->
+        navController.navigate("${ProductsOrderScreen.route}/$orderId")
+    }
+
+    val navigateToProductsOrderTrackingScreen: (String) -> Unit = { orderId ->
         navController.navigate("${ProductsOrderScreen.route}/$orderId")
     }
 

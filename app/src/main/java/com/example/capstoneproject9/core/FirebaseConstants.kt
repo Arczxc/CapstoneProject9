@@ -5,12 +5,30 @@ object FirebaseConstants {
     const val BANNERS = "banners"
     const val BRANDS = "brands"                                               //const val BRANDS = "brands"
     const val SHOPPING_CARTS = "shoppingCarts"
+
+
+    //ALL PRIMARY COLLECTION
     const val USERS = "users"
+    const val ALL_PRODUCT_ORDER = "allProductOrder"
     const val FAQ = "faq"
     const val PRODUCTS = "products"
+
+
+
+    //collection inside USERS
     const val ORDERS = "orders"
     const val PRODUCTS_ORDER = "productsOrder"
     const val SHOPPING_CART = "shoppingCart"
+    const val SUBMITTED_TICKET = "submittedTicket"
+
+
+    //Collection and Document inside productsOrder
+    const val TRACKING_DETAILS = "trackingDetails"
+    const val PAYMENT_DETAILS  = "paymentDetails"
+
+
+    const val TRACKING_STATUS = "trackingStatus"
+
 
     //Firebase Fields
     const val CREATED_AT = "createdAt"
@@ -28,13 +46,30 @@ object FirebaseConstants {
     const val ID = "id"
     const val DATE_OF_SUBMISSION = "dateOfSubmission"
     const val TOTAL = "total"
-    const val REFERENCE = "referenceNumber"
 
+
+    //PAYMONGO REFERENCE
+    const val ADDRESS = "address"
+    const val REFERENCE = "referenceNumber"
+    const val CHECK_OUT_URL = "checkOutUrl"
+    const val PAYMENT_STATUS = "paymentStatus"
+
+
+    //TICKETING REFERENCE
+    const val SUBJECT = "subject"
+    const val PROBLEM = "problem"
     const val NUMBER = "number"
 
     //Cloud Storage Folders
     const val THUMBS = "thumbs"
     const val IMAGES = "images"
+    const val CUSTOMIZE_ORDER = "customizeOrder"
+
+    //CUSTOMIZE ORDER REFERENCE
+    const val ALL_IMAGES = "image/*"
+    const val OPEN_GALLERY = "Open Gallery"
+    const val IMAGE_SUCCESSFULLY_ADDED_MESSAGE = "Image successfully added."
+    const val DISPLAY_IT_MESSAGE = "Display it?"
 
     //Paging Limit
     const val PAGE_SIZE = 8L
