@@ -47,6 +47,10 @@ class Direction(
         navController.navigate(MyTicketScreen.route)
     }
 
+    val navigateToEditProfile: () -> Unit = {
+        navController.navigate(EditProfileScreen.route)
+    }
+
     val navigateToSubmitTicketScreen: () -> Unit = {
         navController.navigate(SubmitTicketScreen.route)
     }
@@ -59,12 +63,12 @@ class Direction(
         navController.navigate("${ProductsOrderScreen.route}/$orderId")
     }
 
-    val navigateToProductsOrderPaymentScreen: (String) -> Unit = { orderId ->
-        navController.navigate("${ProductsOrderScreen.route}/$orderId")
+    val navigateToProductsOrderPaymentScreen: (String) -> Unit = { paymentId ->
+        navController.navigate("${ProductsOrderPaymentScreen.route}/$paymentId")
     }
 
-    val navigateToProductsOrderTrackingScreen: (String) -> Unit = { orderId ->
-        navController.navigate("${ProductsOrderScreen.route}/$orderId")
+    val navigateToProductsOrderTrackingScreen: (String) -> Unit = { trackingId ->
+        navController.navigate("${ProductsOrderTrackingScreen.route}/$trackingId")
     }
 
     val navigateToProductDetailsScreen: (String) -> Unit = { productId ->

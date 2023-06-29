@@ -4,27 +4,26 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import com.example.capstoneproject9.components.AppTopBar
+import com.example.capstoneproject9.presentation.products_order_tracking.components.ProductTrackingTopAppBar
 import com.example.capstoneproject9.presentation.products_order_tracking.components.ProductsOrderTrackingContent
 
 @Composable
-@ExperimentalMaterial3Api
+@OptIn(ExperimentalMaterial3Api::class)
 fun ProductOrderTrackingScreen(
     trackingId: String,
-    navigateToProductSearchScreen: () -> Unit,
-    navigateToShoppingCartScreen: () -> Unit,
     navigateBack: () -> Unit
 ){
     Scaffold(
         topBar = {
-            AppTopBar(
-                title = trackingId,
-                navigateBack = navigateBack,
-                onSearchIconClick = navigateToProductSearchScreen,
-                onShoppingCartIconClick = navigateToShoppingCartScreen
+            ProductTrackingTopAppBar (
+                navigateBack = navigateBack
             )
         },
         content = {padding ->
-            ProductsOrderTrackingContent(padding = padding)
+            ProductsOrderTrackingContent(
+                padding = padding,
+                trackingId = trackingId
+            )
         }
     )
 }

@@ -2,10 +2,7 @@ package com.example.capstoneproject9.presentation.upload_image.components
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -16,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.capstoneproject9.components.HyperlinkText
 import com.example.capstoneproject9.core.FirebaseConstants.ALL_IMAGES
 import com.example.capstoneproject9.core.FirebaseConstants.OPEN_GALLERY
 import com.example.capstoneproject9.presentation.upload_image.UploadImageViewModel
@@ -36,17 +34,27 @@ fun UploadImageContent(
     }
 
     Box(
-        modifier = Modifier.fillMaxSize().padding(padding),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(padding),
         contentAlignment = Alignment.BottomCenter
     ) {
-        Button(
-            onClick = { galleryLauncher.launch(ALL_IMAGES) }
-        ) {
-            Text(
-                text = OPEN_GALLERY,
-                fontSize = 18.sp
+        Column() {
+            HyperlinkText(
+                fullText = "Create your 3D design here",
+                linkText = listOf("design", "here"),
+                hyperlinks = listOf("unitydl://mylink/", "unitydl://mylink/")
             )
+            Button(
+                onClick = { galleryLauncher.launch(ALL_IMAGES) }
+            ) {
+                Text(
+                    text = OPEN_GALLERY,
+                    fontSize = 18.sp
+                )
+            }
         }
+
     }
 
     AddImageToStorage(

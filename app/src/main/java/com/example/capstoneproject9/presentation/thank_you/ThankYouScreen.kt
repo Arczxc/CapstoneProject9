@@ -30,23 +30,23 @@ fun ThankYouScreen(
     navigateBackToMainScreen: () -> Unit
 ) {
 
-    val thatText =  "Hello"                                         //sharedViewModel.saveLink.value
+    /*val thatText =  "Hello"                                         //sharedViewModel.saveLink.value
     println(thatText)
     if (thatText != null) {
         MainContent(url = thatText)
-        /*Message(
+        *//*Message(
             text = thatText
-        )*/
-    }
-    /*Box(
+        )*//*
+    }*/
+    Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter
     ) {
-       *//* LargeButton(
+        LargeButton(
             text = BACK_TO_HOME,
             onClick = navigateBackToMainScreen
-        )*//*
-    }*/
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

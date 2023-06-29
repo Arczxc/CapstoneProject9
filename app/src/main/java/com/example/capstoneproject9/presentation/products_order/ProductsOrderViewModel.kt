@@ -8,9 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import com.example.capstoneproject9.domain.model.Response.Loading
-import com.example.capstoneproject9.domain.repository.PaymentInfoResponse
-import com.example.capstoneproject9.domain.repository.ProductsOrderRepository
-import com.example.capstoneproject9.domain.repository.ShoppingCartItemsResponse
+import com.example.capstoneproject9.domain.repository.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,4 +27,5 @@ class ProductsOrderViewModel @Inject constructor(
     fun getPaymentInfo(orderId: String) = viewModelScope.launch {
         paymentInfoResponse = repo.getPaymentInfoFromFirestore(orderId)
     }
+
 }

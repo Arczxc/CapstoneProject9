@@ -31,12 +31,13 @@ class UploadImageRepositoryImpl @Inject constructor(
         uid = auth.currentUser?.uid ?: AppConstants.NO_VALUE,
         photoUrl = auth.currentUser?.photoUrl.toString(),
         displayName = auth.currentUser?.displayName ?: AppConstants.NO_VALUE,
-        email = auth.currentUser?.email ?: AppConstants.NO_VALUE
+        email = auth.currentUser?.email ?: AppConstants.NO_VALUE,
     )
 
     val uid = auth.currentUser?.uid ?: AppConstants.NO_VALUE
     private val usersRef = db.collection(USERS)
     private val customizeOrderRef = usersRef.document(uid).collection(CUSTOMIZE_ORDER)
+
 
     override suspend fun addImageToFirebaseStorage(imageUri: Uri): AddImageToStorageResponse {
         return try {

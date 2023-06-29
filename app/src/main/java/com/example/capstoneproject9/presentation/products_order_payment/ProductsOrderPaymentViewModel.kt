@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.capstoneproject9.domain.model.Response.*
-import com.example.capstoneproject9.domain.repository.PaymentDetailsResponse
 import com.example.capstoneproject9.domain.repository.ProductsOrderRepository
+import com.example.capstoneproject9.domain.repository.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,7 +20,8 @@ class ProductsOrderPaymentViewModel @Inject constructor(
         private set
 
 
-    fun getPaymentDetails(orderId: String) = viewModelScope.launch{
-        paymentDetailsResponse = repo.getPaymentDetailsFromFirestore(orderId)
+    fun getPaymentDetails(paymentId: String) = viewModelScope.launch{
+        paymentDetailsResponse = repo.getPaymentDetailsFromFirestore(paymentId)
     }
+
 }

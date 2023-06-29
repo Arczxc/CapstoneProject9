@@ -1,15 +1,16 @@
 package com.example.capstoneproject9.presentation.products_order.components
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.capstoneproject9.components.ProgressBar
 import com.example.capstoneproject9.domain.model.PaymentInfo
 import com.example.capstoneproject9.domain.model.Response.*
-import com.example.capstoneproject9.domain.repository.PaymentInfoResponse
 import com.example.capstoneproject9.presentation.products_order.ProductsOrderViewModel
 
 @Composable
+@ExperimentalMaterial3Api
 fun PaymentInfo(
     viewModel: ProductsOrderViewModel = hiltViewModel(),
     paymentInfoContent: @Composable (items: PaymentInfo) -> Unit

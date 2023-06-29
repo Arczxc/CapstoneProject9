@@ -1,10 +1,12 @@
 package com.example.capstoneproject9.presentation.shopping_cart.components
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -13,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -107,11 +110,66 @@ fun ShoppingCartContent(
                         .fillMaxWidth(),
                     shape = CutCornerShape(8.dp)
                 )
+
+                val showingDialog = remember{ mutableStateOf(false) }
+                if (showingDialog.value) {
+                    AlertDialog(
+                        onDismissRequest = {
+                            showingDialog.value = false
+                        },
+                        text = {
+                           Text(text = "Are you sure you want to confirm your order?")
+                        },
+                        title = {
+                           Text(text = "Confirm Order")
+                        },
+                        confirmButton = {
+                           Text(
+                               text = "Ok",
+                               modifier = Modifier
+                                   .padding(16.dp)
+                                   .clickable(
+                                       onClick = {
+                                           scope.launch {
+                                               val price =
+                                                   viewModel.numberOfItemsInShoppingCart.toInt()
+                                               //viewModel.addOrder(items)            // tatanggalin ko
+                                               val link = async {
+                                                   viewModel.getLink(price)
+                                               }
+                                               val paymongo = link.await()
+                                               println(paymongo)
+                                               viewModel.addOrder(items, paymongo, state.value)
+                                           }
+
+                                           navigateToThankYouScreen()
+
+                                       }
+                                   )
+                           )
+                        },
+                        dismissButton = {
+                           Text(
+                               text = "cancel",
+                               modifier = Modifier
+                                   .padding(16.dp)
+                                   .clickable(
+                                       onClick = {
+                                           showingDialog.value = false
+                                       }
+                                   )
+                           )
+                        },
+                        textContentColor = Color.Magenta,
+                        shape = RectangleShape
+                    )
+                }
+
                 LargeButton(
                     text = SEND_ORDER,
                     onClick = {
-
-                        scope.launch{
+                        showingDialog.value = true
+                       /* scope.launch{
                             val price = viewModel.numberOfItemsInShoppingCart.toInt()
                             //viewModel.addOrder(items)            // tatanggalin ko
                             val link = async {
@@ -121,7 +179,7 @@ fun ShoppingCartContent(
                             println(paymongo)
                             viewModel.addOrder(items, paymongo, state.value)
                         }
-                        /*val link = scope.launch {
+                        *//*val link = scope.launch {
                             val price = viewModel.numberOfItemsInShoppingCart.toInt()
                             //viewModel.addOrder(items)            // tatanggalin ko
                             val link = async {
@@ -129,10 +187,10 @@ fun ShoppingCartContent(
                             }
                             val links = link.await()
                             //println(links)
-                        }*/
+                        }*//*
 
                         //println(link.toString())
-                        navigateToThankYouScreen()
+                        navigateToThankYouScreen()*/
                     }
                 )
             }

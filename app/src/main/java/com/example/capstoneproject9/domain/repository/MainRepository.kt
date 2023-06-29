@@ -15,6 +15,8 @@ typealias FAQ = List<Faq>
 typealias FAQResponse = Response<FAQ>
 typealias OrdersResponse = Response<Orders>
 typealias SignOutResponse = Response<Boolean>
+typealias ProfileInfoResponse = Response<ProfileInfo>
+
 
 interface MainRepository {
     val user: User
@@ -32,6 +34,8 @@ interface MainRepository {
     fun getFavoriteProductsFromFirestore(uid: String): Flow<ProductPagingData>
 
     fun getShoppingCartSizeFromRealtimeDatabase(): Flow<Response<Long>>
+
+    suspend fun getProfileInfoInFirestore(): ProfileInfoResponse
 
     suspend fun signOut(): SignOutResponse
 }

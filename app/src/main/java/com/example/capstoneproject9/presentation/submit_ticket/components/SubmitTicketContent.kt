@@ -1,17 +1,25 @@
 package com.example.capstoneproject9.presentation.submit_ticket.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.capstoneproject9.presentation.submit_ticket.SubmitTicketViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 @Composable
 @ExperimentalMaterial3Api
 fun SubmitTicketContent(
     viewModel: SubmitTicketViewModel = hiltViewModel(),
+    navigateToThankYouScreen: () -> Unit,
     padding: PaddingValues
 ){
 
@@ -72,9 +80,51 @@ fun SubmitTicketContent(
             Spacer(
                 modifier = Modifier.padding(15.dp)
             )
+            val showingDialog = remember{ mutableStateOf(false) }
+            if (showingDialog.value) {
+                AlertDialog(
+                    onDismissRequest = {
+                        showingDialog.value = false
+                    },
+                    text = {
+                        Text(text = "Are you sure you want to submit your ticket?")
+                    },
+                    title = {
+                        Text(text = "Submit Ticket")
+                    },
+                    confirmButton = {
+                        Text(
+                            text = "Ok",
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .clickable(
+                                    onClick = {
+
+                                        viewModel.submitTicket(selectedOptionText ,state.value)
+                                        navigateToThankYouScreen()
+                                    }
+                                )
+                        )
+                    },
+                    dismissButton = {
+                        Text(
+                            text = "cancel",
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .clickable(
+                                    onClick = {
+                                        showingDialog.value = false
+                                    }
+                                )
+                        )
+                    },
+                    textContentColor = Color.Magenta,
+                    shape = RectangleShape
+                )
+            }
 
             Button(onClick = {
-                viewModel.submitTicket(selectedOptionText ,state.value)
+                showingDialog.value = true
             }) {
                 Text(text = "SUBMIT TICKET")
             }

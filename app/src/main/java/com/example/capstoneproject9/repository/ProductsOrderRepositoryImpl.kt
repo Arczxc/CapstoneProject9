@@ -15,7 +15,7 @@ import com.example.capstoneproject9.domain.model.Response.Success
 import com.example.capstoneproject9.domain.model.ShoppingCartItems
 import com.example.capstoneproject9.domain.model.TrackingDetails
 import com.example.capstoneproject9.domain.repository.*
-import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.Query
 
 class ProductsOrderRepositoryImpl(
     db: FirebaseFirestore,
@@ -23,6 +23,8 @@ class ProductsOrderRepositoryImpl(
 ): ProductsOrderRepository {
     private val uid = auth.currentUser?.uid?: NO_VALUE
     private val productsOrdersRef = db.collection(USERS).document(uid).collection(PRODUCTS_ORDER)
+    private val trackingRef = db.collection(USERS).document(uid).collection(TRACKING_DETAILS)
+
 
     override suspend fun getOrderShoppingCartItemsFromFirestore(                                               // will get shopping cart items in an array
         orderId: String
@@ -49,7 +51,7 @@ class ProductsOrderRepositoryImpl(
 
     override suspend fun getTrackingDetailsFromFirestore(orderId: String): TrackingDetailsResponse {
         return try{
-            val trackingRef = productsOrdersRef.document(orderId).collection(TRACKING_DETAILS).document(orderId)
+            val trackingRef = trackingRef.document(orderId)                                                     //trackingRef = productsOrdersRef.document(orderId).collection(TRACKING_DETAILS).document(orderId)
             val items = trackingRef.get().await().toObject(TrackingDetails::class.java)
             Success(items)
         } catch (e: Exception){

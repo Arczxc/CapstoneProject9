@@ -10,9 +10,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import com.example.capstoneproject9.core.AppConstants.SIGN_IN_REQUEST
 import com.example.capstoneproject9.core.AppConstants.SIGN_UP_REQUEST
+import com.example.capstoneproject9.core.FirebaseConstants.CONTACT_NUMBER
 import com.example.capstoneproject9.core.FirebaseConstants.CREATED_AT
 import com.example.capstoneproject9.core.FirebaseConstants.DISPLAY_NAME
 import com.example.capstoneproject9.core.FirebaseConstants.EMAIL
+import com.example.capstoneproject9.core.FirebaseConstants.FULL_ADDRESS
 import com.example.capstoneproject9.core.FirebaseConstants.PHOTO_URL
 import com.example.capstoneproject9.core.FirebaseConstants.USERS
 import com.example.capstoneproject9.domain.model.Response.Failure
@@ -78,5 +80,5 @@ fun FirebaseUser.toUser() = mapOf(
     CREATED_AT to serverTimestamp(),
     DISPLAY_NAME to displayName,
     EMAIL to email,
-    PHOTO_URL to photoUrl?.toString()
+    PHOTO_URL to photoUrl?.toString(),
 )

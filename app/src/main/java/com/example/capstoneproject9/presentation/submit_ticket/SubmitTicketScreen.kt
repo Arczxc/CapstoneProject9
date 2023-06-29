@@ -10,6 +10,7 @@ import com.example.capstoneproject9.presentation.submit_ticket.components.Submit
 @ExperimentalMaterial3Api
 fun SubmitTicketScreen(
     navigateBack: () -> Unit,
+    navigateToThankYouScreen: () -> Unit
 ){
     Scaffold(
         topBar = {
@@ -19,7 +20,8 @@ fun SubmitTicketScreen(
         },
         content = { padding ->
             SubmitTicketContent(
-                padding = padding
+                padding = padding,
+                navigateToThankYouScreen = navigateToThankYouScreen
             )
         },
     )

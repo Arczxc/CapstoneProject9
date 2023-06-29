@@ -1,7 +1,7 @@
 package com.example.capstoneproject9.domain.model
 
 data class ShoppingCartItems(
-    val items: List<ShoppingCartItem>? = null,
+    val items: List<ShoppingCartItem>? = null
 )
 
 

@@ -25,8 +25,11 @@ import com.example.capstoneproject9.core.AppConstants.SIGN_UP_REQUEST
 import com.example.capstoneproject9.core.FirebaseConstants.PAGE_SIZE
 import com.example.capstoneproject9.data.repository.*
 import com.example.capstoneproject9.domain.repository.*
+import com.example.capstoneproject9.repository.LocationsRepositoryImpl
+import com.example.capstoneproject9.repository.ProfileRepositoryImpl
 import com.example.capstoneproject9.repository.TicketingRepositoryImpl
 import com.example.capstoneproject9.repository.UploadImageRepositoryImpl
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import javax.inject.Named
@@ -41,10 +44,14 @@ object AppModule {
     fun provideFirebaseDatabase() = Firebase.database           //Firebase Database Instance
 
     @Provides
-    fun provideFirebaseStorage() = Firebase.storage
+    fun provideFirebaseStorage() = Firebase.storage             //Firebase Storage Instance
 
     @Provides
     fun provideFirebaseFirestore() = Firebase.firestore         //Firebase Firestore Instance
+
+
+   /* @Provides
+    fun provideLocationsRef() = Firebase.firestore.collection(LOCATIONS)*/
 
     @Provides
     fun provideOneTapClient(
@@ -185,6 +192,26 @@ object AppModule {
         storage =  firebaseStorage,                                       //Firebase Storage Instance
         db = firebaseFirestore,                                           //Firebase Firestore Instance
         auth = auth                                                       //Firebase Authentication Instance
+    )
+
+
+    @Provides
+    fun provideProfileRepository(
+        firebaseFirestore: FirebaseFirestore,
+        auth: FirebaseAuth
+    ): ProfileRepository = ProfileRepositoryImpl(
+        db = firebaseFirestore,
+        auth = auth
+    )
+
+
+    @Provides
+    fun provideLocationsRepository(
+        firebaseFirestore: FirebaseFirestore,                           //Firestore Instance
+        auth: FirebaseAuth
+    ): LocationsRepository = LocationsRepositoryImpl(
+        firebaseFirestore = firebaseFirestore,
+        auth = auth
     )
 
     @Provides

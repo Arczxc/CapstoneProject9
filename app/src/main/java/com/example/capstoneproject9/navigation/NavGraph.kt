@@ -25,6 +25,7 @@ import com.example.capstoneproject9.navigation.Screen.*
 import com.example.capstoneproject9.presentation.SharedViewModel
 import com.example.capstoneproject9.presentation.auth.AuthScreen
 import com.example.capstoneproject9.presentation.brand_products.BrandProductsScreen
+import com.example.capstoneproject9.presentation.edit_profile_info.EditProfileScreen
 import com.example.capstoneproject9.presentation.main.MainScreen
 import com.example.capstoneproject9.presentation.product_details.ProductDetailsScreen
 import com.example.capstoneproject9.presentation.product_search.ProductSearchScreen
@@ -107,6 +108,9 @@ fun NavGraph(
                 },
                 navigateToMyTicketScreen = {
                     direction.navigateToMyTicketScreen()
+                },
+                navigateToEditProfileScreen = {
+                    direction.navigateToEditProfile()
                 }
             )
         }
@@ -124,6 +128,13 @@ fun NavGraph(
                     direction.navigateToProductDetailsScreen(productId)
                 }
             )
+        }
+
+
+        composable(
+            route = EditProfileScreen.route
+        ){
+            EditProfileScreen()
         }
 
 
@@ -164,13 +175,19 @@ fun NavGraph(
                 navigateBack = {
                     direction.navigateBack()
                 },
+                navigateToPaymentDetailsScreen = { paymentId ->
+                    direction.navigateToProductsOrderPaymentScreen(paymentId)
+                },
+                navigateToTrackingDetailsScreen = { trackingId ->
+                    direction.navigateToProductsOrderTrackingScreen(trackingId)
+                }
             )
         }
 
 
 
         composable(
-            route = "${ProductOrderPaymentScreen.route}/{$PAYMENT_ID}",
+            route = "${ProductsOrderPaymentScreen.route}/{$PAYMENT_ID}",
             arguments = listOf(
                 navArgument(PAYMENT_ID){
                     type = NavType.StringType
@@ -180,12 +197,6 @@ fun NavGraph(
             val paymentId = backStackEntry.arguments?.getString(PAYMENT_ID) ?: NO_VALUE
             ProductOrderPaymentScreen(
                 paymentId = paymentId,
-                navigateToProductSearchScreen = {
-                    direction.navigateToProductSearchScreen()
-                },
-                navigateToShoppingCartScreen = {
-                    direction.navigateToShoppingCartScreen()
-                },
                 navigateBack = {
                     direction.navigateBack()
                 },
@@ -195,7 +206,7 @@ fun NavGraph(
 
 
         composable(
-            route = "${ProductOrderTrackingScreen.route}/{$TRACKING_ID}",
+            route = "${ProductsOrderTrackingScreen.route}/{$TRACKING_ID}",
             arguments = listOf(
                 navArgument(TRACKING_ID){
                     type = NavType.StringType
@@ -205,12 +216,6 @@ fun NavGraph(
             val trackingId = backStackEntry.arguments?.getString(TRACKING_ID) ?: NO_VALUE
             ProductOrderTrackingScreen(
                 trackingId = trackingId,
-                navigateToProductSearchScreen = {
-                    direction.navigateToProductSearchScreen()
-                },
-                navigateToShoppingCartScreen = {
-                    direction.navigateToShoppingCartScreen()
-                },
                 navigateBack = {
                     direction.navigateBack()
                 },
@@ -317,6 +322,9 @@ fun NavGraph(
             SubmitTicketScreen(
                 navigateBack = {
                     direction.navigateBack()
+                },
+                navigateToThankYouScreen = {
+                    direction.navigateToThankYouScreen()
                 }
             )
         }

@@ -10,6 +10,7 @@ object FirebaseConstants {
     //ALL PRIMARY COLLECTION
     const val USERS = "users"
     const val ALL_PRODUCT_ORDER = "allProductOrder"
+    const val ALL_TICKET = "allTicket"
     const val FAQ = "faq"
     const val PRODUCTS = "products"
 
@@ -20,6 +21,8 @@ object FirebaseConstants {
     const val PRODUCTS_ORDER = "productsOrder"
     const val SHOPPING_CART = "shoppingCart"
     const val SUBMITTED_TICKET = "submittedTicket"
+    const val LOCATION_INFO = "locationInfo"
+    const val ADDRESS_INFO = "addressInfo"
 
 
     //Collection and Document inside productsOrder
@@ -46,6 +49,18 @@ object FirebaseConstants {
     const val ID = "id"
     const val DATE_OF_SUBMISSION = "dateOfSubmission"
     const val TOTAL = "total"
+    const val TICKET_ID = "ticketID"
+
+
+
+    //ADDRESS INFORMATION FIELD
+    const val RECIPIENT_NAME = "recipientName"
+    const val CONTACT_NUMBER = "contactNumber"
+    const val HOUSE_NUMBER = "houseNumber"
+    const val CITY = "city"
+    const val COUNTRY = "country"
+    const val ZIP_CODE = "zipCode"
+    const val FULL_ADDRESS = "fullAddress"
 
 
     //PAYMONGO REFERENCE
@@ -53,7 +68,7 @@ object FirebaseConstants {
     const val REFERENCE = "referenceNumber"
     const val CHECK_OUT_URL = "checkOutUrl"
     const val PAYMENT_STATUS = "paymentStatus"
-
+    const val ORDER_ID = "orderId"
 
     //TICKETING REFERENCE
     const val SUBJECT = "subject"

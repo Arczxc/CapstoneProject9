@@ -15,6 +15,8 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import com.example.capstoneproject9.core.AppConstants.NO_VALUE
+import com.example.capstoneproject9.core.FirebaseConstants
+import com.example.capstoneproject9.core.FirebaseConstants.ADDRESS_INFO
 import com.example.capstoneproject9.core.FirebaseConstants.BANNERS
 import com.example.capstoneproject9.core.FirebaseConstants.BRANDS
 import com.example.capstoneproject9.core.FirebaseConstants.DATE_OF_SUBMISSION
@@ -46,11 +48,12 @@ class MainRepositoryImpl @Inject constructor(
         uid = auth.currentUser?.uid ?: NO_VALUE,
         photoUrl = auth.currentUser?.photoUrl.toString(),
         displayName = auth.currentUser?.displayName ?: NO_VALUE,
-        email = auth.currentUser?.email ?: NO_VALUE
+        email = auth.currentUser?.email ?: NO_VALUE,
     )
     private val uidRef = firebaseDatabase.getReference(SHOPPING_CARTS).child(user.uid)
     private val ordersRef = firebaseFirestore.collection(USERS).document(user.uid).collection(ORDERS)
     private val faqRef = firebaseFirestore.collection(FAQ)
+    private val profileRef = firebaseFirestore.collection(USERS).document(user.uid).collection(ADDRESS_INFO)
 
     override suspend fun getBannersFromRealtimeDatabase(): BannersResponse {
         return try {
@@ -140,6 +143,19 @@ class MainRepositoryImpl @Inject constructor(
             uidRef.removeEventListener(listener)
         }
     }
+
+
+    override suspend fun getProfileInfoInFirestore(): ProfileInfoResponse {
+        return try {
+            val profileInfoRef = profileRef.document("address")
+            val items = profileInfoRef.get().await().toObject(ProfileInfo::class.java)
+            Success(items)
+        } catch (e: Exception) {
+            Failure(e)
+        }
+    }
+
+
 
     override suspend fun signOut(): SignOutResponse {
         return try {

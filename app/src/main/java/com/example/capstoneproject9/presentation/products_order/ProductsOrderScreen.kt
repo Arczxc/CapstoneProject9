@@ -12,7 +12,9 @@ fun ProductsOrderScreen(
     orderId: String,
     navigateToProductSearchScreen: () -> Unit,
     navigateToShoppingCartScreen: () -> Unit,
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    navigateToPaymentDetailsScreen: (paymentId: String) -> Unit,
+    navigateToTrackingDetailsScreen: (trackingId: String) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -26,7 +28,9 @@ fun ProductsOrderScreen(
         content = { padding ->
             ProductsOrderContent(
                 padding = padding,
-                orderId = orderId
+                orderId = orderId,
+                navigateToPaymentDetailsScreen = navigateToPaymentDetailsScreen,
+                navigateToTrackingDetailsScreen = navigateToTrackingDetailsScreen,
             )
         }
     )

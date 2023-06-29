@@ -2,12 +2,14 @@ package com.example.capstoneproject9.repository
 
 import com.example.capstoneproject9.core.AppConstants
 import com.example.capstoneproject9.core.FirebaseConstants
+import com.example.capstoneproject9.core.FirebaseConstants.ALL_TICKET
 import com.example.capstoneproject9.core.FirebaseConstants.DATE_OF_SUBMISSION
 import com.example.capstoneproject9.core.FirebaseConstants.ID
 import com.example.capstoneproject9.core.FirebaseConstants.PROBLEM
 import com.example.capstoneproject9.core.FirebaseConstants.PRODUCTS_ORDER
 import com.example.capstoneproject9.core.FirebaseConstants.SUBJECT
 import com.example.capstoneproject9.core.FirebaseConstants.SUBMITTED_TICKET
+import com.example.capstoneproject9.core.FirebaseConstants.TICKET_ID
 import com.example.capstoneproject9.core.FirebaseConstants.USERS
 import com.example.capstoneproject9.domain.model.Faq
 import com.example.capstoneproject9.domain.model.*
@@ -32,18 +34,20 @@ class TicketingRepositoryImpl(
         uid = auth.currentUser?.uid ?: AppConstants.NO_VALUE,
         photoUrl = auth.currentUser?.photoUrl.toString(),
         displayName = auth.currentUser?.displayName ?: AppConstants.NO_VALUE,
-        email = auth.currentUser?.email ?: AppConstants.NO_VALUE
+        email = auth.currentUser?.email ?: AppConstants.NO_VALUE,
     )
 
     val uid = auth.currentUser?.uid ?: AppConstants.NO_VALUE
     private val usersRef = firebaseFirestore.collection(USERS)
     private val submitTicketRef = usersRef.document(uid).collection(SUBMITTED_TICKET)
     private val submittedTicketRef = firebaseFirestore.collection(USERS).document(user.uid).collection(SUBMITTED_TICKET)
+    private val allTicketRef = firebaseFirestore.collection(ALL_TICKET)
 
     override suspend fun SubmitTicketInFirestore(subject: String , problem: String): SubmitTicketResponse {
         return try {
             val orderId = submitTicketRef.document().id
             SubmittedTicket(orderId, subject, problem)
+            AllTicket(orderId, subject, problem)
             Success(true)
         } catch (e: Exception) {
             Failure(e)
@@ -65,7 +69,19 @@ class TicketingRepositoryImpl(
         Subject: String,
         Problem: String
     ) = submitTicketRef.document(orderId).set(mapOf(
-        ID to orderId,
+        TICKET_ID to orderId,
+        DATE_OF_SUBMISSION to serverTimestamp(),
+        SUBJECT to Subject,
+        PROBLEM to Problem
+    )).await()
+
+    private suspend fun AllTicket(
+        orderId: String,
+        Subject: String,
+        Problem: String
+    ) = allTicketRef.document(orderId).set(mapOf(
+        "user" to user.uid,
+        TICKET_ID to orderId,
         DATE_OF_SUBMISSION to serverTimestamp(),
         SUBJECT to Subject,
         PROBLEM to Problem

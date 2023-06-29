@@ -35,6 +35,7 @@ object AppConstants {
     const val PRODUCTS_ORDER_SCREEN = "Products Order"
     const val PRODUCTS_ORDER_PAYMENT_SCREEN = "Product Payment"
     const val PRODUCTS_ORDER_TRACKING_SCREEN = "Product Tracking"
+    const val EDIT_PROFILE_SCREEN = "Edit Profile"
     const val THANK_YOU_SCREEN = "Thank You"
     const val OPEN_3D_SCREEN = "Open 3D"
     const val MY_TICKET_SCREEN = "My Ticket"
@@ -77,4 +78,14 @@ object AppConstants {
     const val MINUS = "-"
     const val PLUS = "+"
     const val DOT = '.'
+
+
+
+    //Firestore
+    const val LOCATIONS = "locations"
+
+    //Google Maps
+    const val ZOOM = 14.5f
+    const val SNIPPET = "Long click to delete."
+
 }

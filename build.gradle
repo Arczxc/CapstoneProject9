@@ -9,6 +9,8 @@ buildscript {
         nav_version = '2.5.3'
         paging_compose_version = '1.0.0-alpha18'
         play_services_auth_version = '20.4.1'
+        maps_compose_version = '2.11.4'
+        play_services_maps_version = '18.1.0'
     }
     //dependencies {
     //    classpath 'com.google.gms:google-services:4.3.15'

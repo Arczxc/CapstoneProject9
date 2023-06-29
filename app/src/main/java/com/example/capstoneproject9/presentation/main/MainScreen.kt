@@ -15,6 +15,7 @@ import com.example.capstoneproject9.core.Utils.Companion.items
 import com.example.capstoneproject9.presentation.main.components.SignOut
 import com.example.capstoneproject9.presentation.main.components.drawer.DrawerContent
 import com.example.capstoneproject9.presentation.main.components.drawer.items.*
+import com.example.capstoneproject9.presentation.map.MapScreen
 
 @Composable
 @ExperimentalMaterial3Api
@@ -28,7 +29,8 @@ fun MainScreen(
     navigateToProductsOrderScreen: (orderId: String) -> Unit,
     navigateToAuthScreen: () -> Unit,
     navigateToSubmitTicketScreen: () -> Unit,
-    navigateToMyTicketScreen: () -> Unit
+    navigateToMyTicketScreen: () -> Unit,
+    navigateToEditProfileScreen: () -> Unit
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
@@ -72,7 +74,10 @@ fun MainScreen(
                             items[2] -> ItemFavorites(
                                 navigateToProductDetailsScreen = navigateToProductDetailsScreen
                             )
-                            items[3] -> ItemProfile()
+                            items[3] -> ItemProfile(
+                                user = viewModel.user,
+                                navigateToEditProfileScreen = navigateToEditProfileScreen
+                            )
 
                             items[4] -> ItemFAQ(
                                 navigateToMyTicketScreen = navigateToMyTicketScreen,

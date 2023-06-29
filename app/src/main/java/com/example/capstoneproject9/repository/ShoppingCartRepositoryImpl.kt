@@ -19,6 +19,7 @@ import com.example.capstoneproject9.core.FirebaseConstants.EMAIL
 import com.example.capstoneproject9.core.FirebaseConstants.ID
 import com.example.capstoneproject9.core.FirebaseConstants.ITEMS
 import com.example.capstoneproject9.core.FirebaseConstants.ORDERS
+import com.example.capstoneproject9.core.FirebaseConstants.ORDER_ID
 import com.example.capstoneproject9.core.FirebaseConstants.PAYMENT_DETAILS
 import com.example.capstoneproject9.core.FirebaseConstants.PAYMENT_STATUS
 import com.example.capstoneproject9.core.FirebaseConstants.PRODUCTS_ORDER
@@ -51,6 +52,7 @@ class ShoppingCartRepositoryImpl(
     private val allProductRef = firebaseFirestore.collection(ALL_PRODUCT_ORDER)
     private val productsOrdersRef = usersRef.document(uid).collection(PRODUCTS_ORDER)
     private val ordersRef = usersRef.document(uid).collection(ORDERS)
+
 
     val userEmail = auth.currentUser!!.email
     val userName = auth.currentUser!!.displayName
@@ -118,6 +120,7 @@ class ShoppingCartRepositoryImpl(
         REFERENCE to paymongo.data.attributes.reference_number,
         CHECK_OUT_URL to paymongo.data.attributes.checkout_url,
         PAYMENT_STATUS to paymongo.data.attributes.status,
+        ORDER_ID to orderId,
         ITEMS to items
     )).await()
 
@@ -125,7 +128,8 @@ class ShoppingCartRepositoryImpl(
     private suspend fun addTrackingDetailsInFirestore(
         orderId: String,
     ) = productsOrdersRef.document(orderId).collection(TRACKING_DETAILS).document(orderId).set(mapOf(
-        TRACKING_STATUS to "confirmedOrder"
+        TRACKING_STATUS to "confirmedOrder",
+        ORDER_ID to orderId,
     )).await()
 
 
@@ -133,7 +137,8 @@ class ShoppingCartRepositoryImpl(
         orderId: String,
         paymongo: Data
     ) = productsOrdersRef.document(orderId).collection(PAYMENT_DETAILS).document(orderId).set(mapOf(
-        PAYMENT_STATUS to paymongo.data.attributes.status
+        PAYMENT_STATUS to paymongo.data.attributes.status,
+        ORDER_ID to orderId,
     )).await()
 
    /* private suspend fun addReference(
@@ -154,7 +159,8 @@ class ShoppingCartRepositoryImpl(
         orderId: String
     ) = allProductRef.document(orderId).set(mapOf(
         EMAIL to userEmail,
-        ID to orderId
+        ID to orderId,
+        DATE_OF_SUBMISSION to serverTimestamp(),
     )).await()
 
     private suspend fun emptyShoppingCartInFirestore() {

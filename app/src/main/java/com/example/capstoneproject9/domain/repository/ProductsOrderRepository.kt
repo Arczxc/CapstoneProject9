@@ -5,6 +5,7 @@ import com.example.capstoneproject9.domain.model.PaymentInfo
 import com.example.capstoneproject9.domain.model.Response
 import com.example.capstoneproject9.domain.model.TrackingDetails
 
+
 typealias PaymentInfoResponse = Response<PaymentInfo>
 typealias TrackingDetailsResponse = Response<TrackingDetails>
 typealias PaymentDetailsResponse =  Response<PaymentDetails>
