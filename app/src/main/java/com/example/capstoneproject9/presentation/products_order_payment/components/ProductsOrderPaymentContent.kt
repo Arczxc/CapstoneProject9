@@ -28,6 +28,7 @@ fun ProductsOrderPaymentScreen(
                 modifier = Modifier.fillMaxWidth()
             ){
                 Text(text = paymentDetails.paymentStatus!!)
+
             }
         }
     }

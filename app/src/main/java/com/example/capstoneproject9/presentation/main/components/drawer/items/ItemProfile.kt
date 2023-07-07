@@ -28,7 +28,7 @@ fun ItemProfile(
     user: User,
     navigateToEditProfileScreen: () -> Unit
 ) {
-    ProfileInfo{
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -69,32 +69,34 @@ fun ItemProfile(
                         .border(1.dp, Color.Black)
 
                 )
+                ProfileInfo {
+                    Text(
+                        text = it.fullAddress.toString(),
+                        fontSize = 30.sp,
+                        modifier = Modifier
+                            .padding(15.dp)
+                            .border(1.dp, Color.Black)
 
-                Text(
-                    text = it.fullAddress.toString(),
-                    fontSize = 30.sp,
-                    modifier = Modifier
-                        .padding(15.dp)
-                        .border(1.dp, Color.Black)
+                    )
 
-                )
+                    Text(
+                        text = it.contactNumber.toString(),
+                        fontSize = 30.sp,
+                        modifier = Modifier
+                            .padding(15.dp)
+                            .border(1.dp, Color.Black)
+                    )
 
-                Text(
-                    text = it.contactNumber.toString(),
-                    fontSize = 30.sp,
-                    modifier = Modifier
-                        .padding(15.dp)
-                        .border(1.dp, Color.Black)
-                )
+                    Text(
+                        text = it.sampleString.toString(),
+                        fontSize = 30.sp,
+                        modifier = Modifier
+                            .padding(15.dp)
+                            .border(1.dp, Color.Black)
 
-                Text(
-                    text = it.sampleString.toString(),
-                    fontSize = 30.sp,
-                    modifier = Modifier
-                        .padding(15.dp)
-                        .border(1.dp, Color.Black)
+                    )
+                }
 
-                )
 
 
                 Button(onClick = { navigateToEditProfileScreen() }) {
@@ -103,6 +105,6 @@ fun ItemProfile(
             }
 
         }
-    }
+
 
 }

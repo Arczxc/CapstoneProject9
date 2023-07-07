@@ -2,6 +2,7 @@ package com.example.capstoneproject9.data.repository
 
 import android.util.Log
 import com.example.capstoneproject9.core.AppConstants.TAG
+import com.example.capstoneproject9.core.FirebaseConstants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FieldValue.serverTimestamp
@@ -31,6 +32,7 @@ import com.example.capstoneproject9.core.FirebaseConstants.TRACKING_STATUS
 import com.example.capstoneproject9.core.FirebaseConstants.USERS
 import com.example.capstoneproject9.core.Utils.Companion.calculateShoppingCartTotal
 import com.example.capstoneproject9.domain.model.Data
+import com.example.capstoneproject9.domain.model.ProfileInfo
 import com.example.capstoneproject9.domain.model.Response.Failure
 import com.example.capstoneproject9.domain.model.Response.Success
 import com.example.capstoneproject9.domain.model.ShoppingCartItem
@@ -52,9 +54,11 @@ class ShoppingCartRepositoryImpl(
     private val allProductRef = firebaseFirestore.collection(ALL_PRODUCT_ORDER)
     private val productsOrdersRef = usersRef.document(uid).collection(PRODUCTS_ORDER)
     private val ordersRef = usersRef.document(uid).collection(ORDERS)
+    private val profileRef = firebaseFirestore.collection(USERS).document(uid).collection(FirebaseConstants.ADDRESS_INFO)
 
 
     val userEmail = auth.currentUser!!.email
+    val userUID = auth.currentUser!!.uid
     val userName = auth.currentUser!!.displayName
 
     override fun getShoppingCartItemsFromFirestore() = callbackFlow {
@@ -94,10 +98,10 @@ class ShoppingCartRepositoryImpl(
         }
     }
 
-    override suspend fun addOrderInFirestore(items: ShoppingCartItems, paymongo: Data, address: String): AddOrderResponse {         // hardcoded address
+    override suspend fun addOrderInFirestore(items: ShoppingCartItems, paymongo: Data): AddOrderResponse {         // hardcoded address
         return try {
             val orderId = productsOrdersRef.document(paymongo.data.attributes.reference_number).id
-            addOrderInFirestore(orderId, items, paymongo, address)               // paymongo will return payment information
+            addOrderInFirestore(orderId, items, paymongo)               // paymongo will return payment information
             addProductsOrderInFirestore(orderId, items)
             addPaymentDetailsInFirestore(orderId, paymongo)                 // Payment Details
             addTrackingDetailsInFirestore(orderId)                         // Tracking Details
@@ -114,10 +118,8 @@ class ShoppingCartRepositoryImpl(
         orderId: String,
         items: ShoppingCartItems,
         paymongo: Data,
-        address: String
+
     ) = productsOrdersRef.document(orderId).set(mapOf(
-        ADDRESS to  address,                                //userEmail,
-        REFERENCE to paymongo.data.attributes.reference_number,
         CHECK_OUT_URL to paymongo.data.attributes.checkout_url,
         PAYMENT_STATUS to paymongo.data.attributes.status,
         ORDER_ID to orderId,
@@ -158,10 +160,23 @@ class ShoppingCartRepositoryImpl(
     private suspend fun addAllOrderInFirestore(
         orderId: String
     ) = allProductRef.document(orderId).set(mapOf(
+        USERS to userUID,
         EMAIL to userEmail,
         ID to orderId,
         DATE_OF_SUBMISSION to serverTimestamp(),
     )).await()
+
+
+
+    override suspend fun getProfileInfoInFirestore(): ProfileInfoResponse {
+        return try {
+            val profileInfoRef = profileRef.document("address")
+            val items = profileInfoRef.get().await().toObject(ProfileInfo::class.java)
+            Success(items)
+        } catch (e: Exception) {
+            Failure(e)
+        }
+    }
 
     private suspend fun emptyShoppingCartInFirestore() {
         shoppingCartRef.get().await().documents.forEach { snapshot ->

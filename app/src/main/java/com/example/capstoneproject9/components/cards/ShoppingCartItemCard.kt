@@ -7,6 +7,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,6 +42,7 @@ fun ShoppingCartItemCard(
             containerColor = Color.White
         )
     ) {
+
         Row(
             modifier = Modifier.fillMaxWidth().padding(
                 start = 8.dp,
@@ -89,8 +92,15 @@ fun ShoppingCartItemCard(
                     color = Color.DarkGray,
                     text = item.quantity.toString()
                 )
+                val maxLimit = item.stock
+                var enabled = rememberSaveable {
+                    mutableStateOf(true)
+                }
+                if (item.quantity == maxLimit){
+                    enabled.value = false
+                }
                 Text(
-                    modifier = Modifier.padding(8.dp).clickable {
+                    modifier = Modifier.padding(8.dp).clickable(enabled = enabled.value) {
                         item.id?.let { itemId ->
                             incrementQuantity(itemId)
                         }

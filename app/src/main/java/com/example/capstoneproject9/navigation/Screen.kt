@@ -2,6 +2,7 @@ package com.example.capstoneproject9.navigation
 
 import com.example.capstoneproject9.core.AppConstants.AUTH_SCREEN
 import com.example.capstoneproject9.core.AppConstants.BRAND_PRODUCTS_SCREEN
+import com.example.capstoneproject9.core.AppConstants.CUSTOMIZE_PRODUCT_SCREEN
 import com.example.capstoneproject9.core.AppConstants.EDIT_PROFILE_SCREEN
 import com.example.capstoneproject9.core.AppConstants.MAIN_SCREEN
 import com.example.capstoneproject9.core.AppConstants.MY_TICKET_SCREEN
@@ -38,4 +39,6 @@ sealed class Screen(val route: String) {
     object SubmitTicketScreen: Screen(SUBMIT_TICKET_SCREEN)
 
     object UploadImageScreen: Screen(UPLOAD_IMAGE_SCREEN)
+
+    object CustomizeProductScreen: Screen(CUSTOMIZE_PRODUCT_SCREEN)
 }

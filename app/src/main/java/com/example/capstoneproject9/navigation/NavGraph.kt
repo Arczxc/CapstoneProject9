@@ -34,6 +34,7 @@ import com.example.capstoneproject9.presentation.shopping_cart.ShoppingCartScree
 import com.example.capstoneproject9.presentation.submit_ticket.SubmitTicketScreen
 import com.example.capstoneproject9.presentation.my_ticket.MyTicketScreen
 import com.example.capstoneproject9.presentation.open_3d_screen.Open3dScreen
+import com.example.capstoneproject9.presentation.products_customize_order.ProductCustomizeScreen
 import com.example.capstoneproject9.presentation.products_order_payment.ProductOrderPaymentScreen
 import com.example.capstoneproject9.presentation.products_order_tracking.ProductOrderTrackingScreen
 import com.example.capstoneproject9.presentation.upload_image.UploadImageScreen
@@ -111,6 +112,9 @@ fun NavGraph(
                 },
                 navigateToEditProfileScreen = {
                     direction.navigateToEditProfile()
+                },
+                navigateToCustomizeOrderScreen = {
+                    direction.navigateToCustomizeProductScreen()
                 }
             )
         }
@@ -219,6 +223,18 @@ fun NavGraph(
                 navigateBack = {
                     direction.navigateBack()
                 },
+            )
+        }
+
+
+
+        composable(
+            route = CustomizeProductScreen.route
+        ){
+            ProductCustomizeScreen(
+                navigateBack = {
+                    direction.navigateBack()
+                }
             )
         }
 

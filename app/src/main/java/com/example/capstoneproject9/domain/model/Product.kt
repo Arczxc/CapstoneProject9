@@ -25,5 +25,6 @@ fun Product.toShoppingCartItem() = ShoppingCartItem(
     name = name,
     price = price,
     quantity = 1,
-    thumb = thumb
+    thumb = thumb,
+    stock = stack
 )

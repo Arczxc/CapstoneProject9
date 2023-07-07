@@ -10,5 +10,6 @@ data class ShoppingCartItem (
     val name: String? = null,
     val price: Int? = null,
     val quantity: Int? = null,
-    val thumb: String? = null
+    val thumb: String? = null,
+    val stock: Int? = null
 )

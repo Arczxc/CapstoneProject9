@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import com.example.capstoneproject9.domain.model.Response
 import com.example.capstoneproject9.domain.model.Response.Loading
 import com.example.capstoneproject9.domain.model.Response.Success
+import com.example.capstoneproject9.domain.repository.ProfileInfoResponse
 import com.example.capstoneproject9.domain.repository.ShoppingCartItems
 import com.example.capstoneproject9.domain.repository.ShoppingCartItemsResponse
 import com.example.capstoneproject9.domain.repository.ShoppingCartRepository
@@ -31,6 +32,8 @@ class ShoppingCartViewModel @Inject constructor(
     var addOrderResponse by mutableStateOf<Response<Boolean>>(Success(false))
         private set
     var numberOfItemsInShoppingCart by mutableStateOf(0)
+    var addressInfoResponse by mutableStateOf<ProfileInfoResponse>(Loading)
+        private set
     var saveLink by mutableStateOf("hatdog naman")
 
     init {
@@ -51,9 +54,9 @@ class ShoppingCartViewModel @Inject constructor(
         decrementQuantityResponse = repo.decrementQuantity(itemId)
     }
 
-    fun addOrder(items: ShoppingCartItems, paymongo: Data, address: String) = viewModelScope.launch {
+    fun addOrder(items: ShoppingCartItems, paymongo: Data) = viewModelScope.launch {
         addOrderResponse = Loading
-        addOrderResponse = repo.addOrderInFirestore(items, paymongo, address)
+        addOrderResponse = repo.addOrderInFirestore(items, paymongo)
     }
 
 
@@ -80,6 +83,12 @@ class ShoppingCartViewModel @Inject constructor(
         return data!!
         //data!!.data.attributes.reference_number
     }
+
+
+    fun getAddress() = viewModelScope.launch {
+        addressInfoResponse = repo.getProfileInfoInFirestore()
+    }
+
 
    /* fun creatLink(price: Int) = viewModelScope.launch(Dispatchers.IO) {
         val answer1 = async {

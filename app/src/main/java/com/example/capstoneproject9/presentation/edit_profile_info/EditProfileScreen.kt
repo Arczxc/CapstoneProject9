@@ -7,11 +7,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.capstoneproject9.presentation.edit_profile_info.components.EditProfileContent
+import com.example.capstoneproject9.presentation.map.MapScreen
+import com.example.capstoneproject9.presentation.thank_you.MainContent
 
 @Composable
 @ExperimentalMaterial3Api
 fun EditProfileScreen(){
     Box(modifier = Modifier.fillMaxSize()){
-        EditProfileContent()
+        /*EditProfileContent()*/
+        MapScreen()
+        //MainContent(url = "https://www.google.com/maps/@14.4080896,120.946688,13z?entry=ttu")
     }
 }

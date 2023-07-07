@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.paging.LoadState
 import com.example.capstoneproject9.R
 import com.example.capstoneproject9.core.AppConstants.CONTACT_SUPPORT
+import com.example.capstoneproject9.core.AppConstants.CUSTOMIZE_ORDERS
 import com.example.capstoneproject9.core.AppConstants.FAVORITES
 import com.example.capstoneproject9.core.AppConstants.HOME
 import com.example.capstoneproject9.core.AppConstants.ORDERS
@@ -16,6 +17,7 @@ import com.example.capstoneproject9.core.AppConstants.PROFILE
 import com.example.capstoneproject9.core.AppConstants.SIGN_OUT
 import com.example.capstoneproject9.core.AppConstants.TAG
 import com.example.capstoneproject9.core.AppConstants.PNG
+import com.example.capstoneproject9.core.FirebaseConstants.CUSTOMIZE_ORDER
 import com.example.capstoneproject9.core.FirebaseConstants.STORAGE_BASE_URL
 import com.example.capstoneproject9.domain.model.Image
 import com.example.capstoneproject9.domain.model.Item
@@ -35,6 +37,7 @@ class Utils {
         val items = listOf(
             Item(Icons.Default.Home, HOME),
             Item(Icons.Default.List, ORDERS),
+            Item(Icons.Default.Star, CUSTOMIZE_ORDERS),
             Item(Icons.Default.Favorite, FAVORITES),
             Item(Icons.Default.Person, PROFILE),
             Item(Icons.Default.Call, CONTACT_SUPPORT ),

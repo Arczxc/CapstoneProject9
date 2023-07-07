@@ -19,6 +19,7 @@ import com.example.capstoneproject9.core.FirebaseConstants
 import com.example.capstoneproject9.core.FirebaseConstants.ADDRESS_INFO
 import com.example.capstoneproject9.core.FirebaseConstants.BANNERS
 import com.example.capstoneproject9.core.FirebaseConstants.BRANDS
+import com.example.capstoneproject9.core.FirebaseConstants.CUSTOMIZE_ORDER
 import com.example.capstoneproject9.core.FirebaseConstants.DATE_OF_SUBMISSION
 import com.example.capstoneproject9.core.FirebaseConstants.FAQ
 import com.example.capstoneproject9.core.FirebaseConstants.FAVORITES
@@ -52,6 +53,7 @@ class MainRepositoryImpl @Inject constructor(
     )
     private val uidRef = firebaseDatabase.getReference(SHOPPING_CARTS).child(user.uid)
     private val ordersRef = firebaseFirestore.collection(USERS).document(user.uid).collection(ORDERS)
+    private val customizeOrderRef = firebaseFirestore.collection(USERS).document(user.uid).collection(CUSTOMIZE_ORDER)
     private val faqRef = firebaseFirestore.collection(FAQ)
     private val profileRef = firebaseFirestore.collection(USERS).document(user.uid).collection(ADDRESS_INFO)
 
@@ -99,6 +101,17 @@ class MainRepositoryImpl @Inject constructor(
             val orders = queryOrdersByDateOfSubmission.get().await().toObjects(Order::class.java)
             Success(orders)
         } catch (e: Exception) {
+            Failure(e)
+        }
+    }
+
+
+    override suspend fun getCustomizeOrderFromFirestore(): CustomizeOrderResponse {
+        return try{
+            val queryOrdersByDateOfSubmission = customizeOrderRef//.orderBy(DATE_OF_SUBMISSION, DESCENDING)
+            val customizeOrder = queryOrdersByDateOfSubmission.get().await().toObjects(CustomizeOrder::class.java)
+            Success(customizeOrder)
+        } catch (e: Exception){
             Failure(e)
         }
     }

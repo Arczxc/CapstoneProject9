@@ -6,22 +6,21 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
+import com.example.capstoneproject9.R
 import com.example.capstoneproject9.components.LargeButton
 import com.example.capstoneproject9.components.Message
 import com.example.capstoneproject9.components.Price
@@ -42,6 +41,9 @@ fun ShoppingCartContent(
     navigateToThankYouScreen: () -> Unit
     //sharedViewModel: SharedViewModel
 ) {
+    LaunchedEffect(Unit){
+        viewModel.getAddress()
+    }
     val scope = CoroutineScope(Dispatchers.IO)
 
     ShoppingCart { items ->
@@ -100,76 +102,101 @@ fun ShoppingCartContent(
                         fontSize = 19.sp
                     )
                 }
-                val state = remember { mutableStateOf("") }
-                TextField(
-                    value = state.value,
-                    onValueChange = { state.value = it },
-                    textStyle = TextStyle(color = Color.Black),
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth(),
-                    shape = CutCornerShape(8.dp)
-                )
 
-                val showingDialog = remember{ mutableStateOf(false) }
-                if (showingDialog.value) {
-                    AlertDialog(
-                        onDismissRequest = {
-                            showingDialog.value = false
-                        },
-                        text = {
-                           Text(text = "Are you sure you want to confirm your order?")
-                        },
-                        title = {
-                           Text(text = "Confirm Order")
-                        },
-                        confirmButton = {
-                           Text(
-                               text = "Ok",
-                               modifier = Modifier
-                                   .padding(16.dp)
-                                   .clickable(
-                                       onClick = {
-                                           scope.launch {
-                                               val price =
-                                                   viewModel.numberOfItemsInShoppingCart.toInt()
-                                               //viewModel.addOrder(items)            // tatanggalin ko
-                                               val link = async {
-                                                   viewModel.getLink(price)
-                                               }
-                                               val paymongo = link.await()
-                                               println(paymongo)
-                                               viewModel.addOrder(items, paymongo, state.value)
-                                           }
 
-                                           navigateToThankYouScreen()
 
-                                       }
-                                   )
-                           )
-                        },
-                        dismissButton = {
-                           Text(
-                               text = "cancel",
-                               modifier = Modifier
-                                   .padding(16.dp)
-                                   .clickable(
-                                       onClick = {
-                                           showingDialog.value = false
-                                       }
-                                   )
-                           )
-                        },
-                        textContentColor = Color.Magenta,
-                        shape = RectangleShape
-                    )
+                AddressInfo{info->
+                    val showingDialog = remember{ mutableStateOf(false) }
+                    if (showingDialog.value) {
+                        AlertDialog(
+                            onDismissRequest = {
+                                showingDialog.value = false
+                            },
+                            text = {
+                                Text(text = "Are you sure you want to confirm your order?")
+                            },
+                            title = {
+                                Text(text = "Confirm Order")
+                            },
+                            confirmButton = {
+                                Text(
+                                    text = "Ok",
+                                    modifier = Modifier
+                                        .padding(16.dp)
+                                        .clickable(
+                                            onClick = {
+                                                scope.launch {
+                                                    val price =
+                                                        viewModel.numberOfItemsInShoppingCart.toInt()
+                                                    //viewModel.addOrder(items)            // tatanggalin ko
+                                                    val link = async {
+                                                        viewModel.getLink(price)
+                                                    }
+                                                    val paymongo = link.await()
+                                                    println(paymongo)
+                                                    viewModel.addOrder(items, paymongo)
+                                                }
+
+                                                navigateToThankYouScreen()
+
+                                            }
+                                        )
+                                )
+                            },
+                            dismissButton = {
+                                Text(
+                                    text = "cancel",
+                                    modifier = Modifier
+                                        .padding(16.dp)
+                                        .clickable(
+                                            onClick = {
+                                                showingDialog.value = false
+                                            }
+                                        )
+                                )
+                            },
+                            textContentColor = Color.Magenta,
+                            shape = RectangleShape
+                        )
+                    }
+
+
+                    var enabled = rememberSaveable {
+                        mutableStateOf(false)
+                    }
+
+                    if (info.fullAddress != ""){
+                        enabled.value = true
+                    }
+
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorResource(R.color.accent)
+                        ),
+                        enabled = enabled.value,
+                        onClick = {
+                            showingDialog.value = true
+                        }
+                    ) {
+                        Text(
+                            text = SEND_ORDER,
+                            modifier = Modifier.padding(4.dp),
+                            fontSize = 24.sp
+                        )
+                    }
+
                 }
 
-                LargeButton(
+
+                /*LargeButton(
                     text = SEND_ORDER,
                     onClick = {
                         showingDialog.value = true
-                       /* scope.launch{
+                       *//* scope.launch{
                             val price = viewModel.numberOfItemsInShoppingCart.toInt()
                             //viewModel.addOrder(items)            // tatanggalin ko
                             val link = async {
@@ -179,7 +206,7 @@ fun ShoppingCartContent(
                             println(paymongo)
                             viewModel.addOrder(items, paymongo, state.value)
                         }
-                        *//*val link = scope.launch {
+                        *//**//*val link = scope.launch {
                             val price = viewModel.numberOfItemsInShoppingCart.toInt()
                             //viewModel.addOrder(items)            // tatanggalin ko
                             val link = async {
@@ -187,12 +214,12 @@ fun ShoppingCartContent(
                             }
                             val links = link.await()
                             //println(links)
-                        }*//*
+                        }*//**//*
 
                         //println(link.toString())
-                        navigateToThankYouScreen()*/
+                        navigateToThankYouScreen()*//*
                     }
-                )
+                )*/
             }
         }
     }

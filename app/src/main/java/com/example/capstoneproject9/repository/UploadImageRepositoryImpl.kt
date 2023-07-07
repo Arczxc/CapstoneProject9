@@ -4,6 +4,8 @@ import android.net.Uri
 import com.example.capstoneproject9.core.AppConstants
 import com.example.capstoneproject9.core.FirebaseConstants.CREATION_DATE
 import com.example.capstoneproject9.core.FirebaseConstants.CUSTOMIZE_ORDER
+import com.example.capstoneproject9.core.FirebaseConstants.DATE_OF_SUBMISSION
+import com.example.capstoneproject9.core.FirebaseConstants.ID
 import com.example.capstoneproject9.core.FirebaseConstants.PHOTO_URL
 import com.example.capstoneproject9.core.FirebaseConstants.USERS
 import com.example.capstoneproject9.domain.model.Response.*
@@ -52,9 +54,10 @@ class UploadImageRepositoryImpl @Inject constructor(
 
     override suspend fun addImageUrlToFirestore(downloadUrl: Uri): AddImageUrlToFirestoreResponse {
         return try {
-            customizeOrderRef.document().set(mapOf(
+            customizeOrderRef.document("myCustomizeOrder").set(mapOf(
+                ID to uid,
                 PHOTO_URL to downloadUrl,
-                CREATION_DATE to FieldValue.serverTimestamp()
+                DATE_OF_SUBMISSION to FieldValue.serverTimestamp()
             )).await()
             Success(true)
         } catch (e: Exception) {

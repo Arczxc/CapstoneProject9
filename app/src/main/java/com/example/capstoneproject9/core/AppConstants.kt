@@ -20,6 +20,7 @@ object AppConstants {
     //Menu Items
     const val HOME = "Home"
     const val ORDERS = "Orders"
+    const val CUSTOMIZE_ORDERS = "Customize Order"
     const val FAVORITES = "Favorites"
     const val PROFILE = "Profile"
     const val SIGN_OUT = "Sign-out"
@@ -41,6 +42,7 @@ object AppConstants {
     const val MY_TICKET_SCREEN = "My Ticket"
     const val SUBMIT_TICKET_SCREEN = "Submit Ticket"
     const val UPLOAD_IMAGE_SCREEN = "Upload Image"
+    const val CUSTOMIZE_PRODUCT_SCREEN = " Customize Product"
 
     //Titles
     const val BRANDS_TITLE = "Categories:"                                   //
@@ -85,7 +87,7 @@ object AppConstants {
     const val LOCATIONS = "locations"
 
     //Google Maps
-    const val ZOOM = 14.5f
+    const val ZOOM = 10f
     const val SNIPPET = "Long click to delete."
 
 }

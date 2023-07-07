@@ -88,7 +88,7 @@ fun ProductsOrderContent(
                         )
 
                         Text(
-                            text = info.referenceNumber.toString(),
+                            text = info.orderId.toString(),
                             fontSize = 19.sp
                         )
                         HyperlinkText(

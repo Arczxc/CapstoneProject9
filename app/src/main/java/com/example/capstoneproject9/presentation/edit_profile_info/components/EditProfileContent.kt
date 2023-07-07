@@ -2,10 +2,7 @@ package com.example.capstoneproject9.presentation.edit_profile_info.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -22,12 +19,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.capstoneproject9.presentation.edit_profile_info.EditProfileViewModel
 
@@ -43,10 +42,16 @@ fun EditProfileContent(
     var isError by rememberSaveable {
         mutableStateOf(false)
     }
+    var zipCode by rememberSaveable {
+        mutableStateOf("")
+    }
+    val zipCodeLimit = 4
+    var zipError by rememberSaveable{
+        mutableStateOf(false)
+    }
     val address1 = remember { mutableStateOf("") }
     val city = remember { mutableStateOf("") }
     val country = remember { mutableStateOf("") }
-    val zipCode = remember { mutableStateOf("") }
 
     fun validate(text: String){
         isError = text.length > contactNumberLimit
@@ -57,10 +62,15 @@ fun EditProfileContent(
             .fillMaxSize()
             .background(Color.Green)
     ){
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
             TextField(
-                modifier = Modifier,
+                modifier = Modifier.padding(15.dp),
                 value = recipientName.value,
                 onValueChange = { recipientName.value = it },
                 label = { Text(text = "Reciepient Name")},
@@ -82,9 +92,11 @@ fun EditProfileContent(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                 isError = isError,
                 keyboardActions = KeyboardActions { validate(contactNumber)},
-                modifier = Modifier.semantics {
-                    if (isError) error("Number invalid")
-                },
+                modifier = Modifier
+                    .padding(15.dp)
+                    .semantics {
+                        if (isError) error("Number invalid")
+                    },
                 supportingText = {
                     Text(
                         text = "${contactNumber.length} / $contactNumberLimit",
@@ -100,24 +112,27 @@ fun EditProfileContent(
 
 
             TextField(
+                modifier = Modifier
+                    .padding(15.dp),
                 value = address1.value,
                 onValueChange = { address1.value = it },
                 label = { Text(text = "House Number, Street, Baranggay")},
                 singleLine = true,
                 leadingIcon = {
                     Image(imageVector = Icons.Default.LocationOn , contentDescription = null)
-                }
+                },
             )
-
 
             TextField(
                 value =city.value,
                 onValueChange = { city.value = it },
                 label = { Text(text = "City")},
                 singleLine = true,
-                leadingIcon = {
+                modifier = Modifier
+                    .padding(15.dp)
+                /*leadingIcon = {
                     Image(imageVector = Icons.Default.LocationOn , contentDescription = null)
-                }
+                }*/
             )
 
 
@@ -126,25 +141,53 @@ fun EditProfileContent(
                 onValueChange = { country.value = it },
                 label = { Text(text = "Country")},
                 singleLine = true,
-                leadingIcon = {
+                modifier = Modifier
+                    .padding(15.dp)
+                /*leadingIcon = {
                     Image(imageVector = Icons.Default.LocationOn , contentDescription = null)
-                }
+                }*/
             )
 
 
             TextField(
-                value =zipCode.value,
-                onValueChange = { zipCode.value = it },
+                value = zipCode,
+                onValueChange = {
+                    if (it.length <= zipCodeLimit) zipCode = it
+                    validate(zipCode)
+                },
                 label = { Text(text = "Zip")},
                 singleLine = true,
-                leadingIcon = {
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+                keyboardActions = KeyboardActions { validate(zipCode)},
+                modifier = Modifier
+                    .padding(15.dp)
+                    .semantics {
+                        if (zipError) error("Number invalid")
+                    },
+                /*leadingIcon = {
                     Image(imageVector = Icons.Default.LocationOn , contentDescription = null)
-                }
+                }*/
             )
 
+            val buttonEnabled = rememberSaveable {
+                mutableStateOf(false)
+            }
 
-            Button(onClick = {
-                viewModel.saveProfile(recipientName.value, contactNumber, address1.value, city.value  , country.value, zipCode.value)
+            if (
+                recipientName.value != "" &&
+                contactNumber.length == 11 &&
+                zipCode.length == 4 &&
+                address1.value != "" &&
+                city.value != "" &&
+                country.value != "" ){
+                buttonEnabled.value = true
+            }
+
+            Button(
+                enabled = buttonEnabled.value,
+                onClick = {
+                    viewModel.saveProfile(recipientName.value, contactNumber, address1.value, city.value  , country.value, zipCode)
+
             }) {
                 Text(text = "SAVE PROFILE")
             }

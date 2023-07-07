@@ -11,9 +11,12 @@ typealias Products = List<Product>
 typealias Brands = List<Brand>
 typealias BrandsResponse = Response<Brands>
 typealias Orders = List<Order>
+typealias CustomizeOrders = List<CustomizeOrder>
 typealias FAQ = List<Faq>
+
 typealias FAQResponse = Response<FAQ>
 typealias OrdersResponse = Response<Orders>
+typealias CustomizeOrderResponse = Response<CustomizeOrders>
 typealias SignOutResponse = Response<Boolean>
 typealias ProfileInfoResponse = Response<ProfileInfo>
 
@@ -28,6 +31,8 @@ interface MainRepository {
     suspend fun getBrandsFromRealtimeDatabase(): BrandsResponse
 
     suspend fun getOrdersFromFirestore(): OrdersResponse
+
+    suspend fun getCustomizeOrderFromFirestore(): CustomizeOrderResponse
 
     suspend fun getFaqFromFirestore(): FAQResponse
 

@@ -16,6 +16,7 @@ import com.example.capstoneproject9.domain.model.User
 import com.example.capstoneproject9.domain.repository.ProfileInfoResponse
 import com.example.capstoneproject9.domain.repository.ProfileRepository
 import com.example.capstoneproject9.domain.repository.SaveProfileResponse
+import com.example.capstoneproject9.presentation.brand_products.capitalizeFirstChar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -63,11 +64,11 @@ class ProfileRepositoryImpl(
         country: String,
         zipCode: String
     ) = profileRef.document("address").set(mapOf(
-        RECIPIENT_NAME to recipientName,
+        RECIPIENT_NAME to recipientName.capitalizeFirstChar(),
         CONTACT_NUMBER to contactNumber,
-        HOUSE_NUMBER to houseNumber,
-        CITY to city,
-        COUNTRY to country,
+        HOUSE_NUMBER to houseNumber.capitalizeFirstChar(),
+        CITY to city.capitalizeFirstChar(),
+        COUNTRY to country.capitalizeFirstChar(),
         ZIP_CODE to zipCode,
         FULL_ADDRESS to "$houseNumber $city $country $zipCode"
     )).await()

@@ -30,7 +30,8 @@ fun MainScreen(
     navigateToAuthScreen: () -> Unit,
     navigateToSubmitTicketScreen: () -> Unit,
     navigateToMyTicketScreen: () -> Unit,
-    navigateToEditProfileScreen: () -> Unit
+    navigateToEditProfileScreen: () -> Unit,
+    navigateToCustomizeOrderScreen: () -> Unit
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
@@ -71,19 +72,22 @@ fun MainScreen(
                             items[1] -> ItemOrders(
                                 navigateToProductsOrderScreen = navigateToProductsOrderScreen
                             )
-                            items[2] -> ItemFavorites(
+                            items[2] -> ItemCustomizeOrder(
+                                navigateToCustomizeOrderScreen = navigateToCustomizeOrderScreen
+                            )
+                            items[3] -> ItemFavorites(
                                 navigateToProductDetailsScreen = navigateToProductDetailsScreen
                             )
-                            items[3] -> ItemProfile(
+                            items[4] -> ItemProfile(
                                 user = viewModel.user,
                                 navigateToEditProfileScreen = navigateToEditProfileScreen
                             )
 
-                            items[4] -> ItemFAQ(
+                            items[5] -> ItemFAQ(
                                 navigateToMyTicketScreen = navigateToMyTicketScreen,
                                 navigateToSubmitTicketScreen = navigateToSubmitTicketScreen
                             )
-                            items[5] -> viewModel.signOut()
+                            items[6] -> viewModel.signOut()
                         }
                     }
                 }

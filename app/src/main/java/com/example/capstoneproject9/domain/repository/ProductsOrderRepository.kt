@@ -1,14 +1,12 @@
 package com.example.capstoneproject9.domain.repository
 
-import com.example.capstoneproject9.domain.model.PaymentDetails
-import com.example.capstoneproject9.domain.model.PaymentInfo
-import com.example.capstoneproject9.domain.model.Response
-import com.example.capstoneproject9.domain.model.TrackingDetails
+import com.example.capstoneproject9.domain.model.*
 
 
 typealias PaymentInfoResponse = Response<PaymentInfo>
 typealias TrackingDetailsResponse = Response<TrackingDetails>
 typealias PaymentDetailsResponse =  Response<PaymentDetails>
+typealias CustomizeOrderResponses = Response<CustomizeOrder>
 interface ProductsOrderRepository {
     suspend fun getOrderShoppingCartItemsFromFirestore(orderId: String): ShoppingCartItemsResponse
 
@@ -19,4 +17,8 @@ interface ProductsOrderRepository {
 
 
     suspend fun getPaymentDetailsFromFirestore(orderId:String) : PaymentDetailsResponse
+
+    suspend fun getProfileInfoInFirestore(): ProfileInfoResponse
+
+    suspend fun getCustomizeOrder(): CustomizeOrderResponses
 }
