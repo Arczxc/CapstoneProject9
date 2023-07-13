@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import com.example.capstoneproject9.components.Price
 import com.example.capstoneproject9.components.icons.ThumbImage
 import com.example.capstoneproject9.core.AppConstants.NO_VALUE
+import com.example.capstoneproject9.core.AppConstants.PESO
 import com.example.capstoneproject9.core.Utils.Companion.getImageUrl
 import com.example.capstoneproject9.domain.model.Image.ProductThumbImage
 import com.example.capstoneproject9.domain.model.ShoppingCartItem
@@ -60,9 +61,14 @@ fun OrderItemCard(
                         text = name ?: NO_VALUE
                     )
                     Price(
-                        price = "$price x $quantity",
+                        price = "$price",
                         fontSize = 12.sp
                     )
+                    /*val prices = price?.div(100)
+                    Text(
+                        text = "$PESO $prices"
+                    )*/
+                    Text("Qty: $quantity")
                 }
             }
         }

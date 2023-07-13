@@ -126,8 +126,7 @@ fun ShoppingCartContent(
                                         .clickable(
                                             onClick = {
                                                 scope.launch {
-                                                    val price =
-                                                        viewModel.numberOfItemsInShoppingCart.toInt()
+                                                    val price = viewModel.numberOfItemsInShoppingCart.toInt()
                                                     //viewModel.addOrder(items)            // tatanggalin ko
                                                     val link = async {
                                                         viewModel.getLink(price)
@@ -136,9 +135,7 @@ fun ShoppingCartContent(
                                                     println(paymongo)
                                                     viewModel.addOrder(items, paymongo)
                                                 }
-
-                                                navigateToThankYouScreen()
-
+                                                //navigateToThankYouScreen() === That can cause an erro so better to remove
                                             }
                                         )
                                 )

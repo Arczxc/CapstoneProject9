@@ -7,6 +7,9 @@ typealias PaymentInfoResponse = Response<PaymentInfo>
 typealias TrackingDetailsResponse = Response<TrackingDetails>
 typealias PaymentDetailsResponse =  Response<PaymentDetails>
 typealias CustomizeOrderResponses = Response<CustomizeOrder>
+typealias DeleteOrderResponse = Response<Boolean>
+typealias CreateLinkResponse = Response<Boolean>
+typealias RequestRefundResponse = Response<Boolean>
 interface ProductsOrderRepository {
     suspend fun getOrderShoppingCartItemsFromFirestore(orderId: String): ShoppingCartItemsResponse
 
@@ -21,4 +24,10 @@ interface ProductsOrderRepository {
     suspend fun getProfileInfoInFirestore(): ProfileInfoResponse
 
     suspend fun getCustomizeOrder(): CustomizeOrderResponses
+
+    suspend fun deleteOrder(orderId: String): DeleteOrderResponse
+
+    suspend fun createLink(paymongo: Data): CreateLinkResponse          // paymongo will return payment
+
+    suspend fun requestRefund(orderId:String, reason: String): RequestRefundResponse
 }

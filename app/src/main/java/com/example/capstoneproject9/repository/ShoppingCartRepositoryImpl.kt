@@ -101,12 +101,12 @@ class ShoppingCartRepositoryImpl(
     override suspend fun addOrderInFirestore(items: ShoppingCartItems, paymongo: Data): AddOrderResponse {         // hardcoded address
         return try {
             val orderId = productsOrdersRef.document(paymongo.data.attributes.reference_number).id
+            emptyShoppingCartInFirestore()
+            deleteShoppingCartInRealtimeDatabase()
             addOrderInFirestore(orderId, items, paymongo)               // paymongo will return payment information
             addProductsOrderInFirestore(orderId, items)
             addPaymentDetailsInFirestore(orderId, paymongo)                 // Payment Details
             addTrackingDetailsInFirestore(orderId)                         // Tracking Details
-            emptyShoppingCartInFirestore()
-            deleteShoppingCartInRealtimeDatabase()
             addAllOrderInFirestore(orderId)
             Success(true)
         } catch (e: Exception) {
@@ -151,7 +151,7 @@ class ShoppingCartRepositoryImpl(
     private suspend fun addProductsOrderInFirestore(
         orderId: String,
         items: ShoppingCartItems
-    ) = ordersRef.add(mapOf(
+    ) = ordersRef.document(orderId).set(mapOf(
         ID to orderId,
         DATE_OF_SUBMISSION to serverTimestamp(),
         TOTAL to calculateShoppingCartTotal(items)
@@ -164,6 +164,7 @@ class ShoppingCartRepositoryImpl(
         EMAIL to userEmail,
         ID to orderId,
         DATE_OF_SUBMISSION to serverTimestamp(),
+        "status" to "to pay"                             //will add
     )).await()
 
 
@@ -183,6 +184,8 @@ class ShoppingCartRepositoryImpl(
             snapshot.reference.delete().await()
         }
     }
+
+    //Find the bug
 
     private suspend fun deleteShoppingCartInRealtimeDatabase() = uidRef.removeValue().await()
 

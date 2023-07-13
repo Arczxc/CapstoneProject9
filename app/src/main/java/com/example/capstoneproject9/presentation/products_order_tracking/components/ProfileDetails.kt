@@ -7,11 +7,12 @@ import com.example.capstoneproject9.components.ProgressBar
 import com.example.capstoneproject9.domain.model.ProfileInfo
 import com.example.capstoneproject9.domain.model.Response
 import com.example.capstoneproject9.domain.model.Response.*
+import com.example.capstoneproject9.presentation.products_order.ProductsOrderViewModel
 import com.example.capstoneproject9.presentation.products_order_tracking.ProductsOrderTrackingViewModel
 
 @Composable
 fun ProfileDetails(
-    viewModel: ProductsOrderTrackingViewModel = hiltViewModel(),
+    viewModel: ProductsOrderViewModel = hiltViewModel(),
     profileContents: @Composable (profileDetails: ProfileInfo) -> Unit
 ){
     when (val profileResponse = viewModel.profileInfoResponse){

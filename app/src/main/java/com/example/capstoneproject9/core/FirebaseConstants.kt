@@ -10,6 +10,8 @@ object FirebaseConstants {
     //ALL PRIMARY COLLECTION
     const val USERS = "users"
     const val ALL_PRODUCT_ORDER = "allProductOrder"
+    const val ALL_CUSTOMIZE_ORDER = "allCustomizeOrder"
+    const val REQUESTED_REFUND = "requestedRefund"
     const val ALL_TICKET = "allTicket"
     const val FAQ = "faq"
     const val PRODUCTS = "products"
@@ -50,6 +52,8 @@ object FirebaseConstants {
     const val DATE_OF_SUBMISSION = "dateOfSubmission"
     const val TOTAL = "total"
     const val TICKET_ID = "ticketID"
+
+    const val REASON = "reason"
 
 
 

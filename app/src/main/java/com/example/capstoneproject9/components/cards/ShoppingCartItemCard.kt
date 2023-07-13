@@ -35,6 +35,7 @@ fun ShoppingCartItemCard(
 ) {
     Card(
         modifier = Modifier
+            .fillMaxHeight(.4f)
             .fillMaxWidth()
             .padding(8.dp),
         elevation = CardDefaults.cardElevation(5.dp),
@@ -44,10 +45,12 @@ fun ShoppingCartItemCard(
     ) {
 
         Row(
-            modifier = Modifier.fillMaxWidth().padding(
-                start = 8.dp,
-                end = 8.dp
-            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = 8.dp,
+                    end = 8.dp
+                ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             item.apply {
@@ -62,10 +65,15 @@ fun ShoppingCartItemCard(
                     height = 64.dp
                 )
                 Column(
-                    modifier = Modifier.align(Alignment.CenterVertically).padding(start = 8.dp)
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 8.dp)
                 ) {
                     Text(
                         text = name ?: NO_VALUE
+                    )
+                    Text(
+                        text = "Stock: " + stock
                     )
                     Price(
                         price = price.toString(),
@@ -76,11 +84,13 @@ fun ShoppingCartItemCard(
                     modifier = Modifier.weight(1f)
                 )
                 Text(
-                    modifier = Modifier.padding(8.dp).clickable {
-                        item.id?.let { itemId ->
-                            decrementQuantity(itemId)
-                        }
-                    },
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clickable {
+                            item.id?.let { itemId ->
+                                decrementQuantity(itemId)
+                            }
+                        },
                     fontSize = 21.sp,
                     color = Color.LightGray,
                     fontWeight = FontWeight.Bold,
@@ -100,11 +110,13 @@ fun ShoppingCartItemCard(
                     enabled.value = false
                 }
                 Text(
-                    modifier = Modifier.padding(8.dp).clickable(enabled = enabled.value) {
-                        item.id?.let { itemId ->
-                            incrementQuantity(itemId)
-                        }
-                    },
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clickable(enabled = enabled.value) {
+                            item.id?.let { itemId ->
+                                incrementQuantity(itemId)
+                            }
+                        },
                     fontSize = 21.sp,
                     color = colorResource(id = R.color.accent),
                     fontWeight = FontWeight.Bold,

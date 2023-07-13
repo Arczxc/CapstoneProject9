@@ -17,7 +17,7 @@ fun SubmitTicket(
         is Loading -> Unit
         is Success -> Unit
         is Failure -> LaunchedEffect(Unit) {
-            Utils.Companion.print(submitTicketResponse.e)
+            print(submitTicketResponse.e)
         }
     }
 }

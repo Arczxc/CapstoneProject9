@@ -138,7 +138,14 @@ fun NavGraph(
         composable(
             route = EditProfileScreen.route
         ){
-            EditProfileScreen()
+            EditProfileScreen(
+                navigateBack = {
+                    direction.navigateBack()
+                },
+                navigateToThankYouScreen = {
+                    direction.navigateToThankYouScreen()
+                }
+            )
         }
 
 
@@ -184,6 +191,9 @@ fun NavGraph(
                 },
                 navigateToTrackingDetailsScreen = { trackingId ->
                     direction.navigateToProductsOrderTrackingScreen(trackingId)
+                },
+                navigateToThankYouScreen = {
+                    direction.navigateToThankYouScreen()
                 }
             )
         }
@@ -234,6 +244,9 @@ fun NavGraph(
             ProductCustomizeScreen(
                 navigateBack = {
                     direction.navigateBack()
+                },
+                navigateToThankYouScreen = {
+                    direction.navigateToThankYouScreen()
                 }
             )
         }

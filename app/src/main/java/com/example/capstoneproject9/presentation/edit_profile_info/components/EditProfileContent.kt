@@ -33,7 +33,9 @@ import com.example.capstoneproject9.presentation.edit_profile_info.EditProfileVi
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditProfileContent(
-    viewModel: EditProfileViewModel = hiltViewModel()
+    viewModel: EditProfileViewModel = hiltViewModel(),
+    padding: PaddingValues,
+    navigateToThankYouScreen: () -> Unit
 ){
 
     val recipientName = remember { mutableStateOf("") }
@@ -60,7 +62,7 @@ fun EditProfileContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Green)
+            .padding(padding)
     ){
         Column(
             modifier = Modifier
@@ -129,10 +131,10 @@ fun EditProfileContent(
                 label = { Text(text = "City")},
                 singleLine = true,
                 modifier = Modifier
-                    .padding(15.dp)
-                /*leadingIcon = {
+                    .padding(15.dp),
+                leadingIcon = {
                     Image(imageVector = Icons.Default.LocationOn , contentDescription = null)
-                }*/
+                }
             )
 
 
@@ -142,10 +144,10 @@ fun EditProfileContent(
                 label = { Text(text = "Country")},
                 singleLine = true,
                 modifier = Modifier
-                    .padding(15.dp)
-                /*leadingIcon = {
+                    .padding(15.dp),
+                leadingIcon = {
                     Image(imageVector = Icons.Default.LocationOn , contentDescription = null)
-                }*/
+                }
             )
 
 
@@ -164,9 +166,9 @@ fun EditProfileContent(
                     .semantics {
                         if (zipError) error("Number invalid")
                     },
-                /*leadingIcon = {
+                leadingIcon = {
                     Image(imageVector = Icons.Default.LocationOn , contentDescription = null)
-                }*/
+                }
             )
 
             val buttonEnabled = rememberSaveable {
@@ -187,7 +189,7 @@ fun EditProfileContent(
                 enabled = buttonEnabled.value,
                 onClick = {
                     viewModel.saveProfile(recipientName.value, contactNumber, address1.value, city.value  , country.value, zipCode)
-
+                    navigateToThankYouScreen()
             }) {
                 Text(text = "SAVE PROFILE")
             }

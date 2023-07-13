@@ -2,9 +2,11 @@ package com.example.capstoneproject9.repository
 
 import android.net.Uri
 import com.example.capstoneproject9.core.AppConstants
+import com.example.capstoneproject9.core.FirebaseConstants.ALL_CUSTOMIZE_ORDER
 import com.example.capstoneproject9.core.FirebaseConstants.CREATION_DATE
 import com.example.capstoneproject9.core.FirebaseConstants.CUSTOMIZE_ORDER
 import com.example.capstoneproject9.core.FirebaseConstants.DATE_OF_SUBMISSION
+import com.example.capstoneproject9.core.FirebaseConstants.EMAIL
 import com.example.capstoneproject9.core.FirebaseConstants.ID
 import com.example.capstoneproject9.core.FirebaseConstants.PHOTO_URL
 import com.example.capstoneproject9.core.FirebaseConstants.USERS
@@ -37,7 +39,10 @@ class UploadImageRepositoryImpl @Inject constructor(
     )
 
     val uid = auth.currentUser?.uid ?: AppConstants.NO_VALUE
+    val userEmail = auth.currentUser!!.email
+    val userUID = auth.currentUser!!.uid
     private val usersRef = db.collection(USERS)
+    private val allCustomizeOrderRef = db.collection(ALL_CUSTOMIZE_ORDER)
     private val customizeOrderRef = usersRef.document(uid).collection(CUSTOMIZE_ORDER)
 
 
@@ -59,11 +64,21 @@ class UploadImageRepositoryImpl @Inject constructor(
                 PHOTO_URL to downloadUrl,
                 DATE_OF_SUBMISSION to FieldValue.serverTimestamp()
             )).await()
+            addAllCustomizeOrderInFirestore()
             Success(true)
         } catch (e: Exception) {
             Failure(e)
         }
     }
+
+
+    private suspend fun addAllCustomizeOrderInFirestore(
+    ) = allCustomizeOrderRef.document(uid).set(mapOf(
+        EMAIL to userEmail,
+        USERS to userUID,
+        DATE_OF_SUBMISSION to FieldValue.serverTimestamp(),
+    )).await()
+
 
     override suspend fun getImageUrlFromFirestore(): GetImageUrlFromFirestoreResponse {
         return try {

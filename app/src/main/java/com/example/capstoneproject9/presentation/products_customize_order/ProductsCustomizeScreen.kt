@@ -9,7 +9,8 @@ import com.example.capstoneproject9.presentation.products_customize_order.compon
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun ProductCustomizeScreen(
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    navigateToThankYouScreen: () -> Unit,
 ){
     Scaffold(
         topBar = {
@@ -19,7 +20,8 @@ fun ProductCustomizeScreen(
         },
         content = {padding->
             ProductCustomizeContent(
-                padding = padding
+                padding = padding,
+                navigateToThankYouScreen = navigateToThankYouScreen
             )
         }
     )
