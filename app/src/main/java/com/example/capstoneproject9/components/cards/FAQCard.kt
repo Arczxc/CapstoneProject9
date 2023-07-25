@@ -4,6 +4,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -71,6 +72,8 @@ fun FAQCARD1(
 
     Card(
         modifier = Modifier
+            .padding(5.dp)
+            .background(Color.Red)
             .fillMaxWidth()
             .animateContentSize(
                 animationSpec = tween(
@@ -93,6 +96,7 @@ fun FAQCARD1(
             ) {
                 Text(
                     modifier = Modifier
+                        .padding(5.dp)
                         .weight(6f),
                     text = faq.question.toString(),
                     //fontSize = titleFontSize,
@@ -116,6 +120,7 @@ fun FAQCARD1(
             }
             if (expandedState) {
                 Text(
+                    modifier = Modifier.padding(5.dp),
                     text = faq.answer.toString(),
                     //fontSize = descriptionFontSize,
                     //fontWeight = descriptionFontWeight,

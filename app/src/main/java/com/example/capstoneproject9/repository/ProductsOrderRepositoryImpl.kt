@@ -7,6 +7,7 @@ import com.example.capstoneproject9.core.AppConstants.NO_VALUE
 import com.example.capstoneproject9.core.FirebaseConstants
 import com.example.capstoneproject9.core.FirebaseConstants.ORDERS
 import com.example.capstoneproject9.core.FirebaseConstants.ADDRESS_INFO
+import com.example.capstoneproject9.core.FirebaseConstants.ALL_CUSTOMIZE_ORDER
 import com.example.capstoneproject9.core.FirebaseConstants.ALL_PRODUCT_ORDER
 import com.example.capstoneproject9.core.FirebaseConstants.CHECK_OUT_URL
 import com.example.capstoneproject9.core.FirebaseConstants.CUSTOMIZE_ORDER
@@ -40,6 +41,7 @@ class ProductsOrderRepositoryImpl(
     private val orderRef = db.collection(USERS).document(uid).collection(ORDERS)
     private val allProductOrderRef = db.collection(ALL_PRODUCT_ORDER)
     private val customizeRef = db.collection(USERS).document(uid).collection(CUSTOMIZE_ORDER)
+    private val customizeColelction = db.collection(ALL_CUSTOMIZE_ORDER)
     private val trackingRef = db.collection(USERS).document(uid).collection(TRACKING_DETAILS)
     private val profileRef = db.collection(USERS).document(uid).collection(ADDRESS_INFO)
     private val refundRef = db.collection(REQUESTED_REFUND)
@@ -104,9 +106,9 @@ class ProductsOrderRepositoryImpl(
     }
 
 
-    override suspend fun getCustomizeOrder(): CustomizeOrderResponses {
+    override suspend fun getCustomizeOrder(customizeId: String): CustomizeOrderResponses {
         return try{
-            val customizeRef = customizeRef.document("myCustomizeOrder")
+            val customizeRef = customizeRef.document(customizeId)
             val items = customizeRef.get().await().toObject(CustomizeOrder::class.java)
             Success(items)
         } catch (e: Exception){
@@ -148,6 +150,23 @@ class ProductsOrderRepositoryImpl(
         orderId: String
     ) = allProductOrderRef.document(orderId).delete().await()
 
+    override suspend fun deleteCustomizeOrder(customizeId: String): DeleteCustomizeOrder {
+        return try {
+            deleteCustomizeInFirestore(customizeId)
+            deleteCustomizeInUser(customizeId)
+            Success(true)
+        } catch (e: Exception){
+            Failure(e)
+        }
+    }
+
+    private suspend fun deleteCustomizeInFirestore(
+        customizeId: String
+    ) = customizeColelction.document(customizeId).delete().await()
+
+    private suspend fun deleteCustomizeInUser(
+        customizeId: String
+    ) = customizeRef.document(customizeId).delete().await()
 
     override suspend fun createLink(paymongo: Data): CreateLinkResponse {
         return try{
@@ -175,6 +194,24 @@ class ProductsOrderRepositoryImpl(
             Failure(e)
         }
     }
+
+    override suspend fun updatePayment(orderId: String, paymongo: Data): UpdatePaymentResponse {
+        return try {
+            updatePaymentInFirestore(orderId, paymongo)
+            Success(true)
+        } catch (e: Exception){
+            Failure(e)
+        }
+    }
+
+    private suspend fun updatePaymentInFirestore(
+        orderId: String,
+        paymongo: Data
+    ) = productsOrdersRef.document(orderId).update(mapOf(
+        PAYMENT_STATUS to paymongo.data.attributes.status,
+        "sampleDate" to paymongo.data.attributes.status,
+        //SetOptions.merge()
+    )).await()
 
 
     private suspend fun saveRequestedRefund(

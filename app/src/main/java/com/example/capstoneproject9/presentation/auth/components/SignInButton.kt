@@ -24,7 +24,7 @@ fun SignInButton(
         modifier = Modifier.padding(bottom = 48.dp),
         shape = RoundedCornerShape(6.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = colorResource(R.color.primary_dark)
+            containerColor = colorResource(R.color.accent)
         )
     ) {
         Image(

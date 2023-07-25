@@ -10,9 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.capstoneproject9.components.Price
 import com.example.capstoneproject9.components.icons.ThumbImage
 import com.example.capstoneproject9.core.AppConstants.NO_VALUE
@@ -23,11 +26,12 @@ import com.example.capstoneproject9.domain.model.Product
 @Composable
 @ExperimentalMaterial3Api
 fun D3Card(
-
     onClick: () -> Unit
 ) {
     Card(
-        modifier = Modifier.padding(4.dp).width(172.dp),
+        modifier = Modifier
+            .padding(4.dp)
+            .width(172.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(3.dp),
         colors = CardDefaults.cardColors(
@@ -41,35 +45,18 @@ fun D3Card(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    /*val url = getImageUrl(
-                        image = ProductThumbImage,
-                        name =                                                 "id ?: NO_VALUE,"
-                        token =                                                thumb ?: NO_VALUE
-                    )*/
-                    ThumbImage(
-                        url = "url",
-                        width = 128.dp,
-                        height = 128.dp
+                    AsyncImage(
+                        modifier = Modifier
+                            .width(128.dp)
+                            .height(128.dp),
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data("https://firebasestorage.googleapis.com/v0/b/capstone-414d8.appspot.com/o/Unity.png?alt=media&token=2e589ec2-efd9-4613-aa6b-45cb9a4e25e4")
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = null
                     )
                 }
-                Column(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
 
-                        Text(
-                            text = "productName",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp,
-                            color = Color.DarkGray
-                        )
-                        Price(
-                            price = "price.toString()",
-                            fontSize = 16.sp
-                        )
-
-                }
 
         }
     }

@@ -9,10 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,12 +19,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.capstoneproject9.R
 import com.example.capstoneproject9.presentation.edit_profile_info.EditProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -189,8 +188,11 @@ fun EditProfileContent(
                 enabled = buttonEnabled.value,
                 onClick = {
                     viewModel.saveProfile(recipientName.value, contactNumber, address1.value, city.value  , country.value, zipCode)
-                    navigateToThankYouScreen()
-            }) {
+                    navigateToThankYouScreen() },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(R.color.accent)
+                )
+            ) {
                 Text(text = "SAVE PROFILE")
             }
         }

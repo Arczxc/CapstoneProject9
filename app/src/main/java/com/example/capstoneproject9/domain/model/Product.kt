@@ -15,7 +15,7 @@ data class Product (
     val popular: Boolean? = null,
     val price: Int? = null,
     val reviews: Int? = null,                                      // code of mine
-    val stack: Int? = null,
+    val stock: Int? = null,
     val thumb: String? = null
 
 )
@@ -26,5 +26,5 @@ fun Product.toShoppingCartItem() = ShoppingCartItem(
     price = price,
     quantity = 1,
     thumb = thumb,
-    stock = stack
+    stock = stock
 )

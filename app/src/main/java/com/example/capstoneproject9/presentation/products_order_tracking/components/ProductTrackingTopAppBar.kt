@@ -2,6 +2,8 @@ package com.example.capstoneproject9.presentation.products_order_tracking.compon
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.colorResource
+import com.example.capstoneproject9.R
 import com.example.capstoneproject9.components.icons.BackIcon
 
 @ExperimentalMaterial3Api
@@ -19,7 +21,7 @@ fun ProductTrackingTopAppBar(
             )
         },
         colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary
+            containerColor = colorResource(R.color.primary)
         )
     )
 }

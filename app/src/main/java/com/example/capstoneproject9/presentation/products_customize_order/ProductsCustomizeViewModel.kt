@@ -29,15 +29,22 @@ class ProductsCustomizeViewModel @Inject constructor(
         private set
     var createLinkResponse by mutableStateOf<Response<Boolean>>(Success(false))
         private set
+    var deleteCustomizeResponse by mutableStateOf<Response<Boolean>>(Success(false))
+        private set
 
 
-    fun getCustomizeOrder() = viewModelScope.launch {
-        customizeOderResponse = repo.getCustomizeOrder()
+    fun getCustomizeOrder(customizeId: String) = viewModelScope.launch {
+        customizeOderResponse = repo.getCustomizeOrder(customizeId)
     }
 
     fun creatLink(paymongo: Data) = viewModelScope.launch {
         createLinkResponse = Loading
         createLinkResponse = repo.createLink(paymongo)
+    }
+
+    fun deleteCustomize(customizeId: String) = viewModelScope.launch {
+        deleteCustomizeResponse = Loading
+        deleteCustomizeResponse = repo.deleteCustomizeOrder(customizeId)
     }
 
 

@@ -38,7 +38,6 @@ import kotlinx.coroutines.*
 fun ShoppingCartContent(
     viewModel: ShoppingCartViewModel = hiltViewModel(),
     padding: PaddingValues,
-    navigateToThankYouScreen: () -> Unit
     //sharedViewModel: SharedViewModel
 ) {
     LaunchedEffect(Unit){
@@ -125,17 +124,15 @@ fun ShoppingCartContent(
                                         .padding(16.dp)
                                         .clickable(
                                             onClick = {
-                                                scope.launch {
+                                               val job = scope.launch {
                                                     val price = viewModel.numberOfItemsInShoppingCart.toInt()
                                                     //viewModel.addOrder(items)            // tatanggalin ko
                                                     val link = async {
                                                         viewModel.getLink(price)
                                                     }
                                                     val paymongo = link.await()
-                                                    println(paymongo)
                                                     viewModel.addOrder(items, paymongo)
                                                 }
-                                                //navigateToThankYouScreen() === That can cause an erro so better to remove
                                             }
                                         )
                                 )
@@ -162,29 +159,50 @@ fun ShoppingCartContent(
                         mutableStateOf(false)
                     }
 
-                    if (info.fullAddress != ""){
-                        enabled.value = true
+                    if (info.fullAddress != null){
+                        //enabled.value = true
+                        Button(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(R.color.accent)
+                            ),
+                            //enabled = enabled.value,
+                            onClick = {
+                                showingDialog.value = true
+                            }
+                        ) {
+                            Text(
+                                text = SEND_ORDER,
+                                modifier = Modifier.padding(4.dp),
+                                fontSize = 24.sp
+                            )
+                        }
+                    } else {
+                        Button(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(R.color.accent)
+                            ),
+                            //enabled = enabled.value,
+                            onClick = {
+                                //showingDialog.value = true
+                            }
+                        ) {
+                            Text(
+                                text = "Fill address information 1st",
+                                modifier = Modifier.padding(4.dp),
+                                fontSize = 24.sp
+                            )
+                        }
                     }
 
-                    Button(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        shape = RoundedCornerShape(16.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = colorResource(R.color.accent)
-                        ),
-                        enabled = enabled.value,
-                        onClick = {
-                            showingDialog.value = true
-                        }
-                    ) {
-                        Text(
-                            text = SEND_ORDER,
-                            modifier = Modifier.padding(4.dp),
-                            fontSize = 24.sp
-                        )
-                    }
+
 
                 }
 

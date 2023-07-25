@@ -4,16 +4,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.capstoneproject9.presentation.submit_ticket.SubmitTicketViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 @Composable
 @ExperimentalMaterial3Api
@@ -27,7 +25,8 @@ fun SubmitTicketContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(padding),
-            
+            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalAlignment = Alignment.CenterHorizontally
         ){
 
             val options = listOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5")
@@ -40,7 +39,7 @@ fun SubmitTicketContent(
             ) {
                 TextField(
                     // The `menuAnchor` modifier must be passed to the text field for correctness.
-                    modifier = Modifier.menuAnchor(),
+                    modifier = Modifier.menuAnchor().padding(top = 15.dp),
                     readOnly = true,
                     value = selectedOptionText,
                     onValueChange = {},
@@ -64,6 +63,7 @@ fun SubmitTicketContent(
                     }
                 }
             }
+
 
             Spacer(
                 modifier = Modifier.padding(15.dp)
@@ -99,9 +99,13 @@ fun SubmitTicketContent(
                                 .padding(16.dp)
                                 .clickable(
                                     onClick = {
-
-                                        viewModel.submitTicket(selectedOptionText ,state.value)
-                                        navigateToThankYouScreen()
+                                        GlobalScope.launch(Dispatchers.IO) {
+                                            viewModel.submitTicket(selectedOptionText ,state.value)
+                                            delay(3000L)
+                                            withContext(Dispatchers.Main){
+                                                navigateToThankYouScreen()
+                                            }
+                                        }
                                     }
                                 )
                         )

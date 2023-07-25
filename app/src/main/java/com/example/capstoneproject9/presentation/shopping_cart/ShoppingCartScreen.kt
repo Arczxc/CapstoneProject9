@@ -9,20 +9,19 @@ import com.example.capstoneproject9.presentation.shopping_cart.components.Shoppi
 @Composable
 @ExperimentalMaterial3Api
 fun ShoppingCartScreen(
-    navigateBack: () -> Unit,
+    navigateBackToMainScreen: () -> Unit,
     navigateToThankYouScreen: () -> Unit,
     //sharedViewModel: SharedViewModel
 ) {
     Scaffold(
         topBar = {
             ShoppingCartTopBar(
-                navigateBack = navigateBack
+                navigateBackToMainScreen = navigateBackToMainScreen
             )
         },
         content = { padding ->
             ShoppingCartContent(
                 padding = padding,
-                navigateToThankYouScreen = navigateToThankYouScreen,
                 //sharedViewModel = sharedViewModel
             )
         },

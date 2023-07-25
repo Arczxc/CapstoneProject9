@@ -12,7 +12,7 @@ import com.example.capstoneproject9.core.AppConstants.SHOPPING_CART_SCREEN
 @Composable
 @ExperimentalMaterial3Api
 fun ShoppingCartTopBar(
-    navigateBack: () -> Unit
+    navigateBackToMainScreen: () -> Unit
 ) {
     TopAppBar(
         title = {
@@ -23,7 +23,7 @@ fun ShoppingCartTopBar(
         },
         navigationIcon = {
             IconButton(
-                onClick = navigateBack
+                onClick = navigateBackToMainScreen
             ) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,

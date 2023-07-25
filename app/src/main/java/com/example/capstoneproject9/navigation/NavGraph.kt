@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.example.capstoneproject9.core.AppConstants.CUSTOMIZE_ID
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.example.capstoneproject9.core.AppConstants.NO_VALUE
@@ -113,8 +114,8 @@ fun NavGraph(
                 navigateToEditProfileScreen = {
                     direction.navigateToEditProfile()
                 },
-                navigateToCustomizeOrderScreen = {
-                    direction.navigateToCustomizeProductScreen()
+                navigateToCustomizeOrderScreen = { customizeId ->
+                    direction.navigateToCustomizeProductScreen(customizeId)
                 }
             )
         }
@@ -154,8 +155,8 @@ fun NavGraph(
             route = ShoppingCartScreen.route
         ) {
             ShoppingCartScreen(
-                navigateBack = {
-                    direction.navigateBack()
+                navigateBackToMainScreen = {
+                    direction.navigateBackToMainScreen()
                 },
                 navigateToThankYouScreen = {
                     direction.navigateToThankYouScreen()
@@ -239,9 +240,16 @@ fun NavGraph(
 
 
         composable(
-            route = CustomizeProductScreen.route
-        ){
+            route = "${CustomizeProductScreen.route}/{$CUSTOMIZE_ID}",
+            arguments = listOf(
+                navArgument(CUSTOMIZE_ID){
+                    type = NavType.StringType
+                }
+            )
+        ){backStackEntry ->
+            val customizeId = backStackEntry.arguments?.getString(CUSTOMIZE_ID) ?: NO_VALUE
             ProductCustomizeScreen(
+                customizeId = customizeId,
                 navigateBack = {
                     direction.navigateBack()
                 },
@@ -281,6 +289,9 @@ fun NavGraph(
                 navigateBack = {
                     direction.navigateBack()
                 },
+                navigateToThankYouScreen = {
+                    direction.navigateToThankYouScreen()
+                }
             )
         }
 
@@ -366,6 +377,9 @@ fun NavGraph(
             MyTicketScreen(
                 navigateBack = {
                     direction.navigateBack()
+                },
+                navigateToThankYouScreen = {
+                    direction.navigateToThankYouScreen()
                 }
             )
         }

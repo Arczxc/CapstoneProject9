@@ -50,3 +50,45 @@ fun Hyperlink(
         }
     )
 }
+
+@Composable
+fun Hyperlink2(
+    fullText: String,
+    linkText: String
+){
+    val annotatedString = buildAnnotatedString {
+        append(fullText)
+
+        val startIndex = fullText.indexOf("DOWNLOAD")
+        val endIndex = startIndex + "DOWNLOAD".length
+
+        addStyle(
+            SpanStyle(
+                color = Color.Green,
+                fontSize = 30.sp
+            ),
+            start = startIndex,
+            end = endIndex
+        )
+        addStringAnnotation(
+            tag = "DOWNLOAD",
+            annotation = linkText,
+            start = startIndex,
+            end = endIndex
+        )
+    }
+
+    val uriHandler = LocalUriHandler.current
+
+    ClickableText(
+        text = annotatedString,
+        onClick = {offset->
+            val uri = annotatedString.getStringAnnotations("DOWNLOAD",offset,offset).firstOrNull()?.item
+
+            if(uri!=null){
+                uriHandler.openUri(uri)
+            }
+
+        }
+    )
+}

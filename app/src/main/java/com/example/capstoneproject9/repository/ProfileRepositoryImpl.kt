@@ -70,7 +70,7 @@ class ProfileRepositoryImpl(
         CITY to city.capitalizeFirstChar(),
         COUNTRY to country.capitalizeFirstChar(),
         ZIP_CODE to zipCode,
-        FULL_ADDRESS to "$houseNumber $city $country $zipCode"
+        FULL_ADDRESS to "${houseNumber.capitalizeFirstChar()} ${city.capitalizeFirstChar()} ${country.capitalizeFirstChar()} $zipCode"
     )).await()
 
 

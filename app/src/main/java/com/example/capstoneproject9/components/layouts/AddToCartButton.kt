@@ -17,14 +17,14 @@ import com.example.capstoneproject9.R
 fun AddToCartButton(
     text: String,
     onClick: () -> Unit,
-    stack: Int
+    stock: Int
 ) {
 
     var enabled by remember {
         mutableStateOf(true)
     }
 
-    if (stack == 0){
+    if (stock == 0){
         enabled = false
     }
 

@@ -12,6 +12,7 @@ import com.example.capstoneproject9.presentation.submit_ticket.components.Submit
 @ExperimentalMaterial3Api
 fun MyTicketScreen(
     navigateBack: () -> Unit,
+    navigateToThankYouScreen: () -> Unit
 ){
     Scaffold(
         topBar = {
@@ -21,7 +22,8 @@ fun MyTicketScreen(
         },
         content = { padding ->
            MyTicketContent(
-                padding = padding
+               padding = padding,
+               navigateToThankYouScreen = navigateToThankYouScreen
             )
         },
     )

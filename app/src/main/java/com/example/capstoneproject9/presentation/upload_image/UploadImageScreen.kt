@@ -10,6 +10,7 @@ import com.example.capstoneproject9.presentation.upload_image.components.UploadI
 @Composable
 fun UploadImageScreen(
     navigateBack: () -> Unit,
+    navigateToThankYouScreen: () -> Unit,
 ){
 
     Scaffold(
@@ -21,6 +22,7 @@ fun UploadImageScreen(
         content = { padding ->
             UploadImageContent(
                 padding = padding,
+                navigateToThankYouScreen = navigateToThankYouScreen
             )
         }
     )

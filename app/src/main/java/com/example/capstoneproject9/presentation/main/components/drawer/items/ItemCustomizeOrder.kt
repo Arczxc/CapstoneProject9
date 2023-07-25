@@ -17,7 +17,7 @@ import com.example.capstoneproject9.presentation.main.components.CustomizeOrder
 @Composable
 @ExperimentalMaterial3Api
 fun ItemCustomizeOrder(
-    navigateToCustomizeOrderScreen: () -> Unit
+    navigateToCustomizeOrderScreen: (customizeId: String) -> Unit
 ){
     CustomizeOrder{ customizeOrders ->
         Column {
@@ -30,7 +30,7 @@ fun ItemCustomizeOrder(
                 items(customizeOrders){customizeOrder ->
                     CustomizeOrderCard(
                         customizeOrder = customizeOrder,
-                        navigateToCustomizeScreen = navigateToCustomizeOrderScreen
+                        navigateToCustomizeOrderScreen = navigateToCustomizeOrderScreen
                     )
                 }
             }

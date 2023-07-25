@@ -8,7 +8,7 @@ data class CustomizeOrder(
     @ServerTimestamp
     val dateOfSubmission: Date? = null,
     val photoUrl: String? = null,
-    val total: Int? = null,
-    val size: Int? = null,
-    val color: String? = null,
+    val total: Int? = 0,
+    val checkOutUrl: String? = null,
+    val nameInStorage: String? = null
 )

@@ -18,7 +18,7 @@ fun ProductDetailsScreen(
     Scaffold(
         topBar = {
             AppTopBar(
-                title = NO_VALUE,
+                title = "Product Details",
                 navigateBack = navigateBack,
                 onSearchIconClick = navigateToProductSearchScreen,
                 onShoppingCartIconClick = navigateToShoppingCartScreen

@@ -31,7 +31,7 @@ fun MainScreen(
     navigateToSubmitTicketScreen: () -> Unit,
     navigateToMyTicketScreen: () -> Unit,
     navigateToEditProfileScreen: () -> Unit,
-    navigateToCustomizeOrderScreen: () -> Unit
+    navigateToCustomizeOrderScreen: (customizeId: String) -> Unit
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
@@ -82,7 +82,6 @@ fun MainScreen(
                                 user = viewModel.user,
                                 navigateToEditProfileScreen = navigateToEditProfileScreen
                             )
-
                             items[5] -> ItemFAQ(
                                 navigateToMyTicketScreen = navigateToMyTicketScreen,
                                 navigateToSubmitTicketScreen = navigateToSubmitTicketScreen

@@ -21,7 +21,7 @@ import com.example.capstoneproject9.domain.model.CustomizeOrder
 @ExperimentalMaterial3Api
 fun CustomizeOrderCard(
     customizeOrder: CustomizeOrder,
-    navigateToCustomizeScreen:() -> Unit
+    navigateToCustomizeOrderScreen: (customizeId: String) -> Unit
 ){
     Card(
         modifier = Modifier
@@ -32,25 +32,35 @@ fun CustomizeOrderCard(
             containerColor = Color.White
         ),
         onClick = {
-            navigateToCustomizeScreen()
+            navigateToCustomizeOrderScreen(customizeOrder.nameInStorage.toString())
         }
     ){
         Row(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ){
             customizeOrder.apply {
                 Text(
-                    text = dateOfSubmission.toString(),
+                    text = dateOfSubmission!!.toLocaleString(),
                     fontSize = 14.sp
                 )
                 Spacer(
                     modifier = Modifier.weight(1f)
                 )
-                Price(
-                    price = total.toString(),
-                    fontSize = 14.sp
-                )
+                if (total == null){
+                    Price(
+                        price = "00.00",
+                        fontSize = 14.sp
+                    )
+                } else {
+                    Price(
+                        price = total.toString(),
+                        fontSize = 14.sp
+                    )
+                }
+
             }
         }
     }

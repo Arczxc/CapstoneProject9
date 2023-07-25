@@ -65,6 +65,7 @@ object AppConstants {
     const val PAYMENT_ID = "paymentId"
     const val TRACKING_ID = "trackingId"
     const val PRODUCT_ID = "productId"
+    const val CUSTOMIZE_ID = "customizeId"
     const val LINK = "link"
 
     //Messages

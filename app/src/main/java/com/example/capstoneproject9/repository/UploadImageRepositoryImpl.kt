@@ -3,12 +3,14 @@ package com.example.capstoneproject9.repository
 import android.net.Uri
 import com.example.capstoneproject9.core.AppConstants
 import com.example.capstoneproject9.core.FirebaseConstants.ALL_CUSTOMIZE_ORDER
+import com.example.capstoneproject9.core.FirebaseConstants.CHECK_OUT_URL
 import com.example.capstoneproject9.core.FirebaseConstants.CREATION_DATE
 import com.example.capstoneproject9.core.FirebaseConstants.CUSTOMIZE_ORDER
 import com.example.capstoneproject9.core.FirebaseConstants.DATE_OF_SUBMISSION
 import com.example.capstoneproject9.core.FirebaseConstants.EMAIL
 import com.example.capstoneproject9.core.FirebaseConstants.ID
 import com.example.capstoneproject9.core.FirebaseConstants.PHOTO_URL
+import com.example.capstoneproject9.core.FirebaseConstants.TOTAL
 import com.example.capstoneproject9.core.FirebaseConstants.USERS
 import com.example.capstoneproject9.domain.model.Response.*
 import com.example.capstoneproject9.domain.model.User
@@ -23,6 +25,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.random.Random
 
 
 class UploadImageRepositoryImpl @Inject constructor(
@@ -44,11 +47,13 @@ class UploadImageRepositoryImpl @Inject constructor(
     private val usersRef = db.collection(USERS)
     private val allCustomizeOrderRef = db.collection(ALL_CUSTOMIZE_ORDER)
     private val customizeOrderRef = usersRef.document(uid).collection(CUSTOMIZE_ORDER)
+    val nextValues = List(10) { Random.nextInt(0, 100) }
+    val nameInStorage = nextValues.toString()+".jpeg"
 
 
     override suspend fun addImageToFirebaseStorage(imageUri: Uri): AddImageToStorageResponse {
         return try {
-            val downloadUrl = storage.reference.child(CUSTOMIZE_ORDER).child(uid+".jpeg")
+            val downloadUrl = storage.reference.child(CUSTOMIZE_ORDER).child(nameInStorage)
                 .putFile(imageUri).await()
                 .storage.downloadUrl.await()
             Success(downloadUrl)
@@ -59,10 +64,13 @@ class UploadImageRepositoryImpl @Inject constructor(
 
     override suspend fun addImageUrlToFirestore(downloadUrl: Uri): AddImageUrlToFirestoreResponse {
         return try {
-            customizeOrderRef.document("myCustomizeOrder").set(mapOf(
+            customizeOrderRef.document(nameInStorage).set(mapOf(
                 ID to uid,
                 PHOTO_URL to downloadUrl,
-                DATE_OF_SUBMISSION to FieldValue.serverTimestamp()
+                DATE_OF_SUBMISSION to FieldValue.serverTimestamp(),
+                CHECK_OUT_URL to null,
+                TOTAL to null,
+                "nameInStorage" to nameInStorage
             )).await()
             addAllCustomizeOrderInFirestore()
             Success(true)
@@ -73,7 +81,7 @@ class UploadImageRepositoryImpl @Inject constructor(
 
 
     private suspend fun addAllCustomizeOrderInFirestore(
-    ) = allCustomizeOrderRef.document(uid).set(mapOf(
+    ) = allCustomizeOrderRef.document(nameInStorage).set(mapOf(
         EMAIL to userEmail,
         USERS to userUID,
         DATE_OF_SUBMISSION to FieldValue.serverTimestamp(),

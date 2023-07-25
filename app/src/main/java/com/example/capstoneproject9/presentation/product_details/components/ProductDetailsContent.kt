@@ -91,6 +91,16 @@ fun ProductDetailsContent(
                         )
                     }
                 }
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 16.dp,
+                            end = 16.dp,
+                            top = 8.dp
+                        ),
+                    text = product.description.toString()
+                )
             }
            /* LargeButton(
                 text = ADD_TO_CART,
@@ -103,7 +113,7 @@ fun ProductDetailsContent(
                 onClick = {
                     productDetailsViewModel.addProductToShoppingCart(product.toShoppingCartItem())
                 },
-                stack = product.stack!!.toInt()
+                stock = product.stock!!.toInt()
             )
 
         }

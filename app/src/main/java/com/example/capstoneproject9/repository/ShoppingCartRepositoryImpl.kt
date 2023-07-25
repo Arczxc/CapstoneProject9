@@ -15,6 +15,7 @@ import com.example.capstoneproject9.core.FirebaseConstants.ADDITION_DATE
 import com.example.capstoneproject9.core.FirebaseConstants.ADDRESS
 import com.example.capstoneproject9.core.FirebaseConstants.ALL_PRODUCT_ORDER
 import com.example.capstoneproject9.core.FirebaseConstants.CHECK_OUT_URL
+import com.example.capstoneproject9.core.FirebaseConstants.CREATION_DATE
 import com.example.capstoneproject9.core.FirebaseConstants.DATE_OF_SUBMISSION
 import com.example.capstoneproject9.core.FirebaseConstants.EMAIL
 import com.example.capstoneproject9.core.FirebaseConstants.ID
@@ -105,8 +106,6 @@ class ShoppingCartRepositoryImpl(
             deleteShoppingCartInRealtimeDatabase()
             addOrderInFirestore(orderId, items, paymongo)               // paymongo will return payment information
             addProductsOrderInFirestore(orderId, items)
-            addPaymentDetailsInFirestore(orderId, paymongo)                 // Payment Details
-            addTrackingDetailsInFirestore(orderId)                         // Tracking Details
             addAllOrderInFirestore(orderId)
             Success(true)
         } catch (e: Exception) {
@@ -122,6 +121,7 @@ class ShoppingCartRepositoryImpl(
     ) = productsOrdersRef.document(orderId).set(mapOf(
         CHECK_OUT_URL to paymongo.data.attributes.checkout_url,
         PAYMENT_STATUS to paymongo.data.attributes.status,
+        CREATION_DATE to serverTimestamp(),
         ORDER_ID to orderId,
         ITEMS to items
     )).await()

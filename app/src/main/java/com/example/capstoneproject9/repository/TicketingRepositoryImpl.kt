@@ -4,6 +4,7 @@ import com.example.capstoneproject9.core.AppConstants
 import com.example.capstoneproject9.core.FirebaseConstants
 import com.example.capstoneproject9.core.FirebaseConstants.ALL_TICKET
 import com.example.capstoneproject9.core.FirebaseConstants.DATE_OF_SUBMISSION
+import com.example.capstoneproject9.core.FirebaseConstants.EMAIL
 import com.example.capstoneproject9.core.FirebaseConstants.ID
 import com.example.capstoneproject9.core.FirebaseConstants.PROBLEM
 import com.example.capstoneproject9.core.FirebaseConstants.PRODUCTS_ORDER
@@ -16,6 +17,7 @@ import com.example.capstoneproject9.domain.model.*
 import com.example.capstoneproject9.domain.model.Response.Failure
 import com.example.capstoneproject9.domain.model.Response.Success
 import com.example.capstoneproject9.domain.model.User
+import com.example.capstoneproject9.domain.repository.DeleteTicketResponse
 import com.example.capstoneproject9.domain.repository.MyTicketResponse
 import com.example.capstoneproject9.domain.repository.SubmitTicketResponse
 import com.example.capstoneproject9.domain.repository.TicketingRepository
@@ -80,10 +82,30 @@ class TicketingRepositoryImpl(
         Subject: String,
         Problem: String
     ) = allTicketRef.document(orderId).set(mapOf(
-        "user" to user.uid,
+        ID to user.uid,
+        EMAIL to user.email,
         TICKET_ID to orderId,
         DATE_OF_SUBMISSION to serverTimestamp(),
         SUBJECT to Subject,
         PROBLEM to Problem
     )).await()
+
+
+    override suspend fun DeleteTicket(ticketId: String): DeleteTicketResponse {
+        return try {
+            DeleteAllTicket(ticketId)
+            DeleteMyTicket(ticketId)
+            Success(true)
+        } catch (e: Exception){
+            Failure(e)
+        }
+    }
+
+    private suspend fun DeleteMyTicket(
+        ticketId: String
+    ) = submitTicketRef.document(ticketId).delete().await()
+
+    private suspend fun DeleteAllTicket(
+        ticketId: String
+    ) = allTicketRef.document(ticketId).delete().await()
 }

@@ -7,6 +7,7 @@ import com.example.capstoneproject9.domain.model.User
 typealias Tickets = List<Ticket>
 typealias MyTicketResponse = Response<Tickets>
 typealias SubmitTicketResponse = Response<Boolean>
+typealias DeleteTicketResponse = Response<Boolean>
 
 interface TicketingRepository{
 
@@ -15,5 +16,7 @@ interface TicketingRepository{
     suspend fun SubmitTicketInFirestore(subject: String , problem: String): SubmitTicketResponse
 
     suspend fun GetTicketInFirestore() : MyTicketResponse
+
+    suspend fun DeleteTicket( ticketId: String ) : DeleteTicketResponse
 
 }

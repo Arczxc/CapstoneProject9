@@ -55,8 +55,8 @@ class Direction(
         navController.navigate(SubmitTicketScreen.route)
     }
 
-    val navigateToCustomizeProductScreen: () -> Unit = {
-        navController.navigate(CustomizeProductScreen.route)
+    val navigateToCustomizeProductScreen: (String) -> Unit = { customizeId ->
+        navController.navigate("${CustomizeProductScreen.route}/$customizeId")                                                         //(CustomizeProductScreen.route)
     }
 
     val navigateToBrandProductsScreen: (String) -> Unit = { productBrand ->

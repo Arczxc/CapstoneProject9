@@ -6,7 +6,8 @@ import java.util.*
 data class Ticket(
     @ServerTimestamp
     val dateOfSubmission: Date? = null,
-    val id: String? = null,
     val problem: String? = null,
     val subject: String? = null,
+    val ticketID: String? = null,
+    val response: String? = null
 )

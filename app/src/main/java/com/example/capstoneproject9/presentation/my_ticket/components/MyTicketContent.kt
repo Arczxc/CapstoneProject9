@@ -14,7 +14,10 @@ import com.example.capstoneproject9.domain.repository.Tickets
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTicketContent (padding: PaddingValues){
+fun MyTicketContent (
+    padding: PaddingValues,
+    navigateToThankYouScreen: () -> Unit,
+){
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -32,7 +35,10 @@ fun MyTicketContent (padding: PaddingValues){
                     contentPadding = PaddingValues(8.dp)
                 ) {
                     items(ticket) { ticketS->
-                        MyTicketCard(ticket = ticketS)
+                        MyTicketCard(
+                            ticket = ticketS,
+                            navigateToThankYouScreen = navigateToThankYouScreen
+                        )
                     }
                 }
 

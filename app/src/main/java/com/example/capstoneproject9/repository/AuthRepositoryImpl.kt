@@ -10,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import com.example.capstoneproject9.core.AppConstants.SIGN_IN_REQUEST
 import com.example.capstoneproject9.core.AppConstants.SIGN_UP_REQUEST
+import com.example.capstoneproject9.core.FirebaseConstants.ADDRESS_INFO
 import com.example.capstoneproject9.core.FirebaseConstants.CONTACT_NUMBER
 import com.example.capstoneproject9.core.FirebaseConstants.CREATED_AT
 import com.example.capstoneproject9.core.FirebaseConstants.DISPLAY_NAME
@@ -60,6 +61,7 @@ class AuthRepositoryImpl @Inject constructor(
             val isNewUser = authResult.additionalUserInfo?.isNewUser ?: false
             if (isNewUser) {
                 createUserInFirestore()
+                createAddressInfo()
             }
             Success(true)
         } catch (e: Exception) {
@@ -70,8 +72,15 @@ class AuthRepositoryImpl @Inject constructor(
     private suspend fun createUserInFirestore() {
         auth.currentUser?.apply {
             val user = toUser()
-            //EMAIL will display in firestore
             db.collection(USERS).document(uid).set(user).await()
+        }
+    }
+
+    private suspend fun createAddressInfo() {
+        auth.currentUser?.apply {
+            db.collection(USERS).document(uid).collection(ADDRESS_INFO).document("address").set(mapOf(
+                FULL_ADDRESS to null
+            )).await()
         }
     }
 }
