@@ -20,6 +20,7 @@ import com.example.capstoneproject9.core.FirebaseConstants.PRODUCTS_ORDER
 import com.example.capstoneproject9.core.FirebaseConstants.REASON
 import com.example.capstoneproject9.core.FirebaseConstants.REQUESTED_REFUND
 import com.example.capstoneproject9.core.FirebaseConstants.TRACKING_DETAILS
+import com.example.capstoneproject9.core.FirebaseConstants.UPDATED_PAYMENT_DATE
 import com.example.capstoneproject9.core.FirebaseConstants.USERS
 import com.example.capstoneproject9.domain.model.*
 import com.example.capstoneproject9.domain.model.Response.Failure
@@ -209,8 +210,7 @@ class ProductsOrderRepositoryImpl(
         paymongo: Data
     ) = productsOrdersRef.document(orderId).update(mapOf(
         PAYMENT_STATUS to paymongo.data.attributes.status,
-        "sampleDate" to paymongo.data.attributes.status,
-        //SetOptions.merge()
+        UPDATED_PAYMENT_DATE to FieldValue.serverTimestamp(),
     )).await()
 
 

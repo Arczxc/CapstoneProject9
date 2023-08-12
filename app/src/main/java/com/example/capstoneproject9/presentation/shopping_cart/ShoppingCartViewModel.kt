@@ -54,9 +54,9 @@ class ShoppingCartViewModel @Inject constructor(
         decrementQuantityResponse = repo.decrementQuantity(itemId)
     }
 
-    fun addOrder(items: ShoppingCartItems, paymongo: Data) = viewModelScope.launch {
+    fun addOrder(items: ShoppingCartItems, paymongo: Data, modeOfPayment: String, modeOfService: String) = viewModelScope.launch {
         addOrderResponse = Loading
-        addOrderResponse = repo.addOrderInFirestore(items, paymongo)
+        addOrderResponse = repo.addOrderInFirestore(items, paymongo, modeOfPayment, modeOfService)
     }
 
 
@@ -89,17 +89,37 @@ class ShoppingCartViewModel @Inject constructor(
         addressInfoResponse = repo.getProfileInfoInFirestore()
     }
 
+}
 
-   /* fun creatLink(price: Int) = viewModelScope.launch(Dispatchers.IO) {
-        val answer1 = async {
-            getLink(price)
-        }
-        //Log.d(TAG,"${answer1.await()}")
-    }
 
-    suspend fun getLink(price: Int): String{
+/* fun creatLink(price: Int) = viewModelScope.launch(Dispatchers.IO) {
+       val answer1 = async {
+           getLink(price)
+       }
+       //Log.d(TAG,"${answer1.await()}")
+   }
+
+   suspend fun getLink(price: Int): String{
+       val mediaType = "application/json".toMediaTypeOrNull()
+       val body = RequestBody.create(mediaType, "{\"data\":{\"attributes\":{\"amount\":$price,\"description\":\"checkoutURL\"}}}")
+       val request = Request.Builder()
+           .url("https://api.paymongo.com/v1/links")
+           .post(body)
+           .addHeader("accept", "application/json")
+           .addHeader("content-type", "application/json")
+           .addHeader("authorization", "Basic c2tfbGl2ZV9MWTR6ZmN5QkRYQ29HWXROUVNzdDVmNUw6")
+           .build()
+       val response = client.newCall(request).execute()
+
+       val data = dataJsonAdapter.fromJson(response.body!!.source())
+
+       return data!!.data.attributes.checkout_url
+   }*/
+
+/*fun createLink() = viewModelScope.launch {
+    launch (Dispatchers.IO){
         val mediaType = "application/json".toMediaTypeOrNull()
-        val body = RequestBody.create(mediaType, "{\"data\":{\"attributes\":{\"amount\":$price,\"description\":\"checkoutURL\"}}}")
+        val body = RequestBody.create(mediaType, "{\"data\":{\"attributes\":{\"amount\":690000,\"description\":\"checkoutURL\"}}}")
         val request = Request.Builder()
             .url("https://api.paymongo.com/v1/links")
             .post(body)
@@ -111,47 +131,29 @@ class ShoppingCartViewModel @Inject constructor(
 
         val data = dataJsonAdapter.fromJson(response.body!!.source())
 
-        return data!!.data.attributes.checkout_url
-    }*/
-
-    /*fun createLink() = viewModelScope.launch {
-        launch (Dispatchers.IO){
-            val mediaType = "application/json".toMediaTypeOrNull()
-            val body = RequestBody.create(mediaType, "{\"data\":{\"attributes\":{\"amount\":690000,\"description\":\"checkoutURL\"}}}")
-            val request = Request.Builder()
-                .url("https://api.paymongo.com/v1/links")
-                .post(body)
-                .addHeader("accept", "application/json")
-                .addHeader("content-type", "application/json")
-                .addHeader("authorization", "Basic c2tfbGl2ZV9MWTR6ZmN5QkRYQ29HWXROUVNzdDVmNUw6")
-                .build()
-            val response = client.newCall(request).execute()
-
-            val data = dataJsonAdapter.fromJson(response.body!!.source())
-
-            if (data != null) {
-                println(data.data.attributes.checkout_url)
-            }
+        if (data != null) {
+            println(data.data.attributes.checkout_url)
         }
+    }
 
-    }*/
-    /*fun createLink(): String{
-        val result = viewModelScope.async {
-            val mediaType = "application/json".toMediaTypeOrNull()
-            val body = RequestBody.create(mediaType, "{\"data\":{\"attributes\":{\"amount\":690000,\"description\":\"checkoutURL\"}}}")
-            val request = Request.Builder()
-                .url("https://api.paymongo.com/v1/links")
-                .post(body)
-                .addHeader("accept", "application/json")
-                .addHeader("content-type", "application/json")
-                .addHeader("authorization", "Basic c2tfbGl2ZV9MWTR6ZmN5QkRYQ29HWXROUVNzdDVmNUw6")
-                .build()
-            val response = client.newCall(request).execute()
+}*/
+/*fun createLink(): String{
+    val result = viewModelScope.async {
+        val mediaType = "application/json".toMediaTypeOrNull()
+        val body = RequestBody.create(mediaType, "{\"data\":{\"attributes\":{\"amount\":690000,\"description\":\"checkoutURL\"}}}")
+        val request = Request.Builder()
+            .url("https://api.paymongo.com/v1/links")
+            .post(body)
+            .addHeader("accept", "application/json")
+            .addHeader("content-type", "application/json")
+            .addHeader("authorization", "Basic c2tfbGl2ZV9MWTR6ZmN5QkRYQ29HWXROUVNzdDVmNUw6")
+            .build()
+        val response = client.newCall(request).execute()
 
-            val data = dataJsonAdapter.fromJson(response.body!!.source())
-            data
+        val data = dataJsonAdapter.fromJson(response.body!!.source())
+        data
 
-            *//*if (data != null) {
+        *//*if (data != null) {
                 println(data.data.attributes.checkout_url)
             }*//*
         }
@@ -167,80 +169,78 @@ class ShoppingCartViewModel @Inject constructor(
     }*/
 
 
-  /*  fun createLink(){
-        //val response = client.newCall(request).execute()
+/*  fun createLink(){
+      //val response = client.newCall(request).execute()
 
-        GlobalScope.launch(Dispatchers.IO) {
-            val mediaType = "application/json".toMediaTypeOrNull()
-            val body = RequestBody.create(mediaType, "{\"data\":{\"attributes\":{\"amount\":690000,\"description\":\"checkoutURL\"}}}")
-            val request = Request.Builder()
-                .url("https://api.paymongo.com/v1/links")
-                .post(body)
-                .addHeader("accept", "application/json")
-                .addHeader("content-type", "application/json")
-                .addHeader("authorization", "Basic c2tfbGl2ZV9MWTR6ZmN5QkRYQ29HWXROUVNzdDVmNUw6")
-                .build()
-            val response = client.newCall(request).execute()
+      GlobalScope.launch(Dispatchers.IO) {
+          val mediaType = "application/json".toMediaTypeOrNull()
+          val body = RequestBody.create(mediaType, "{\"data\":{\"attributes\":{\"amount\":690000,\"description\":\"checkoutURL\"}}}")
+          val request = Request.Builder()
+              .url("https://api.paymongo.com/v1/links")
+              .post(body)
+              .addHeader("accept", "application/json")
+              .addHeader("content-type", "application/json")
+              .addHeader("authorization", "Basic c2tfbGl2ZV9MWTR6ZmN5QkRYQ29HWXROUVNzdDVmNUw6")
+              .build()
+          val response = client.newCall(request).execute()
 
-            val data = dataJsonAdapter.fromJson(response.body!!.source())
-            if (data != null) {
-                println(data.data.attributes.checkout_url)
-            }
+          val data = dataJsonAdapter.fromJson(response.body!!.source())
+          if (data != null) {
+              println(data.data.attributes.checkout_url)
+          }
 
-            //Log.d(TAG, response.body!!.string())
+          //Log.d(TAG, response.body!!.string())
 
-            // getLink(response)
-        }
-    }*/
+          // getLink(response)
+      }
+  }*/
 
-  /*  fun createLink(){
+/*  fun createLink(){
 
-        val mediaType = "application/json".toMediaTypeOrNull()
-        val body = RequestBody.create(mediaType, "{\"data\":{\"attributes\":{\"amount\":780000,\"description\":\"checkoutURL\"}}}")
-        val request = Request.Builder()
-            .url("https://api.paymongo.com/v1/links")
-            .post(body)
-            .addHeader("accept", "application/json")
-            .addHeader("content-type", "application/json")
-            .addHeader("authorization", "Basic c2tfbGl2ZV9MWTR6ZmN5QkRYQ29HWXROUVNzdDVmNUw6")
-            .build()
+      val mediaType = "application/json".toMediaTypeOrNull()
+      val body = RequestBody.create(mediaType, "{\"data\":{\"attributes\":{\"amount\":780000,\"description\":\"checkoutURL\"}}}")
+      val request = Request.Builder()
+          .url("https://api.paymongo.com/v1/links")
+          .post(body)
+          .addHeader("accept", "application/json")
+          .addHeader("content-type", "application/json")
+          .addHeader("authorization", "Basic c2tfbGl2ZV9MWTR6ZmN5QkRYQ29HWXROUVNzdDVmNUw6")
+          .build()
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
-            }
-            override fun onResponse(call: Call, response: okhttp3.Response) {
-                response.use {
-                    //println(response.body!!.string())
-                    val data = dataJsonAdapter.fromJson(response.body!!.source())
-                    println(data?.data!!.attributes.checkout_url)
-                }
-            }
-        })
-    }*/
+      client.newCall(request).enqueue(object : Callback {
+          override fun onFailure(call: Call, e: IOException) {
+              e.printStackTrace()
+          }
+          override fun onResponse(call: Call, response: okhttp3.Response) {
+              response.use {
+                  //println(response.body!!.string())
+                  val data = dataJsonAdapter.fromJson(response.body!!.source())
+                  println(data?.data!!.attributes.checkout_url)
+              }
+          }
+      })
+  }*/
 
-   /* fun createLink(){
-
-
-        //val response = client.newCall(request).execute()
-
-        GlobalScope.launch(Dispatchers.IO) {
-            val mediaType = "application/json".toMediaTypeOrNull()
-            val body = RequestBody.create(mediaType, "{\"data\":{\"attributes\":{\"amount\":690000,\"description\":\"checkoutURL\"}}}")
-            val request = Request.Builder()
-                .url("https://api.paymongo.com/v1/links")
-                .post(body)
-                .addHeader("accept", "application/json")
-                .addHeader("content-type", "application/json")
-                .addHeader("authorization", "Basic c2tfbGl2ZV9MWTR6ZmN5QkRYQ29HWXROUVNzdDVmNUw6")
-                .build()
-            val response = client.newCall(request).execute()
+/* fun createLink(){
 
 
-            Log.d(TAG, response.body!!.string())
+     //val response = client.newCall(request).execute()
 
-           // getLink(response)
-        }
-    }*/
+     GlobalScope.launch(Dispatchers.IO) {
+         val mediaType = "application/json".toMediaTypeOrNull()
+         val body = RequestBody.create(mediaType, "{\"data\":{\"attributes\":{\"amount\":690000,\"description\":\"checkoutURL\"}}}")
+         val request = Request.Builder()
+             .url("https://api.paymongo.com/v1/links")
+             .post(body)
+             .addHeader("accept", "application/json")
+             .addHeader("content-type", "application/json")
+             .addHeader("authorization", "Basic c2tfbGl2ZV9MWTR6ZmN5QkRYQ29HWXROUVNzdDVmNUw6")
+             .build()
+         val response = client.newCall(request).execute()
 
-}
+
+         Log.d(TAG, response.body!!.string())
+
+        // getLink(response)
+     }
+ }*/

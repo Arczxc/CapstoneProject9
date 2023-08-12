@@ -20,6 +20,8 @@ import com.example.capstoneproject9.core.FirebaseConstants.DATE_OF_SUBMISSION
 import com.example.capstoneproject9.core.FirebaseConstants.EMAIL
 import com.example.capstoneproject9.core.FirebaseConstants.ID
 import com.example.capstoneproject9.core.FirebaseConstants.ITEMS
+import com.example.capstoneproject9.core.FirebaseConstants.MODE_OF_PAYMENT
+import com.example.capstoneproject9.core.FirebaseConstants.MODE_OF_SERVICE
 import com.example.capstoneproject9.core.FirebaseConstants.ORDERS
 import com.example.capstoneproject9.core.FirebaseConstants.ORDER_ID
 import com.example.capstoneproject9.core.FirebaseConstants.PAYMENT_DETAILS
@@ -99,12 +101,12 @@ class ShoppingCartRepositoryImpl(
         }
     }
 
-    override suspend fun addOrderInFirestore(items: ShoppingCartItems, paymongo: Data): AddOrderResponse {         // hardcoded address
+    override suspend fun addOrderInFirestore(items: ShoppingCartItems, paymongo: Data, modeOfPayment: String, modeOfService: String): AddOrderResponse {         // hardcoded address
         return try {
             val orderId = productsOrdersRef.document(paymongo.data.attributes.reference_number).id
             emptyShoppingCartInFirestore()
             deleteShoppingCartInRealtimeDatabase()
-            addOrderInFirestore(orderId, items, paymongo)               // paymongo will return payment information
+            addOrderInFirestore(orderId, items, paymongo, modeOfPayment, modeOfService)               // paymongo will return payment information
             addProductsOrderInFirestore(orderId, items)
             addAllOrderInFirestore(orderId)
             Success(true)
@@ -117,13 +119,17 @@ class ShoppingCartRepositoryImpl(
         orderId: String,
         items: ShoppingCartItems,
         paymongo: Data,
-
+        modeOfPayment: String,
+        modeOfService: String
     ) = productsOrdersRef.document(orderId).set(mapOf(
         CHECK_OUT_URL to paymongo.data.attributes.checkout_url,
         PAYMENT_STATUS to paymongo.data.attributes.status,
+        TOTAL to paymongo.data.attributes.amount,
         CREATION_DATE to serverTimestamp(),
         ORDER_ID to orderId,
-        ITEMS to items
+        ITEMS to items,
+        MODE_OF_PAYMENT to modeOfPayment,
+        MODE_OF_SERVICE to modeOfService
     )).await()
 
 

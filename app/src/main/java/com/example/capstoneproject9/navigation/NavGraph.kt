@@ -1,5 +1,6 @@
 package com.example.capstoneproject9.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -85,6 +86,10 @@ fun NavGraph(
             ),
 
         ) {
+
+            BackHandler(true) {
+                //Do Nothing
+            }
 
             MainScreen(
                 navigateToProductSearchScreen = {

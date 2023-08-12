@@ -37,10 +37,12 @@ fun OrderItemCard(
         )
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(
-                start = 8.dp,
-                end = 8.dp
-            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = 8.dp,
+                    end = 8.dp
+                ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             item.apply {
@@ -55,7 +57,9 @@ fun OrderItemCard(
                     height = 64.dp
                 )
                 Column(
-                    modifier = Modifier.align(Alignment.CenterVertically).padding(start = 8.dp)
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 8.dp)
                 ) {
                     Text(
                         text = name ?: NO_VALUE

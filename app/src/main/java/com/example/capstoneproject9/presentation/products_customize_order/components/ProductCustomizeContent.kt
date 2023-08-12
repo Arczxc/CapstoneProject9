@@ -1,24 +1,21 @@
 package com.example.capstoneproject9.presentation.products_customize_order.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,10 +26,7 @@ import com.example.capstoneproject9.components.Hyperlink
 import com.example.capstoneproject9.components.Message
 import com.example.capstoneproject9.core.AppConstants
 import com.example.capstoneproject9.presentation.products_customize_order.ProductsCustomizeViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 @Composable
 fun ProductCustomizeContent(
@@ -43,32 +37,145 @@ fun ProductCustomizeContent(
 ){
     LaunchedEffect(Unit){
         viewModel.getCustomizeOrder(customizeId)
+        viewModel.getProfile()
     }
 
-    CustomizeOrders{customizeOrder ->
-        if (customizeOrder.total != null){
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)) {
-                Box(modifier = Modifier
-                    .fillMaxWidth(1f)
-                    .fillMaxHeight(0.75f)
-                    .background(Color.Blue)){
-                    AsyncImage(
+    CustomizeOrders { customizeOrder ->
+        ProfileDetailsCustomize { profileDetails ->
+            if (customizeOrder.checkOutUrl != null) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding)
+                ) {
+                    Column(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(8.dp)
-                            .background(Color.Black),
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(customizeOrder.photoUrl)
-                            .crossfade(true)
-                            .build(),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds
-                    )
-                }
+                            .fillMaxWidth(),
+                    ) {
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp),
+                            elevation = CardDefaults.cardElevation(5.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color.Gray
+                            ),
+                            border = BorderStroke(2.dp, Color.Yellow)
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(5.dp)
+                            ) {
+                                Text(text = profileDetails.recipientName.toString())
+                                Text(text = profileDetails.fullAddress.toString())
+                                Text(text = profileDetails.contactNumber.toString())
+                                Text(text = customizeOrder.checkOutUrl.toString())
+                                Text(text = customizeOrder.paymentStatus.toString())
+                                Button(
+                                    modifier = Modifier.padding(10.dp),
+                                    onClick = { },
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = colorResource(R.color.accent)
+                                    )
+                                    ){
+                                    Text(text = "UPDATE PAYMENT")
+                                }
+                                Box(
+                                    modifier = Modifier
+                                        .padding(padding)
+                                ) {
+                                    Column(
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
 
-                    if (customizeOrder.checkOutUrl == null){
+                                        //val titles = listOf("To Pay", "To Ship", "To Receive", "To Finish")
+                                        Box(modifier = Modifier.padding()) {
+                                            var state by remember { mutableStateOf(0) }
+                                            val titlesAndIcons = listOf(
+                                                "To Pay" to R.drawable.baseline_payment_24,
+                                                "To Ship" to R.drawable.baseline_local_shipping_24,
+                                                "To Receive" to R.drawable.baseline_redeem_24,
+                                                "To Finish" to R.drawable.baseline_done_24
+                                            )
+
+                                            if (customizeOrder.paymentStatus == "unpaid" ){
+                                                state = 0
+                                            } else if(customizeOrder.paymentStatus == "paid" ) {
+                                                state = 1
+                                            } else if (customizeOrder.paymentStatus == "received" ){
+                                                state = 2
+                                            } else {
+                                                state = 3
+                                            }
+
+
+                                            Column {
+                                                TabRow(selectedTabIndex = state, contentColor = Color.Black, containerColor = Color.White) {
+                                                    titlesAndIcons.forEachIndexed { index, (title, icon) ->
+                                                        Tab(
+                                                            text = { Text(title) },
+                                                            icon = {
+                                                                Icon(
+                                                                    painter = painterResource(id = icon),
+                                                                    contentDescription = null
+                                                                )
+                                                            },
+                                                            selected = state == index,
+                                                            onClick = { state = index },
+                                                            enabled = false,
+                                                            selectedContentColor = Color.Green,
+                                                            unselectedContentColor = Color.Black
+                                                        )
+                                                    }
+                                                }
+                                                Text(
+                                                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                                                    text = "Text and icon tab ${state + 1} selected",
+                                                    // style = MaterialTheme.typography.body1
+                                                )
+                                            }
+                                        }
+
+                                        //Text(text = trackingDetails.trackingStatus.toString())
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(1f)
+                            .fillMaxHeight(0.75f)
+                            .background(Color.Blue)
+                    ) {
+                        AsyncImage(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(8.dp)
+                                .background(Color.Black),
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(customizeOrder.photoUrl)
+                                .crossfade(true)
+                                .build(),
+                            contentDescription = null,
+                            contentScale = ContentScale.FillBounds
+                        )
+                    }
+
+                }
+            } else {
+                Message(text = "Customize Order Waiting for approval")
+            }
+
+        }
+    }
+    CreateLink()
+}
+
+/*if (customizeOrder.checkOutUrl == null){
                         Box(modifier = Modifier.padding(15.dp)){
                             Column(modifier = Modifier.fillMaxWidth()) {
 
@@ -155,13 +262,4 @@ fun ProductCustomizeContent(
                             fullText = "PAY HERE" ,
                             linkText = customizeOrder.checkOutUrl.toString()
                         )
-                    }
-            }
-        } else {
-            Message(text = "Customize Order Waiting for approval")
-        }
-
-    }
-
-    CreateLink()
-}
+                    }*/

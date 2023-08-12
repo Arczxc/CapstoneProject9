@@ -46,6 +46,7 @@ fun ShoppingCartContent(
     val scope = CoroutineScope(Dispatchers.IO)
 
     ShoppingCart { items ->
+        AddressInfo{info->
         viewModel.numberOfItemsInShoppingCart = calculateShoppingCartTotal(items)
 
         if (items.isEmpty()) {
@@ -76,9 +77,106 @@ fun ShoppingCartContent(
                         )
                     }
                 }
+
+
                 Spacer(
                     modifier = Modifier.weight(1f)
                 )
+
+
+                var service by remember { mutableStateOf(false) }                    // Mode of service either Pick Up or Deliver
+                var payment by remember { mutableStateOf(false) }                   // Mode of payment cash on deliver or online payment
+
+
+                val showingDialog = remember{ mutableStateOf(false) }               // if true will show the dialog
+
+                var price = if(payment == true){                                       // will return price based on payment
+                    viewModel.numberOfItemsInShoppingCart.toInt()
+                } else{
+                    15000
+                }
+
+                var modeOfService = if(service == true){
+                    "Pick Up"
+                } else{
+                    "Deliver"
+                }
+
+                var modeOfPayment = if(payment == true){
+                    "Online Payment"
+                } else{
+                    "Cash on Delivery"
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 16.dp,
+                            end = 16.dp,
+                            top = 16.dp
+                        ),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ){
+
+
+                    InputChip(
+                        selected = payment,
+                        onClick = { payment = !payment
+                                  },
+                        label = { Text(text = "Cash On Deliver")},
+                        colors = InputChipDefaults.inputChipColors(
+                            containerColor = Color.Green,
+                            disabledContainerColor = Color.Red
+                        )
+                    )
+
+                    InputChip(
+                        selected = !payment,
+                        onClick = { payment = !payment },
+                        label = { Text(text = "Online Payment")},
+                        colors = InputChipDefaults.inputChipColors(
+                            containerColor = Color.Green,
+                            disabledContainerColor = Color.Red
+                        )
+                    )
+
+
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 16.dp,
+                            end = 16.dp,
+                            top = 16.dp
+                        ),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ){
+
+                    InputChip(
+                        selected = service,
+                        onClick = { service = !service },
+                        label = { Text(text = "Deliver") },
+                        colors = InputChipDefaults.inputChipColors(
+                            containerColor = Color.Green,
+                            disabledContainerColor = Color.Red
+                        )
+                    )
+
+                    InputChip(
+                        selected = !service,
+                        enabled = payment,
+                        onClick = { service = !service },
+                        label = { Text(text = "Pick Up") },
+                        colors = InputChipDefaults.inputChipColors(
+                            containerColor = Color.Green,
+                            disabledContainerColor = Color.Red
+                        )
+                    )
+
+                }
                 ShortDivider()
                 Row(
                     modifier = Modifier
@@ -97,15 +195,12 @@ fun ShoppingCartContent(
                         modifier = Modifier.weight(1f)
                     )
                     Price(
-                        price = viewModel.numberOfItemsInShoppingCart.toString(),
+                        price = price.toString(),
                         fontSize = 19.sp
                     )
                 }
 
 
-
-                AddressInfo{info->
-                    val showingDialog = remember{ mutableStateOf(false) }
                     if (showingDialog.value) {
                         AlertDialog(
                             onDismissRequest = {
@@ -124,14 +219,14 @@ fun ShoppingCartContent(
                                         .padding(16.dp)
                                         .clickable(
                                             onClick = {
-                                               val job = scope.launch {
-                                                    val price = viewModel.numberOfItemsInShoppingCart.toInt()
-                                                    //viewModel.addOrder(items)            // tatanggalin ko
+                                                val job = scope.launch {
+                                                    //val price = viewModel.numberOfItemsInShoppingCart.toInt()
+
                                                     val link = async {
                                                         viewModel.getLink(price)
                                                     }
                                                     val paymongo = link.await()
-                                                    viewModel.addOrder(items, paymongo)
+                                                    viewModel.addOrder(items, paymongo, modeOfPayment, modeOfService)
                                                 }
                                             }
                                         )
@@ -201,17 +296,23 @@ fun ShoppingCartContent(
                             )
                         }
                     }
-
-
-
                 }
 
+            }
+        }
+    }
 
-                /*LargeButton(
-                    text = SEND_ORDER,
-                    onClick = {
-                        showingDialog.value = true
-                       *//* scope.launch{
+    AddOrder()
+}
+
+
+
+
+                   /*LargeButton(
+                   text = SEND_ORDER,
+                   onClick = {
+                       showingDialog.value = true
+                      *//* scope.launch{
                             val price = viewModel.numberOfItemsInShoppingCart.toInt()
                             //viewModel.addOrder(items)            // tatanggalin ko
                             val link = async {
@@ -235,9 +336,3 @@ fun ShoppingCartContent(
                         navigateToThankYouScreen()*//*
                     }
                 )*/
-            }
-        }
-    }
-
-    AddOrder()
-}

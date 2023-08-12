@@ -10,5 +10,6 @@ data class CustomizeOrder(
     val photoUrl: String? = null,
     val total: Int? = 0,
     val checkOutUrl: String? = null,
-    val nameInStorage: String? = null
+    val nameInStorage: String? = null,
+    val paymentStatus: String? = null
 )

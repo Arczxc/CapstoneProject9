@@ -10,6 +10,7 @@ import com.example.capstoneproject9.domain.model.Response
 import com.example.capstoneproject9.domain.model.Response.*
 import com.example.capstoneproject9.domain.repository.CustomizeOrderResponses
 import com.example.capstoneproject9.domain.repository.ProductsOrderRepository
+import com.example.capstoneproject9.domain.repository.ProfileInfoResponse
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,6 +31,8 @@ class ProductsCustomizeViewModel @Inject constructor(
     var createLinkResponse by mutableStateOf<Response<Boolean>>(Success(false))
         private set
     var deleteCustomizeResponse by mutableStateOf<Response<Boolean>>(Success(false))
+        private set
+    var profileInfoResponse by mutableStateOf<ProfileInfoResponse>(Loading)
         private set
 
 
@@ -71,6 +74,10 @@ class ProductsCustomizeViewModel @Inject constructor(
 
         return data!!
         //data!!.data.attributes.reference_number
+    }
+
+    fun getProfile() = viewModelScope.launch {
+        profileInfoResponse = repo.getProfileInfoInFirestore()
     }
 
 
