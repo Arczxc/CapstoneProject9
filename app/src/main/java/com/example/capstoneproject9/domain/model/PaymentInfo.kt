@@ -8,6 +8,7 @@ data class PaymentInfo(
     val items: List<ShoppingCartItem>? = null,
     val orderId: String? = null,
     val paymentStatus: String? = null,
+    val orderStatus: String? = null,
     val trackingStatus: String? = null,
     @ServerTimestamp
     val creationDate: Date? = null,

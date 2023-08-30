@@ -21,6 +21,7 @@ object AppConstants {
     const val HOME = "Home"
     const val ORDERS = "Orders"
     const val CUSTOMIZE_ORDERS = "Customize Order"
+    const val PURCHASE_HISTORY = "Purchase History"
     const val FAVORITES = "Favorites"
     const val PROFILE = "Profile"
     const val SIGN_OUT = "Sign-out"

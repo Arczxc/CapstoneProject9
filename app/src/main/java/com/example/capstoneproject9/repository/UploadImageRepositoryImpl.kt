@@ -9,6 +9,7 @@ import com.example.capstoneproject9.core.FirebaseConstants.CUSTOMIZE_ORDER
 import com.example.capstoneproject9.core.FirebaseConstants.DATE_OF_SUBMISSION
 import com.example.capstoneproject9.core.FirebaseConstants.EMAIL
 import com.example.capstoneproject9.core.FirebaseConstants.ID
+import com.example.capstoneproject9.core.FirebaseConstants.ORDER_STATUS
 import com.example.capstoneproject9.core.FirebaseConstants.PAYMENT_STATUS
 import com.example.capstoneproject9.core.FirebaseConstants.PHOTO_URL
 import com.example.capstoneproject9.core.FirebaseConstants.TOTAL
@@ -70,6 +71,7 @@ class UploadImageRepositoryImpl @Inject constructor(
                 CHECK_OUT_URL to null,
                 TOTAL to null,
                 PAYMENT_STATUS to "unpaid",
+                ORDER_STATUS to "unpaid",
                 "nameInStorage" to uid
             )).await()
             addAllCustomizeOrderInFirestore()

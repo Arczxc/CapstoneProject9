@@ -24,6 +24,7 @@ import com.example.capstoneproject9.core.FirebaseConstants.MODE_OF_PAYMENT
 import com.example.capstoneproject9.core.FirebaseConstants.MODE_OF_SERVICE
 import com.example.capstoneproject9.core.FirebaseConstants.ORDERS
 import com.example.capstoneproject9.core.FirebaseConstants.ORDER_ID
+import com.example.capstoneproject9.core.FirebaseConstants.ORDER_STATUS
 import com.example.capstoneproject9.core.FirebaseConstants.PAYMENT_DETAILS
 import com.example.capstoneproject9.core.FirebaseConstants.PAYMENT_STATUS
 import com.example.capstoneproject9.core.FirebaseConstants.PRODUCTS_ORDER
@@ -124,6 +125,7 @@ class ShoppingCartRepositoryImpl(
     ) = productsOrdersRef.document(orderId).set(mapOf(
         CHECK_OUT_URL to paymongo.data.attributes.checkout_url,
         PAYMENT_STATUS to paymongo.data.attributes.status,
+        ORDER_STATUS to paymongo.data.attributes.status,
         TOTAL to paymongo.data.attributes.amount,
         CREATION_DATE to serverTimestamp(),
         ORDER_ID to orderId,
@@ -160,6 +162,7 @@ class ShoppingCartRepositoryImpl(
     ) = ordersRef.document(orderId).set(mapOf(
         ID to orderId,
         DATE_OF_SUBMISSION to serverTimestamp(),
+        ORDER_STATUS to "unpaid",
         TOTAL to calculateShoppingCartTotal(items)
     )).await()
 

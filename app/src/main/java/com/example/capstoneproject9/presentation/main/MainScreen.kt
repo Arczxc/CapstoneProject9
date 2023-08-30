@@ -75,18 +75,22 @@ fun MainScreen(
                             items[2] -> ItemCustomizeOrder(
                                 navigateToCustomizeOrderScreen = navigateToCustomizeOrderScreen
                             )
-                            items[3] -> ItemFavorites(
+                            items[3] -> ItemPurchaseHistory(
+                                navigateToProductsOrderScreen = navigateToProductsOrderScreen
+                            )
+
+                            items[4] -> ItemFavorites(
                                 navigateToProductDetailsScreen = navigateToProductDetailsScreen
                             )
-                            items[4] -> ItemProfile(
+                            items[5] -> ItemProfile(
                                 user = viewModel.user,
                                 navigateToEditProfileScreen = navigateToEditProfileScreen
                             )
-                            items[5] -> ItemFAQ(
+                            items[6] -> ItemFAQ(
                                 navigateToMyTicketScreen = navigateToMyTicketScreen,
                                 navigateToSubmitTicketScreen = navigateToSubmitTicketScreen
                             )
-                            items[6] -> viewModel.signOut()
+                            items[7] -> viewModel.signOut()
                         }
                     }
                 }

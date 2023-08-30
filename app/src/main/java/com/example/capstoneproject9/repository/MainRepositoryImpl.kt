@@ -97,7 +97,17 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getOrdersFromFirestore(): OrdersResponse {
         return try {
-            val queryOrdersByDateOfSubmission = ordersRef.orderBy(DATE_OF_SUBMISSION, DESCENDING)
+            val queryOrdersByDateOfSubmission = ordersRef.whereEqualTo("orderStatus", "unpaid")    //.orderBy(DATE_OF_SUBMISSION, DESCENDING)
+            val orders = queryOrdersByDateOfSubmission.get().await().toObjects(Order::class.java)
+            Success(orders)
+        } catch (e: Exception) {
+            Failure(e)
+        }
+    }    // create under for delivered order
+
+    override suspend fun getPurchaseHistoryFromFirestore(): PurchaseHistoryResponse {
+        return try {
+            val queryOrdersByDateOfSubmission = ordersRef.whereEqualTo("orderStatus", "delivered")    //.orderBy(DATE_OF_SUBMISSION, DESCENDING)
             val orders = queryOrdersByDateOfSubmission.get().await().toObjects(Order::class.java)
             Success(orders)
         } catch (e: Exception) {

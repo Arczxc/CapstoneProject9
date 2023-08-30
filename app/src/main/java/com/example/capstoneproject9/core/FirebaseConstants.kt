@@ -73,9 +73,11 @@ object FirebaseConstants {
     const val CHECK_OUT_URL = "checkOutUrl"
     const val PAYMENT_STATUS = "paymentStatus"
     const val ORDER_ID = "orderId"
+    const val ORDER_STATUS = "orderStatus"
     const val UPDATED_PAYMENT_DATE = "updatedPaymentDate"
     const val MODE_OF_PAYMENT = "modeOfPayment"
     const val MODE_OF_SERVICE = "modeOfService"
+
 
     //TICKETING REFERENCE
     const val SUBJECT = "subject"

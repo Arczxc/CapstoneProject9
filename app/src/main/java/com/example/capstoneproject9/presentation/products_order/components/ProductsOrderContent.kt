@@ -54,6 +54,7 @@ fun ProductsOrderContent(
                 if (items.isEmpty()){
 
                 } else {
+
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -83,7 +84,7 @@ fun ProductsOrderContent(
                                     Text(text = profileDetails.contactNumber.toString())
                                     Text(text = info.checkOutUrl.toString())
                                     Text(text = info.orderId.toString())
-                                    Text(text = info.paymentStatus.toString())
+                                    Text(text = info.orderStatus.toString())
                                     Button(
                                         modifier = Modifier.padding(10.dp),
                                         onClick = {
@@ -130,11 +131,11 @@ fun ProductsOrderContent(
                                                     "To Finish" to R.drawable.baseline_done_24
                                                 )
 
-                                                if (info.paymentStatus == "unpaid" ){
+                                                if (info.orderStatus == "unpaid" ){
                                                     state = 0
-                                                } else if(info.paymentStatus == "paid" ) {
+                                                } else if(info.orderStatus == "paid" ) {
                                                     state = 1
-                                                } else if (info.trackingStatus == "received" ){
+                                                } else if (info.orderStatus == "received" ){
                                                     state = 2
                                                 } else {
                                                     state = 3
@@ -281,7 +282,6 @@ fun ProductsOrderContent(
                                 Text("Submit Request Refund")
                             }
                         }
-
                     }
                 }
             }

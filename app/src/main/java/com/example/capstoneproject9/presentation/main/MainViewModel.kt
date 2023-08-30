@@ -27,6 +27,8 @@ class MainViewModel @Inject constructor(
         private set
     var ordersResponse by mutableStateOf<OrdersResponse>(Loading)
         private set
+    var purchaseHistoryResponse by mutableStateOf<PurchaseHistoryResponse>(Loading)
+        private set
     var customizeOrderResponse by mutableStateOf<CustomizeOrderResponse>(Loading)
         private set
     var faqResponse by mutableStateOf<FAQResponse>(Loading)
@@ -45,6 +47,7 @@ class MainViewModel @Inject constructor(
         getBrands()
         getOrders()
         getCustomizeOrder()
+        getPurchaseHistory()
         getFAQ()
         getProfile()
     }
@@ -61,6 +64,10 @@ class MainViewModel @Inject constructor(
 
     private fun getOrders() = viewModelScope.launch {
         ordersResponse = repo.getOrdersFromFirestore()
+    }
+
+    private fun getPurchaseHistory() = viewModelScope.launch {
+        purchaseHistoryResponse = repo.getPurchaseHistoryFromFirestore()
     }
 
     private fun getCustomizeOrder() = viewModelScope.launch {

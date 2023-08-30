@@ -17,6 +17,7 @@ import com.example.capstoneproject9.core.AppConstants.PROFILE
 import com.example.capstoneproject9.core.AppConstants.SIGN_OUT
 import com.example.capstoneproject9.core.AppConstants.TAG
 import com.example.capstoneproject9.core.AppConstants.PNG
+import com.example.capstoneproject9.core.AppConstants.PURCHASE_HISTORY
 import com.example.capstoneproject9.core.FirebaseConstants.CUSTOMIZE_ORDER
 import com.example.capstoneproject9.core.FirebaseConstants.STORAGE_BASE_URL
 import com.example.capstoneproject9.domain.model.Image
@@ -38,6 +39,7 @@ class Utils {
             Item(Icons.Default.Home, HOME),
             Item(Icons.Default.List, ORDERS),
             Item(Icons.Default.Star, CUSTOMIZE_ORDERS),
+            Item(Icons.Default.DateRange, PURCHASE_HISTORY),
             Item(Icons.Default.Favorite, FAVORITES),
             Item(Icons.Default.Person, PROFILE),
             Item(Icons.Default.Call, CONTACT_SUPPORT ),
