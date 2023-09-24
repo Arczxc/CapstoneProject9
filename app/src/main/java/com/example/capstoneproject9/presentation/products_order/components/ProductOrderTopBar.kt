@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -28,36 +30,43 @@ fun ProductOrderTopBar(
     orderId: String,
     viewModel: ProductsOrderViewModel = hiltViewModel(),
 ){
+
+    LaunchedEffect(Unit) {
+        viewModel.getPaymentInfo(orderId)
+    }
+
     val showingDialog = remember{ mutableStateOf(false) }
 
-    TopAppBar(
-        title = {
-            Text(
-                text = "Product Order",
-                color = Color.White,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        },
-        navigationIcon = {
-            BackIcon(
-                navigateBack = navigateBack
-            )
-        },
-        actions = {
-            IconButton(
-                onClick = {
-                    showingDialog.value = true
-                }
-            ) {
-                Icon(
-                    Icons.Default.Delete,
-                    contentDescription = null
+    PaymentInfo {info ->
+        TopAppBar(
+            title = {
+                Text(
+                    text = "Product Order",
+                    color = Color.White,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
-            }
-        },
-        colors = getTopBarColors()
-    )
+            },
+            navigationIcon = {
+                BackIcon(
+                    navigateBack = navigateBack
+                )
+            },
+            actions = {
+                IconButton(
+                    onClick = {
+                        showingDialog.value = true
+                    }
+                ) {
+                    Icon(
+                        Icons.Default.Delete,
+                        contentDescription = null
+                    )
+                }
+            },
+            colors = getTopBarColors()
+        )
+    }
 
 
 
@@ -79,10 +88,10 @@ fun ProductOrderTopBar(
                         .padding(16.dp)
                         .clickable(
                             onClick = {
-                                GlobalScope.launch(Dispatchers.IO){
+                                GlobalScope.launch(Dispatchers.IO) {
                                     viewModel.deleteOrder(orderId)
                                     delay(3000L)
-                                    withContext(Dispatchers.Main){
+                                    withContext(Dispatchers.Main) {
                                         navigateToThankYouScreen()
                                     }
                                 }

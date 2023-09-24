@@ -1,6 +1,10 @@
 package com.example.capstoneproject9.presentation.product_details.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +25,7 @@ import com.example.capstoneproject9.core.AppConstants.NO_VALUE
 import com.example.capstoneproject9.domain.model.toShoppingCartItem
 import com.example.capstoneproject9.presentation.main.MainViewModel
 import com.example.capstoneproject9.presentation.product_details.ProductDetailsViewModel
+import com.gowtham.ratingbar.RatingBar
 
 @Composable
 fun ProductDetailsContent(
@@ -90,7 +95,35 @@ fun ProductDetailsContent(
                             fontSize = 21.sp
                         )
                     }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 16.dp,
+                                end = 16.dp,
+                                top = 8.dp
+                            ),
+                    ) {
+                        Icon(
+                            Icons.Default.Star,
+                            contentDescription = null
+                        )
+                        Text(text = reviews.toString(), fontSize = 25.sp)
+                    }
                 }
+
+
+                /*RatingBar(
+                    value = 5.0f,
+                    //style = RatingBarStyle.Fill(),
+                    modifier = Modifier.fillMaxWidth(),
+                    onValueChange = {
+                        rating = it
+                    },
+                    onRatingChanged = {
+                        //Log.d("TAG", "onRatingChanged: $it")
+                    }
+                )*/
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()

@@ -21,8 +21,8 @@ class SubmitTicketViewModel @Inject constructor(
     var submitTicketResponse by mutableStateOf<Response<Boolean>>(Success(false))
         private set
 
-    fun submitTicket(subject: String , problem: String) = viewModelScope.launch {
+    fun submitTicket(subject: String ,contantNumber:String, email: String, problem: String) = viewModelScope.launch {
         submitTicketResponse = Loading
-        submitTicketResponse = repo.SubmitTicketInFirestore(subject, problem)
+        submitTicketResponse = repo.SubmitTicketInFirestore(subject, contantNumber, email, problem)
     }
 }

@@ -3,6 +3,7 @@ package com.example.capstoneproject9.presentation.brand_products
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import com.example.capstoneproject9.components.AppTopBar
 import com.example.capstoneproject9.core.AppConstants.SHOES
 import com.example.capstoneproject9.presentation.brand_products.components.BrandProductsContent
@@ -20,6 +21,7 @@ fun BrandProductsScreen(
     navigateToUploadScreen: () -> Unit,
 ) {
     Scaffold(
+        containerColor = Color.LightGray,
         topBar = {
             AppTopBar(
                 title = "${productBrand.capitalizeFirstChar()}",       //title = "${productBrand.capitalizeFirstChar()} $SHOES",

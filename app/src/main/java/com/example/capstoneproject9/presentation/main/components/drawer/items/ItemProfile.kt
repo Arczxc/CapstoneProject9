@@ -35,7 +35,6 @@ fun ItemProfile(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(15.dp),
-            contentAlignment = Alignment.Center
         ) {
             Column(
                 modifier = Modifier.fillMaxSize()
@@ -43,8 +42,9 @@ fun ItemProfile(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(100.dp)
-                        .padding(15.dp),
+                        .fillMaxHeight(.4f)
+                        //.padding(15.dp)
+                        .background(Color.Gray),
                     contentAlignment = Alignment.Center
                 ){
                     AsyncImage(
@@ -63,40 +63,73 @@ fun ItemProfile(
 
 
                 Text(
-                    text = user.displayName,
-                    fontSize = 30.sp,
+                    text = "Name",
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 15.sp,
                     modifier = Modifier
                         .padding(15.dp)
+                )
+
+
+                Text(
+                    text = user.displayName,
+                    fontSize = 25.sp,
+                    modifier = Modifier
+                        .padding(horizontal = 30.dp)
 
                 )
                 ProfileInfo {
+
                     Text(
-                        text = it.fullAddress.toString(),
-                        fontSize = 30.sp,
+                        text = "Address",
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 15.sp,
                         modifier = Modifier
                             .padding(15.dp)
+                    )
 
+                    Text(
+                        text = it.fullAddress.toString(),
+                        fontSize = 25.sp,
+                        modifier = Modifier
+                            .padding(horizontal = 30.dp)
+                    )
+
+                    Text(
+                        text = "Contact Number",
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 15.sp,
+                        modifier = Modifier
+                            .padding(15.dp)
                     )
 
                     Text(
                         text = it.contactNumber.toString(),
-                        fontSize = 30.sp,
+                        fontSize = 25.sp,
                         modifier = Modifier
-                            .padding(15.dp)
+                            .padding(horizontal = 30.dp)
+
                     )
                 }
 
-
-
-                Button(
-                    onClick = { navigateToEditProfileScreen() },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(R.color.accent)
-                    )
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Bottom,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = "Edit profile here")
+                    Button(
+                        onClick = { navigateToEditProfileScreen() },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorResource(R.color.accent)
+                        )
+                    ) {
+                        Text(text = "Edit profile here")
+                    }
                 }
+
+
             }
+
 
         }
 

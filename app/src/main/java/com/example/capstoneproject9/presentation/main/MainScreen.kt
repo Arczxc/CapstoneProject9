@@ -8,6 +8,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import com.example.capstoneproject9.components.DrawerTopBar
@@ -47,6 +48,7 @@ fun MainScreen(
         },
         content = {
             Scaffold(
+                containerColor = Color.LightGray,
                 topBar = {
                     DrawerTopBar(
                         openNavigationDrawer = {

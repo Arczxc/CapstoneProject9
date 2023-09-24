@@ -1,10 +1,13 @@
 package com.example.capstoneproject9.presentation.main.components.drawer.items
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -40,14 +43,21 @@ fun ItemHome(
             pagingPopularProducts = viewModel.getPopularProducts().collectAsLazyPagingItems(),
             navigateToProductDetailsScreen = navigateToProductDetailsScreen
         )
-        Title(BRANDS_TITLE)
-        Brands(
-            brandsContent = { brands ->
-                BrandsHorizontalContent(
-                    brands = brands,
-                    navigateToBrandProductsScreen = navigateToBrandProductsScreen
-                )
-            }
-        )
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom,
+            /*horizontalAlignment = Alignment.CenterHorizontally*/
+        ){
+            Title(BRANDS_TITLE)
+            Brands(
+                brandsContent = { brands ->
+                    BrandsHorizontalContent(
+                        brands = brands,
+                        navigateToBrandProductsScreen = navigateToBrandProductsScreen
+                    )
+                }
+            )
+        }
+
     }
 }

@@ -51,7 +51,10 @@ fun UploadImageContent(
                 .padding(padding),
             contentAlignment = Alignment.BottomCenter
         ) {
+
             Column(modifier = Modifier.padding(15.dp)) {
+
+
                 Hyperlink2(fullText = "DOWNLOAD" , linkText = "" )
 
                 HyperlinkText(

@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartIntentSend
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.gms.auth.api.identity.BeginSignInResult
 import com.google.android.gms.common.api.ApiException
@@ -24,6 +25,7 @@ fun AuthScreen(
     navigateToHomeScreen: () -> Unit
 ) {
     Scaffold(
+        containerColor = Color.LightGray,
         topBar = {
             AuthTopBar()
         },

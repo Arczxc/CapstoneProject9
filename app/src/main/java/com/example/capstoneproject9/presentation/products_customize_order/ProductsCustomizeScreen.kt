@@ -3,6 +3,7 @@ package com.example.capstoneproject9.presentation.products_customize_order
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import com.example.capstoneproject9.presentation.products_customize_order.components.ProductCustomizeContent
 import com.example.capstoneproject9.presentation.products_customize_order.components.ProductCustomizeTopAppBar
 
@@ -14,6 +15,7 @@ fun ProductCustomizeScreen(
     navigateToThankYouScreen: () -> Unit,
 ){
     Scaffold(
+        containerColor = Color.LightGray,
         topBar = {
             ProductCustomizeTopAppBar(
                 customizeId = customizeId,

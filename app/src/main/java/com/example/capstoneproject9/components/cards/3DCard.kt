@@ -50,7 +50,7 @@ fun D3Card(
                             .width(128.dp)
                             .height(128.dp),
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data("https://firebasestorage.googleapis.com/v0/b/capstone-414d8.appspot.com/o/Unity.png?alt=media&token=2e589ec2-efd9-4613-aa6b-45cb9a4e25e4")
+                            .data("https://firebasestorage.googleapis.com/v0/b/capstone-414d8.appspot.com/o/CustomizePic.png?alt=media&token=a909c954-b8f7-465a-b7d0-98b9bc11e4a6")
                             .crossfade(true)
                             .build(),
                         contentDescription = null

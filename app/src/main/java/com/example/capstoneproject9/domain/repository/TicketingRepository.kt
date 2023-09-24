@@ -13,7 +13,7 @@ interface TicketingRepository{
 
     val user: User
 
-    suspend fun SubmitTicketInFirestore(subject: String , problem: String): SubmitTicketResponse
+    suspend fun SubmitTicketInFirestore(subject: String ,contantNumber:String, email: String, problem: String): SubmitTicketResponse
 
     suspend fun GetTicketInFirestore() : MyTicketResponse
 

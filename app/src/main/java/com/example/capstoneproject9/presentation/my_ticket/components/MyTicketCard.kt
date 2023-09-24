@@ -32,7 +32,7 @@ fun MyTicketCard(
             .fillMaxSize()
             .padding(top = 10.dp, bottom = 10.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.Black,
+            containerColor = Color.Red,
             contentColor = Color.White,
         ),
         ){

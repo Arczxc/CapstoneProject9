@@ -22,7 +22,7 @@ fun Price(
         text = buildAnnotatedString {
             withStyle(
                 style = SpanStyle(
-                    color = colorResource(R.color.accent),
+                    color = colorResource(R.color.green),
                     fontWeight = FontWeight.Bold
                 )
             ) {

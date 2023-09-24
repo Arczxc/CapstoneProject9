@@ -7,6 +7,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.example.capstoneproject9.presentation.edit_profile_info.components.EditProfileContent
 import com.example.capstoneproject9.presentation.edit_profile_info.components.EditProfileTopAppBar
 import com.example.capstoneproject9.presentation.map.MapScreen
@@ -19,6 +20,7 @@ fun EditProfileScreen(
     navigateToThankYouScreen: () -> Unit,
 ){
     Scaffold(
+        containerColor = Color.LightGray,
         topBar = {
             EditProfileTopAppBar(
                 navigateBack = navigateBack

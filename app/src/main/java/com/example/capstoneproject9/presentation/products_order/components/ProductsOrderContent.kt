@@ -2,6 +2,7 @@ package com.example.capstoneproject9.presentation.products_order.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -28,6 +30,9 @@ import com.example.capstoneproject9.presentation.products_order_payment.componen
 import com.example.capstoneproject9.presentation.products_order_tracking.components.ProfileDetails
 import com.example.capstoneproject9.presentation.products_order_tracking.components.TrackingDetails
 import kotlinx.coroutines.*
+
+import androidx.compose.runtime.*
+import com.gowtham.ratingbar.RatingBar
 
 @Composable
 @ExperimentalMaterial3Api
@@ -214,26 +219,34 @@ fun ProductsOrderContent(
                         }
 
 
-                        val hasRequested = rememberSaveable {
-                            mutableStateOf(false) }
+                        val hasRequested = rememberSaveable { mutableStateOf(false) }
+
+                        val hasReview = rememberSaveable { mutableStateOf(false) }
 
                         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter){
-                            if (info.paymentStatus == "unpaid"){
+                            if (info.orderStatus == "unpaid"){
                                 Hyperlink(
                                     fullText = "PAY HERE" ,
                                     linkText = info.checkOutUrl.toString()
                                 )
-                            } else if (info.paymentStatus == "paid"){
+                            } else if (info.orderStatus == "delivered"){
 
-                                TextButton(onClick = { hasRequested.value = true }) {
-                                    Text("Request Refund")
+                                Row(horizontalArrangement = Arrangement.SpaceAround) {
+
+                                    TextButton(onClick = { hasReview.value = true }) {
+                                        Text("Write a review")
+                                    }
+
+                                    TextButton(onClick = { hasRequested.value = true }) {
+                                        Text("Request Refund")
+                                    }
+
                                 }
-
                             }
                         }
 
 
-                        if (hasRequested.value == true){
+                        /*if (hasRequested.value == true){
 
                             val options = listOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5")
                             var expanded by remember { mutableStateOf(false) }
@@ -281,6 +294,147 @@ fun ProductsOrderContent(
                             ) {
                                 Text("Submit Request Refund")
                             }
+                        }*/
+
+                        if (hasRequested.value == true){
+
+                            val options = listOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5")
+                            var expanded by remember { mutableStateOf(false) }
+                            var selectedOptionText by remember { mutableStateOf(options[0]) }
+
+                            val orderId = info.orderId!!
+                            val reason = selectedOptionText
+
+                            AlertDialog(
+                                onDismissRequest = {
+                                    hasRequested.value = false
+                                },
+                                text = {
+
+
+
+                                    ExposedDropdownMenuBox(
+                                        expanded = expanded,
+                                        onExpandedChange = { expanded = !expanded },
+                                    ){
+                                        TextField(
+                                            // The `menuAnchor` modifier must be passed to the text field for correctness.
+                                            modifier = Modifier.menuAnchor(),
+                                            readOnly = true,
+                                            value = selectedOptionText,
+                                            onValueChange = {},
+                                            label = { Text("Label") },
+                                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                                            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                                        )
+                                        ExposedDropdownMenu(
+                                            expanded = expanded,
+                                            onDismissRequest = { expanded = false },
+                                        ) {
+                                            options.forEach { selectionOption ->
+                                                DropdownMenuItem(
+                                                    text = { Text(selectionOption) },
+                                                    onClick = {
+                                                        selectedOptionText = selectionOption
+                                                        expanded = false
+                                                    },
+                                                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                                                )
+                                            }
+                                        }
+                                    }
+
+                                },
+                                title = {
+                                    Text(text = "Refund Reason")
+                                },
+                                confirmButton = {
+                                    Text(
+                                        text = "Submit Request",
+                                        modifier = Modifier
+                                            .padding(16.dp)
+                                            .clickable(
+                                                onClick = {
+                                                    viewModel.getRefundRequest(orderId, selectedOptionText)
+                                                }
+                                            )
+                                    )
+                                },
+                                dismissButton = {
+                                    Text(
+                                        text = "cancel",
+                                        modifier = Modifier
+                                            .padding(16.dp)
+                                            .clickable(
+                                                onClick = {
+                                                    hasRequested.value = false
+                                                }
+                                            )
+                                    )
+                                },
+                                textContentColor = Color.Magenta,
+                                shape = RectangleShape
+                            )
+                        }
+
+                        var rating: Float by remember { mutableStateOf(3.2f) }
+
+                        if (hasReview.value == true){
+
+                            AlertDialog(
+                                onDismissRequest = {
+                                    hasReview.value = false
+                                },
+                                text = {
+                                    //Text(text = "Are you sure you want to delete your order?")
+                                    RatingBar(
+                                        value = rating,
+                                        //style = RatingBarStyle.Fill(),
+                                        modifier = Modifier.fillMaxWidth(),
+                                        onValueChange = {
+                                            rating = it
+                                        },
+                                        onRatingChanged = {
+                                            //Log.d("TAG", "onRatingChanged: $it")
+                                        }
+                                    )
+                                },
+                                title = {
+                                    Text(text = "Review your Order")
+                                },
+                                confirmButton = {
+                                    Text(
+                                        text = "Ok",
+                                        modifier = Modifier
+                                            .padding(16.dp)
+                                            .clickable(
+                                                onClick = {
+                                                    GlobalScope.launch(Dispatchers.IO) {
+                                                        /*viewModel.deleteOrder(orderId)
+                                                        delay(3000L)
+                                                        withContext(Dispatchers.Main) {
+                                                            navigateToThankYouScreen()
+                                                        }*/
+                                                    }
+                                                }
+                                            )
+                                    )
+                                },
+                                dismissButton = {
+                                    Text(
+                                        text = "cancel",
+                                        modifier = Modifier
+                                            .padding(16.dp)
+                                            .clickable(
+                                                onClick = {
+                                                    hasReview.value = false
+                                                }
+                                            )
+                                    )
+                                },
+                                textContentColor = Color.Magenta,
+                                shape = RectangleShape
+                            )
                         }
                     }
                 }

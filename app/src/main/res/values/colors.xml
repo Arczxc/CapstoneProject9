@@ -8,10 +8,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="primary">#FF0000</color>
-    <color name="primary_dark">#FF0000</color>
-    <color name="primary_light">#FF0000</color>
-    <color name="accent">#FF4081</color>
+    <color name="primary">#37474F</color>
+    <color name="primary_dark">#B2DFDB</color>
+    <color name="primary_light">#FF3700B3</color>
+    <color name="accent">#78909C</color>
+
+    <color name="green">#64DD17</color>
+
+
 
 
 </resources>

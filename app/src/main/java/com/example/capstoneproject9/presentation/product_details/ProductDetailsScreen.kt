@@ -3,6 +3,7 @@ package com.example.capstoneproject9.presentation.product_details
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import com.example.capstoneproject9.components.AppTopBar
 import com.example.capstoneproject9.core.AppConstants.NO_VALUE
 import com.example.capstoneproject9.presentation.product_details.components.ProductDetailsContent
@@ -16,6 +17,7 @@ fun ProductDetailsScreen(
     navigateBack: () -> Unit
 ) {
     Scaffold(
+        containerColor = Color.LightGray,
         topBar = {
             AppTopBar(
                 title = "Product Details",

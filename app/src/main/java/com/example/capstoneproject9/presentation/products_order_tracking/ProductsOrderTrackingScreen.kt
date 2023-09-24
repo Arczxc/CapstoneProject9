@@ -3,6 +3,7 @@ package com.example.capstoneproject9.presentation.products_order_tracking
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import com.example.capstoneproject9.components.AppTopBar
 import com.example.capstoneproject9.presentation.products_order_tracking.components.ProductTrackingTopAppBar
 import com.example.capstoneproject9.presentation.products_order_tracking.components.ProductsOrderTrackingContent
@@ -14,6 +15,7 @@ fun ProductOrderTrackingScreen(
     navigateBack: () -> Unit
 ){
     Scaffold(
+        containerColor = Color.LightGray,
         topBar = {
             ProductTrackingTopAppBar (
                 navigateBack = navigateBack

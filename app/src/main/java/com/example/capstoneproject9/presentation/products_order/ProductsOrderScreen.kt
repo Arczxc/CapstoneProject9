@@ -3,6 +3,7 @@ package com.example.capstoneproject9.presentation.products_order
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import com.example.capstoneproject9.components.AppTopBar
 import com.example.capstoneproject9.presentation.products_order.components.ProductOrderTopBar
 import com.example.capstoneproject9.presentation.products_order.components.ProductsOrderContent
@@ -19,6 +20,7 @@ fun ProductsOrderScreen(
     navigateToThankYouScreen: () -> Unit
 ) {
     Scaffold(
+        containerColor = Color.LightGray,
         topBar = {
             ProductOrderTopBar(
                 navigateBack = navigateBack,

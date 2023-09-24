@@ -45,10 +45,10 @@ class TicketingRepositoryImpl(
     private val submittedTicketRef = firebaseFirestore.collection(USERS).document(user.uid).collection(SUBMITTED_TICKET)
     private val allTicketRef = firebaseFirestore.collection(ALL_TICKET)
 
-    override suspend fun SubmitTicketInFirestore(subject: String , problem: String): SubmitTicketResponse {
+    override suspend fun SubmitTicketInFirestore(subject: String ,contantNumber:String, email: String, problem: String): SubmitTicketResponse {
         return try {
             val orderId = submitTicketRef.document().id
-            SubmittedTicket(orderId, subject, problem)
+            SubmittedTicket(orderId, subject,contantNumber, email, problem)
             AllTicket(orderId, subject, problem)
             Success(true)
         } catch (e: Exception) {
@@ -68,6 +68,8 @@ class TicketingRepositoryImpl(
 
     private suspend fun SubmittedTicket(
         orderId: String,
+        contantNumber: String,
+        email: String,
         Subject: String,
         Problem: String
     ) = submitTicketRef.document(orderId).set(mapOf(
