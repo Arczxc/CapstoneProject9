@@ -157,6 +157,7 @@ fun SubmitTicketContent(
                     confirmButton = {
                         Text(
                             text = "Ok",
+                            color = Color.Black,
                             modifier = Modifier
                                 .padding(16.dp)
                                 .clickable(
@@ -175,6 +176,7 @@ fun SubmitTicketContent(
                     dismissButton = {
                         Text(
                             text = "cancel",
+                            color = Color.Black,
                             modifier = Modifier
                                 .padding(16.dp)
                                 .clickable(
@@ -184,7 +186,8 @@ fun SubmitTicketContent(
                                 )
                         )
                     },
-                    textContentColor = Color.Magenta,
+                    textContentColor = Color.Black,
+                    containerColor = Color.Gray,
                     shape = RectangleShape
                 )
             }

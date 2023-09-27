@@ -49,7 +49,7 @@ fun BannerCard(
                 )
                 .crossfade(true)
                 .build(),
-            contentDescription = null
+            contentDescription = null,
         )
     }
 }

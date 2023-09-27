@@ -81,6 +81,7 @@ fun ItemFAQ(
                     onDismissRequest = {
                         showPrivacyPolicy.value = false
                     },
+                    containerColor = Color.Gray,
                     text = {
                         Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                             Text(
@@ -156,6 +157,7 @@ fun ItemFAQ(
                     confirmButton = {
                         Text(
                             text = "Ok",
+                            color = Color.Black,
                             modifier = Modifier
                                 .padding(16.dp)
                                 .clickable(
@@ -177,7 +179,7 @@ fun ItemFAQ(
                                 )
                         )*/
                     },
-                    textContentColor = Color.Black,
+                    textContentColor = Color.White,
                     shape = RectangleShape
                 )
             }

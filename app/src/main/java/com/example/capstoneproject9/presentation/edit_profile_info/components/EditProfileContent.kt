@@ -74,7 +74,7 @@ fun EditProfileContent(
                 modifier = Modifier.padding(15.dp),
                 value = recipientName.value,
                 onValueChange = { recipientName.value = it },
-                label = { Text(text = "Reciepient Name")},
+                label = { Text(text = "Recipient Name")},
                 singleLine = true,
                 leadingIcon = {
                     Image(imageVector = Icons.Default.Person , contentDescription = null)

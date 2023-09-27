@@ -50,9 +50,7 @@ fun ProductCustomizeTopAppBar(
                 )
             }
         },
-        colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = colorResource(R.color.primary)
-        )
+        colors = getTopBarColors()
     )
 
 
@@ -70,6 +68,7 @@ fun ProductCustomizeTopAppBar(
             confirmButton = {
                 Text(
                     text = "Ok",
+                    color = Color.Black,
                     modifier = Modifier
                         .padding(16.dp)
                         .clickable(
@@ -88,6 +87,7 @@ fun ProductCustomizeTopAppBar(
             dismissButton = {
                 Text(
                     text = "cancel",
+                    color = Color.Black,
                     modifier = Modifier
                         .padding(16.dp)
                         .clickable(
@@ -97,8 +97,18 @@ fun ProductCustomizeTopAppBar(
                         )
                 )
             },
-            textContentColor = Color.Magenta,
+            textContentColor = Color.Black,
+            containerColor = Color.Gray,
             shape = RectangleShape
         )
     }
 }
+
+
+@Composable
+@ExperimentalMaterial3Api
+fun getTopBarColors() = TopAppBarDefaults.smallTopAppBarColors(
+    containerColor = colorResource(R.color.primary),
+    navigationIconContentColor = Color.White,
+    actionIconContentColor = Color.White
+)

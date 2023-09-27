@@ -21,6 +21,8 @@ import com.example.capstoneproject9.domain.model.Faq
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.res.colorResource
+import com.example.capstoneproject9.R
 
 /*@Composable
 @ExperimentalMaterial3Api
@@ -73,7 +75,7 @@ fun FAQCARD1(
     Card(
         modifier = Modifier
             .padding(5.dp)
-            .background(Color.Red)
+            .background(Color.Gray)
             .fillMaxWidth()
             .animateContentSize(
                 animationSpec = tween(
@@ -84,7 +86,10 @@ fun FAQCARD1(
         shape = shape,
         onClick = {
             expandedState = !expandedState
-        }
+        },
+        colors = CardDefaults.cardColors(
+            containerColor = colorResource(R.color.accent)
+        ),
     ) {
         Column(
             modifier = Modifier

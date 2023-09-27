@@ -127,6 +127,7 @@ fun UploadImageTopAppBar(
             confirmButton = {
                 Text(
                     text = "Ok",
+                    color = Color.Black,
                     modifier = Modifier
                         .padding(16.dp)
                         .clickable(
@@ -148,7 +149,8 @@ fun UploadImageTopAppBar(
                         )
                 )*/
             },
-            textContentColor = Color.Black,
+            textContentColor = Color.White,
+            containerColor = Color.Gray,
             shape = RectangleShape
         )
     }

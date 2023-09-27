@@ -3,6 +3,7 @@ package com.example.capstoneproject9.presentation.brand_products.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -33,7 +34,13 @@ fun BrandProductsContent(
             )
 
             //D3Card(navigateTo3dScreen)
-            D3Card(navigateToUploadScreen)
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.BottomCenter
+            ){
+                D3Card(navigateToUploadScreen)
+            }
+
         }
 
 

@@ -84,6 +84,7 @@ fun ProductOrderTopBar(
             confirmButton = {
                 Text(
                     text = "Ok",
+                    color = Color.Black,
                     modifier = Modifier
                         .padding(16.dp)
                         .clickable(
@@ -102,6 +103,7 @@ fun ProductOrderTopBar(
             dismissButton = {
                 Text(
                     text = "cancel",
+                    color = Color.Black,
                     modifier = Modifier
                         .padding(16.dp)
                         .clickable(
@@ -111,7 +113,8 @@ fun ProductOrderTopBar(
                         )
                 )
             },
-            textContentColor = Color.Magenta,
+            textContentColor = Color.Black,
+            containerColor = Color.Gray,
             shape = RectangleShape
         )
     }

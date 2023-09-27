@@ -32,7 +32,7 @@ fun MyTicketCard(
             .fillMaxSize()
             .padding(top = 10.dp, bottom = 10.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.Red,
+            containerColor = Color.Gray,
             contentColor = Color.White,
         ),
         ){
@@ -78,6 +78,7 @@ fun MyTicketCard(
                 confirmButton = {
                     Text(
                         text = "Ok",
+                        color = Color.Black,
                         modifier = Modifier
                             .padding(16.dp)
                             .clickable(
@@ -91,6 +92,7 @@ fun MyTicketCard(
                 dismissButton = {
                     Text(
                         text = "cancel",
+                        color = Color.Black,
                         modifier = Modifier
                             .padding(16.dp)
                             .clickable(
@@ -100,7 +102,8 @@ fun MyTicketCard(
                             )
                     )
                 },
-                textContentColor = Color.Magenta,
+                textContentColor = Color.Black,
+                containerColor = Color.Gray,
                 shape = RectangleShape
             )
         }

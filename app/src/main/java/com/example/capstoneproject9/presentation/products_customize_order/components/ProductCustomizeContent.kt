@@ -42,7 +42,7 @@ fun ProductCustomizeContent(
 
     CustomizeOrders { customizeOrder ->
         ProfileDetailsCustomize { profileDetails ->
-            if (customizeOrder.checkOutUrl != null) {
+            if (customizeOrder.checkOutUrl != "") {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -71,7 +71,9 @@ fun ProductCustomizeContent(
                                 Text(text = profileDetails.fullAddress.toString())
                                 Text(text = profileDetails.contactNumber.toString())
                                 Text(text = customizeOrder.checkOutUrl.toString())
-                                Text(text = customizeOrder.paymentStatus.toString())
+                                Text(text = customizeOrder.id.toString())
+                                Text(text = customizeOrder.orderStatus.toString())
+                                //Text(text = customizeOrder.paymentStatus.toString())
                                 Button(
                                     modifier = Modifier.padding(10.dp),
                                     onClick = { },
@@ -129,11 +131,11 @@ fun ProductCustomizeContent(
                                                         )
                                                     }
                                                 }
-                                                Text(
+                                                /*Text(
                                                     modifier = Modifier.align(Alignment.CenterHorizontally),
                                                     text = "Text and icon tab ${state + 1} selected",
                                                     // style = MaterialTheme.typography.body1
-                                                )
+                                                )*/
                                             }
                                         }
 
@@ -163,6 +165,14 @@ fun ProductCustomizeContent(
                             contentDescription = null,
                             contentScale = ContentScale.FillBounds
                         )
+                    }
+
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter){
+
+                            Hyperlink(
+                                fullText = "PAY HERE" ,
+                                linkText = customizeOrder.checkOutUrl.toString()
+                            )
                     }
 
                 }

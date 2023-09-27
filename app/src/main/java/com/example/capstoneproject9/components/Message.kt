@@ -22,7 +22,7 @@ fun Message(
         Text(
             text = text,
             fontSize = 21.sp,
-            color = colorResource(R.color.primary_dark),
+            color = colorResource(R.color.black),
             fontWeight = FontWeight.Bold
         )
     }

@@ -90,6 +90,8 @@ fun ShoppingCartContent(
 
                 val showingDialog = remember{ mutableStateOf(false) }               // if true will show the dialog
 
+                val showConfirmation = remember{ mutableStateOf(false) }     // tatanggalin, for testing purpose only
+
                 var price = if(payment == true){                                       // will return price based on payment
                     viewModel.numberOfItemsInShoppingCart.toInt()
                 } else{
@@ -215,6 +217,7 @@ fun ShoppingCartContent(
                             confirmButton = {
                                 Text(
                                     text = "Ok",
+                                    color = Color.Black,
                                     modifier = Modifier
                                         .padding(16.dp)
                                         .clickable(
@@ -227,6 +230,7 @@ fun ShoppingCartContent(
                                                     }
                                                     val paymongo = link.await()
                                                     viewModel.addOrder(items, paymongo, modeOfPayment, modeOfService)
+                                                    showConfirmation.value = true
                                                 }
                                             }
                                         )
@@ -235,6 +239,7 @@ fun ShoppingCartContent(
                             dismissButton = {
                                 Text(
                                     text = "cancel",
+                                    color = Color.Black,
                                     modifier = Modifier
                                         .padding(16.dp)
                                         .clickable(
@@ -244,10 +249,53 @@ fun ShoppingCartContent(
                                         )
                                 )
                             },
-                            textContentColor = Color.Magenta,
+                            textContentColor = Color.Black,
+                            containerColor = Color.Gray,
                             shape = RectangleShape
                         )
                     }
+
+                if (showConfirmation.value){
+                    AlertDialog(
+                        onDismissRequest = {
+                            showingDialog.value = false
+                        },
+                        text = {
+                            Text(text = "Proceed to Orders for more info")
+                        },
+                        title = {
+                            Text(text = "Order Succeed")
+                        },
+                        confirmButton = {
+                            Text(
+                                text = "Ok",
+                                color = Color.Black,
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .clickable(
+                                        onClick = {
+                                            showConfirmation.value = false
+                                        }
+                                    )
+                            )
+                        },
+                        dismissButton = {
+                            /*Text(
+                                text = "cancel",
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .clickable(
+                                        onClick = {
+                                            showingDialog.value = false
+                                        }
+                                    )
+                            )*/
+                        },
+                        textContentColor = Color.Black,
+                        containerColor = Color.Gray,
+                        shape = RectangleShape
+                    )
+                }
 
 
                     var enabled = rememberSaveable {

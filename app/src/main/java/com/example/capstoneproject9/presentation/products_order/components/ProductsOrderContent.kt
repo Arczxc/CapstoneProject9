@@ -166,11 +166,11 @@ fun ProductsOrderContent(
                                                             )
                                                         }
                                                     }
-                                                    Text(
+                                                    /*Text(
                                                         modifier = Modifier.align(Alignment.CenterHorizontally),
                                                         text = "Text and icon tab ${state + 1} selected",
                                                         // style = MaterialTheme.typography.body1
-                                                    )
+                                                    )*/
                                                 }
                                             }
 
@@ -298,7 +298,7 @@ fun ProductsOrderContent(
 
                         if (hasRequested.value == true){
 
-                            val options = listOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5")
+                            val options = listOf("Damage or Broken", "Does not match description", "Wrong item", "Order arrive too late", "other")
                             var expanded by remember { mutableStateOf(false) }
                             var selectedOptionText by remember { mutableStateOf(options[0]) }
 
@@ -351,11 +351,15 @@ fun ProductsOrderContent(
                                 confirmButton = {
                                     Text(
                                         text = "Submit Request",
+                                        color = Color.Black,
                                         modifier = Modifier
                                             .padding(16.dp)
                                             .clickable(
                                                 onClick = {
-                                                    viewModel.getRefundRequest(orderId, selectedOptionText)
+                                                    viewModel.getRefundRequest(
+                                                        orderId,
+                                                        selectedOptionText
+                                                    )
                                                 }
                                             )
                                     )
@@ -363,6 +367,7 @@ fun ProductsOrderContent(
                                 dismissButton = {
                                     Text(
                                         text = "cancel",
+                                        color = Color.Black,
                                         modifier = Modifier
                                             .padding(16.dp)
                                             .clickable(
@@ -372,7 +377,8 @@ fun ProductsOrderContent(
                                             )
                                     )
                                 },
-                                textContentColor = Color.Magenta,
+                                textContentColor = Color.Black,
+                                containerColor = Color.Gray,
                                 shape = RectangleShape
                             )
                         }
@@ -405,6 +411,7 @@ fun ProductsOrderContent(
                                 confirmButton = {
                                     Text(
                                         text = "Ok",
+                                        color = Color.Black,
                                         modifier = Modifier
                                             .padding(16.dp)
                                             .clickable(
@@ -423,6 +430,7 @@ fun ProductsOrderContent(
                                 dismissButton = {
                                     Text(
                                         text = "cancel",
+                                        color = Color.Black,
                                         modifier = Modifier
                                             .padding(16.dp)
                                             .clickable(
@@ -432,7 +440,8 @@ fun ProductsOrderContent(
                                             )
                                     )
                                 },
-                                textContentColor = Color.Magenta,
+                                textContentColor = Color.Black,
+                                containerColor = Color.Gray,
                                 shape = RectangleShape
                             )
                         }
