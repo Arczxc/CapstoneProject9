@@ -389,8 +389,4 @@ fun NavGraph(
             )
         }
     }
-
-
-
-    // will create submit and my ticket screen composable here
 }

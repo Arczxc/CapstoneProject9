@@ -83,53 +83,10 @@ fun UploadImageContent(
             }
 
         }
-
-
-    /*if (showingDialog.value) {
-        AlertDialog(
-            onDismissRequest = {
-                showingDialog.value = false
-            },
-            text = {
-                Text(text = "Are you sure you want to delete your order?")
-            },
-            title = {
-                Text(text = "Delete Order")
-            },
-            confirmButton = {
-                Text(
-                    text = "Ok",
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .clickable(
-                            onClick = {
-                                galleryLauncher.launch(ALL_IMAGES)
-                            }
-                        )
-                )
-            },
-            dismissButton = {
-                Text(
-                    text = "cancel",
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .clickable(
-                            onClick = {
-                                showingDialog.value = false
-                            }
-                        )
-                )
-            },
-            textContentColor = Color.Magenta,
-            shape = RectangleShape
-        )
-    }*/
-
     AddImageToStorage(
         addImageToDatabase = { downloadUrl ->
             viewModel.addImageToDatabase(downloadUrl)
         }
     )
-
 
 }

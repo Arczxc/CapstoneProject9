@@ -34,9 +34,11 @@ fun EditProfileScreen(
         }
     )
 
-    /*Box(modifier = Modifier.fillMaxSize()){
+}
+
+
+/*Box(modifier = Modifier.fillMaxSize()){
         EditProfileContent()
         //MapScreen()
         //MainContent(url = "https://www.google.com/maps/@14.4080896,120.946688,13z?entry=ttu")
     }*/
-}

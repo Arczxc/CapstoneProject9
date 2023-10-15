@@ -60,7 +60,7 @@ fun ProductCustomizeContent(
                             colors = CardDefaults.cardColors(
                                 containerColor = Color.Gray
                             ),
-                            border = BorderStroke(2.dp, Color.Yellow)
+                            border = BorderStroke(2.dp, Color.Black)
                         ) {
                             Column(
                                 modifier = Modifier
@@ -72,8 +72,8 @@ fun ProductCustomizeContent(
                                 Text(text = profileDetails.contactNumber.toString())
                                 Text(text = customizeOrder.checkOutUrl.toString())
                                 Text(text = customizeOrder.id.toString())
-                                Text(text = customizeOrder.orderStatus.toString())
-                                //Text(text = customizeOrder.paymentStatus.toString())
+                                //Text(text = customizeOrder.orderStatus.toString())
+                                Text(text = customizeOrder.paymentStatus.toString())
                                 Button(
                                     modifier = Modifier.padding(10.dp),
                                     onClick = { },

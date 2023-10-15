@@ -77,7 +77,7 @@ fun ProductsOrderContent(
                                 colors = CardDefaults.cardColors(
                                     containerColor = Color.Gray
                                 ),
-                                border = BorderStroke(2.dp, Color.Yellow)
+                                border = BorderStroke(2.dp, Color.Black)
                             ) {
                                 Column(
                                     modifier = Modifier
@@ -89,7 +89,7 @@ fun ProductsOrderContent(
                                     Text(text = profileDetails.contactNumber.toString())
                                     Text(text = info.checkOutUrl.toString())
                                     Text(text = info.orderId.toString())
-                                    Text(text = info.orderStatus.toString())
+                                    Text(text = info.paymentStatus.toString())
                                     Button(
                                         modifier = Modifier.padding(10.dp),
                                         onClick = {
